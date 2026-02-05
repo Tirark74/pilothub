@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>W&B</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      /* Même thème que tes 3 autres sites */
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+      --gridLine:#b9c2cc;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --shadow: rgba(0,0,0,.12);
+
+      /* Lisibilité */
+      --baseFont: 18px;
+      --baseLine: 1.22;
+
+      /* Blocs "code" en clair */
+      --codeBg:#ffffff;
+      --codeBorder:#b9c2cc;
+
+      /* Badges */
+      --you:#1e6f36;
+      --atc:#b96a00;
+      --note:#b42318;
+
+      /* extras */
+      --calloutBg:#ffffff;
+      --calloutBorder:#b9c2cc;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+      font-size:var(--baseFont);
+      line-height:var(--baseLine);
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    /* sheen léger (comme tes autres pages) */
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    /* ===== HEADER ===== */
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+      text-align:center;
+    }
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:10px 10px 12px;
+    }
+
+    /* ===== Subtitle (badges) ===== */
+    .subtitle{
+      text-align:center;
+      color:var(--ink2);
+      margin:6px 0 12px;
+      font-size:15px;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin:0 6px 6px 0;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.55);
+      font-weight:900;
+      color:#20324a;
+      vertical-align:2px;
+      white-space:nowrap;
+    }
+    .badge-you{ color:var(--you); border-color:rgba(30,111,54,.35); }
+    .badge-atc{ color:var(--atc); border-color:rgba(185,106,0,.35); }
+    .badge-note{ color:var(--note); border-color:rgba(180,35,24,.35); }
+
+    /* ===== Sections / accordéons ===== */
+    details.section{
+      display:block;
+      margin:0 0 12px;
+      padding:0;
+    }
+
+    /* En-tête jaune cliquable (summary) */
+    summary.btn{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+
+      margin:0;
+      padding:8px 10px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:19px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    summary.btn::-webkit-details-marker{display:none}
+
+    /* petit "pill" à droite du titre */
+    .pill{
+      display:inline-block;
+      padding:1px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.35px;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.55);
+      color:#20324a;
+      text-transform:none;
+      font-style:normal;
+      white-space:nowrap;
+    }
+
+    /* chevron */
+    .chev{
+      margin-left:auto;
+      font-weight:900;
+      color:#2b3b4f;
+      opacity:.85;
+      transition: transform 180ms ease;
+      font-style:normal;
+    }
+    details.section[open] .chev{ transform: rotate(90deg); }
+
+    /* Corps */
+    .section-body{
+      margin-top:8px;
+      background:transparent;
+      padding:0 2px 4px;
+    }
+
+    /* animation douce d’ouverture */
+    details.section .section-body{
+      overflow:hidden;
+      max-height:0;
+      opacity:0;
+      transform: translateY(-6px);
+      transition:
+        max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 260ms ease,
+        transform 260ms ease;
+    }
+    details.section[open] .section-body{
+      max-height: 8000px;
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* ===== Rows ===== */
+    .row{ margin-top:10px; }
+    .row-label{
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--ink2);
+      margin-bottom:4px;
+    }
+    .note{
+      font-size:14px;
+      color:var(--ink2);
+      line-height:1.25;
+      margin:8px 0 6px;
+    }
+
+    /* ===== Pre/code en thème clair ===== */
+    pre, pre.atc{
+      margin: 6px 0 10px;
+      padding: 10px 12px;
+      background: var(--codeBg);
+      border-radius: 6px;
+      border: 1px solid var(--codeBorder);
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--ink);
+      font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    code{
+      font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: inherit;
+    }
+    em{ font-style:italic; }
+
+    /* Tokens conservés (couleurs identiques au fichier original, OK en fond clair) */
+    .tok-facility { color: #ff5252; font-weight: 700; }
+    .tok-info     { color: #b96a00; font-weight: 900; } /* un peu plus lisible en clair */
+    .tok-blue     { color: #1f5f9e; font-weight: 900; } /* bleu thème */
+    .tok-green    { color: #1e6f36; font-weight: 900; } /* vert thème */
+    .tok-twy      { color: #b42318; font-weight: 900; }
+    .tok-warn     { color: #111111; font-weight: 900; }
+
+    .tok-freq   { color: #1f5f9e; font-weight: 900; }
+    .tok-alt    { color: #1f5f9e; font-weight: 900; }
+    .tok-code   { color: #b96a00; font-weight: 900; }
+    .tok-hdg    { color: #1f5f9e; font-weight: 900; }
+    .tok-rwy    { color: #1e6f36; font-weight: 900; }
+    .tok-place  { color: #b42318; font-weight: 900; }
+
+    /* séparateur doux (utilisé dans le contenu existant via <hr>) */
+    hr{
+      border:none;
+      border-top:1px solid rgba(0,0,0,.15);
+      margin:10px 0;
+    }
+
+    .checkmate-link{
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    .checkmate-link .checkmate{
+      cursor:pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .checkmate-link .checkmate:hover{
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.85),
+        0 3px 8px rgba(0,0,0,.18);
+    }
+
+    /* Content helpers */
+    .h2{
+      margin:0 0 4px;
+      font-size:18px;
+      font-weight:900;
+      color:var(--deepBlue);
+      font-style:italic;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      text-align:center;
+    }
+    .callout{
+      background:var(--calloutBg);
+      border:1px solid var(--calloutBorder);
+      border-radius:6px;
+      padding:10px 12px;
+      margin:6px 0 10px;
+    }
+    .callout strong{ font-weight:900; }
+    .list{
+      margin:6px 0 10px;
+      padding-left:18px;
+    }
+    .list li{ margin:4px 0; }
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+    }
+    .tbl{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      border:1px solid var(--gridLine);
+      border-radius:6px;
+      overflow:hidden;
+      font-size:14px;
+    }
+    .tbl th, .tbl td{
+      border-bottom:1px solid rgba(0,0,0,.12);
+      border-right:1px solid rgba(0,0,0,.08);
+      padding:8px 10px;
+      vertical-align:top;
+    }
+    .tbl th{
+      background:linear-gradient(#fbfdff,#f1f6ff);
+      color:#2b3b4f;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-size:12px;
+    }
+    .tbl tr:last-child td{ border-bottom:none; }
+    .tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+    .kpi{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin:6px 0 10px;
+    }
+    .kpi .box{
+      min-width:220px;
+      background:#fff;
+      border:1px solid var(--gridLine);
+      border-radius:8px;
+      padding:8px 10px;
+    }
+    .kpi .box .t{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--ink2);
+      font-weight:900;
+      margin-bottom:2px;
+    }
+    .kpi .box .v{
+      font-size:16px;
+      font-weight:900;
+      color:#2b3b4f;
+    }
+	
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+    /* Responsive */
+    @media (max-width:1020px){
+      body{padding:10px}
+      .main{padding:10px}
+      .checkwrap{padding:0 24px}
+      .checkwrap:before,.checkwrap:after{display:none}
+      .brand,.variant{width:auto}
+      summary.btn{font-size:18px}
+      .pill{font-size:11px}
+      .grid2, .grid3{ grid-template-columns:1fr; }
+      .kpi .box{ min-width:unset; width:100%; }
+    }
+	
+		/* =========================================================
+		   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+		   + summary.btn qui wrap proprement
+		   ========================================================= */
+		@media (max-width: 520px){
+
+		  /* ----- Header layout ----- */
+		  .header-top{
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		  }
+
+		  /* OPS reste en haut à gauche */
+		  .brand{
+			width:100%;
+			justify-content:flex-start;
+		  }
+
+		  /* Titre centré (ligne du milieu) */
+		  .logo{
+			width:100%;
+			padding:0;
+			display:flex;
+			justify-content:center;
+		  }
+
+		  /* cache la colonne droite */
+		  .variant{ display:none; }
+
+		  /* ----- Titre + barres rouges conservées ----- */
+		  .checkwrap{
+			padding: 0 38px;           /* laisse la place aux barres */
+			max-width: 100%;
+		  }
+
+		  .checkwrap:before,
+		  .checkwrap:after{
+			display:block !important;  /* on force l’affichage */
+			width: clamp(18px, 7vw, 34px);
+			height: 3px;
+		  }
+
+		  /* Le titre peut passer sur 2 lignes */
+		  .checkmate{
+			font-size: 22px;
+			max-width: 88vw;
+			white-space: normal;       /* autorise le wrap */
+			line-height: 1.15;
+			padding: 8px 14px;
+			text-align:center;
+		  }
+
+		  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+		  summary.btn{
+			white-space: normal;
+			flex-wrap: wrap;
+			row-gap: 6px;
+			font-size: 16px;
+			padding: 10px 10px;
+		  }
+
+		  /* le texte principal prend la largeur pour éviter le serrage */
+		  summary.btn > :first-child{
+			flex: 1 1 100%;
+		  }
+
+		  /* chevron toujours à droite */
+		  .chev{
+			margin-left:auto;
+		  }
+		}
+	/* ===== Fix badges Étape X sur mobile ===== */
+	@media (max-width: 520px) {
+	  .row-label{
+		text-align: center;   /* optionnel mais plus propre */
+	  }
+
+	  .row-label .badge{
+		white-space: normal;         /* clé */
+		display: inline-block;
+		max-width: 100%;
+		line-height: 1.25;
+		text-align: center;
+		word-break: break-word;
+	  }
+	}
+
+
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains">
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Weight & Balance</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="variant">
+          
+          <small></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="subtitle">
+      </div>
+
+      <!-- ===== SECTION 1 : Mots clés / théorie ===== -->
+      <details class="section" open>
+        <summary class="btn">
+          <span>Théorie : les 4 notions indispensables</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Pourquoi on fait ça</span></div>
+            <div class="callout">
+              Le <strong>Weight &amp; Balance</strong> sert à vérifier deux choses :
+              <ul class="list">
+                <li><strong>Masse</strong> : ton avion ne dépasse pas les limites (ex : MTOW, MLW).</li>
+                <li><strong>Centrage</strong> : ton <strong>CG</strong> (center of gravity) reste dans l’<strong>enveloppe</strong> autorisée pour la catégorie choisie (Normal / Utility).</li>
+              </ul>
+              Même si l’avion “vole” dans le simulateur, hors limites = <strong>NO GO</strong> en aviation réelle (risques : instabilité, perfs dégradées, décrochage plus dangereux).
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Définitions (POH)</span></div>
+            <div class="callout">
+              <ul class="list">
+                <li><strong>Datum</strong> : plan de référence (vertical) depuis lequel toutes les distances sont mesurées.</li>
+                <li><strong>Arm (bras)</strong> : distance horizontale entre le datum et le point où agit une masse (sièges, bagages, fuel…).</li>
+                <li><strong>Moment</strong> : “effet de levier” d’une masse :
+                  <pre>Moment = Poids × Bras</pre>
+                </li>
+                <li><strong>CG</strong> : position du centre de gravité total (moyenne pondérée par les moments) :
+                  <pre>CG = (Somme des moments) / (Somme des poids)</pre>
+                </li>
+              </ul>
+              <div class="note">
+                Ces termes et leur usage sont ceux que tu retrouves dans ton POH (terminologie et sections Weight &amp; Balance). 
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ===== SECTION 2 : Procédure universelle ===== -->
+      <details class="section" open>
+        <summary class="btn">
+          <span>Méthode universelle : Weight &amp; Balance à partir du POH/AFM</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 1 — Limites “légales”</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> un avion peut être <em>trop lourd</em> et/ou <em>mal centré</em>. Les limites viennent du POH/AFM.
+              <hr>
+              <strong>À relever dans le POH :</strong>
+              <ul class="list">
+                <li><strong>MTOW</strong> (Max Takeoff Weight)</li>
+                <li><strong>MLW</strong> (Max Landing Weight) si différent</li>
+                <li><strong>Limites bagages</strong> (zones + max total)</li>
+                <li><strong>CG limits / CG envelope</strong> (souvent une enveloppe graphique + parfois des valeurs chiffrées)</li>
+                <li><strong>Catégories</strong> : Normal / Utility (et leurs limites associées)</li>
+              </ul>
+              <div class="note">
+                Pour le C172P, ton POH contient ces limitations (poids max, catégories et enveloppes CG). 
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 2 — Stations / Arms</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> deux chargements de même poids peuvent avoir un CG différent selon <em>où</em> tu places la masse.
+              <hr>
+              <strong>À relever dans le POH :</strong> la table des <strong>stations</strong> (bras) :
+              <ul class="list">
+                <li>Sièges avant</li>
+                <li>Sièges arrière</li>
+                <li>Bagages (zones)</li>
+                <li>Carburant (Fuel)</li>
+                <li>Options éventuelles (équipements, réservoirs spécifiques, etc.)</li>
+              </ul>
+              <div class="note">
+                Sur un C172P typique, tu retrouveras des bras “standard” (avant, arrière, bagages, fuel) dans la section W&amp;B du POH.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 3 — Avion à vide (Empty Weight)</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> l’avion vide a déjà un poids et un CG (donc un moment). C’est la base de ton calcul.
+              <hr>
+              <strong>Tu as besoin d’un de ces formats (selon POH/fiche de pesée) :</strong>
+              <ul class="list">
+                <li><strong>Empty Weight + Empty Moment</strong> (ou “Basic Empty Weight &amp; Moment”)</li>
+                <li><strong>Empty Weight + Empty CG</strong></li>
+                <li>Une <strong>fiche de pesée</strong> spécifique à l’avion (le plus réaliste)</li>
+              </ul>
+              <div class="note">
+                En simulateur, prends idéalement l’info “empty” du menu W&amp;B de l’avion du sim (ou sa fiche). La méthode reste identique.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 4 — Construire le tableau de chargement</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> chaque poste = un couple <em>(poids, bras)</em> → donc un <em>moment</em>.
+              <hr>
+              <strong>Tu fais une ligne par poste :</strong>
+              <ul class="list">
+                <li>Avion à vide</li>
+                <li>Pilote / passagers (avant / arrière)</li>
+                <li>Bagages (par zone)</li>
+                <li>Fuel au départ</li>
+                <li>(Optionnel) autres masses (équipements, cargo…)</li>
+              </ul>
+              <div class="note">
+                Le tableau est “universel” : il marche sur un DR400, PA28, C172, TBM, etc., tant que tu as les bras dans le POH/AFM.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 5 — Unités &amp; conversions</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> il faut des unités cohérentes (sinon CG faux).
+              <hr>
+              <strong>Conversions usuelles :</strong>
+              <ul class="list">
+                <li><strong>1 kg = 2.2046 lb</strong></li>
+                <li><strong>AVGAS ≈ 6 lb / US gal</strong> (approximation standard)</li>
+              </ul>
+              <div class="note">
+                Dans ton POH C172P (long range tanks), tu as bien une capacité “usable” totale de <strong>50 gallons</strong> (25 par réservoir utilisables). 
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 6 — Calculer les moments</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> le moment représente l’effet de levier d’une masse autour du datum.
+              <pre>Moment = Poids × Bras</pre>
+              <div class="note">
+                Tu fais ce calcul pour <em>chaque ligne</em> de ton tableau.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 7 — Calculer le CG</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> le CG est une moyenne pondérée par les moments.
+              <pre>CG = (Somme des moments) / (Somme des poids)</pre>
+              <strong>À la fin, tu as :</strong>
+              <ul class="list">
+                <li><strong>Poids total</strong> = somme des poids</li>
+                <li><strong>Moment total</strong> = somme des moments</li>
+                <li><strong>CG</strong> = moment total / poids total</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Étape 8 — Faire décollage &amp; atterrissage</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> le CG peut changer en vol (principalement à cause du fuel brûlé). Donc on vérifie au minimum :
+              <ul class="list">
+                <li><strong>CG Takeoff</strong> (fuel départ)</li>
+                <li><strong>CG Landing</strong> (fuel restant prévu)</li>
+              </ul>
+              <div class="note">
+                Si tu changes de passagers/bagages en cours de route (stop), tu refais le calcul pour la nouvelle config.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ===== SECTION 3 : Vérifier l'enveloppe (Normal/Utility) ===== -->
+      <details class="section" open>
+        <summary class="btn">
+          <span>Vérifier l’enveloppe CG : Normal vs Utility (méthode graphique + numérique)</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Théorie : Normal vs Utility</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> les catégories de certification définissent <em>ce que l’avion est autorisé à faire</em> et <em>dans quelles limites de poids/centrage</em>.
+              <hr>
+              <div class="grid2">
+                <div class="callout" style="margin:0;">
+                  <strong>Catégorie NORMAL</strong>
+                  <ul class="list">
+                    <li>Vols “normaux” (croisière, nav, tours de piste).</li>
+                    <li>Virages ≤ 60°.</li>
+                    <li><strong>Masse max plus élevée</strong>.</li>
+                    <li><strong>Enveloppe CG plus large</strong>.</li>
+                  </ul>
+                  <div class="note">C’est la catégorie utilisée dans la grande majorité des vols (et dans ton scénario).</div>
+                </div>
+
+                <div class="callout" style="margin:0;">
+                  <strong>Catégorie UTILITY</strong>
+                  <ul class="list">
+                    <li>Manœuvres plus exigeantes (selon POH/AFM).</li>
+                    <li><strong>Masse max réduite</strong>.</li>
+                    <li><strong>CG plus contraint</strong>.</li>
+                  </ul>
+                  <div class="note">Souvent : 2 personnes max, peu de fuel, peu/pas de bagages (selon avion et POH).</div>
+                </div>
+              </div>
+              <div class="note">
+                Le POH précise toujours les enveloppes/limites propres à chaque catégorie.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Méthode STANDARD : vérification graphique</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> l’enveloppe CG est une zone “autorisée” sur un graphique (poids vs CG). Si ton point est dedans → OK, sinon → NO GO.
+              <hr>
+              <strong>Ce qu’il te faut :</strong>
+              <ul class="list">
+                <li>Ton <strong>poids total</strong> (lbs)</li>
+                <li>Ton <strong>CG calculé</strong> (inches)</li>
+                <li>Le <strong>graphique d’enveloppe CG</strong> du POH (Normal ou Utility selon ton choix)</li>
+              </ul>
+
+              <strong>Étapes (pas à pas) :</strong>
+              <ol class="list">
+                <li><strong>Choisir la bonne enveloppe</strong> (Normal ou Utility) — ne jamais mélanger.</li>
+                <li>Lire les axes :
+                  <ul class="list">
+                    <li>Axe X = <strong>CG</strong> (inches)</li>
+                    <li>Axe Y = <strong>Poids</strong> (lbs)</li>
+                  </ul>
+                </li>
+                <li>Placer ton point :
+                  <pre>(x = CG, y = Poids)</pre>
+                </li>
+                <li><strong>Décision :</strong>
+                  <ul class="list">
+                    <li>✅ Point <strong>à l’intérieur</strong> → <strong>AUTORISÉ</strong></li>
+                    <li>❌ Point <strong>à l’extérieur</strong> → <strong>NO GO</strong></li>
+                  </ul>
+                </li>
+                <li>Refaire la même chose pour :
+                  <ul class="list">
+                    <li><strong>Takeoff</strong></li>
+                    <li><strong>Landing</strong> (fuel restant)</li>
+                  </ul>
+                </li>
+              </ol>
+
+              <div class="note">
+                Astuce : si le point est “sur la ligne”, c’est généralement considéré limite acceptable ; en pratique on aime garder une petite marge.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Méthode ALTERNATIVE : vérification numérique (sans graphique)</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> certains POH donnent des limites chiffrées (CG min/max) selon le poids. C’est l’équivalent du graphique, présenté en tableau.
+              <hr>
+              <strong>Comment faire :</strong>
+              <ol class="list">
+                <li>Repère dans le POH la table “CG limits” (ou équivalent).</li>
+                <li>Prends la ligne correspondant à ton <strong>poids total</strong> (ou interpoler si nécessaire).</li>
+                <li>Vérifie :
+                  <pre>CG mini ≤ CG calculé ≤ CG maxi</pre>
+                </li>
+                <li>Refais pour <strong>Takeoff</strong> et <strong>Landing</strong>.</li>
+              </ol>
+              <div class="note">
+                Si ton POH n’a pas de table chiffrée, la méthode graphique suffit (et c’est le standard).
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Interprétation en vol (ce que ça change vraiment)</span></div>
+            <div class="callout">
+              <div class="grid2">
+                <div class="callout" style="margin:0;">
+                  <strong>CG AVANT</strong>
+                  <ul class="list">
+                    <li>✔️ Avion plus stable</li>
+                    <li>❌ Rotation plus difficile</li>
+                    <li>❌ Distance de décollage ↑</li>
+                    <li>✔️ Décrochage plus doux</li>
+                  </ul>
+                </div>
+
+                <div class="callout" style="margin:0;">
+                  <strong>CG ARRIÈRE</strong>
+                  <ul class="list">
+                    <li>✔️ Performances parfois ↑</li>
+                    <li>❌ Stabilité ↓</li>
+                    <li>❌ Décrochage plus vif</li>
+                    <li>❌ Récupération plus délicate</li>
+                  </ul>
+                  <div class="note">
+                    En aviation réelle, un CG trop arrière est particulièrement critique (instabilité, comportement au décrochage).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-note">Erreurs fréquentes à éviter</span></div>
+            <div class="callout">
+              <ul class="list">
+                <li>❌ Utiliser l’enveloppe Utility pour un vol Normal (ou l’inverse).</li>
+                <li>❌ Vérifier uniquement le décollage (et oublier l’atterrissage).</li>
+                <li>❌ Confondre CG “avant/arrière” avec une notion “gauche/droite”.</li>
+                <li>❌ Penser que “tant que ça vole dans le simu, c’est bon” — la logique réelle reste : <strong>dans l’enveloppe ou NO GO</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ===== SECTION 4 : Exemple C172 + Little NavMap ===== -->
+      <details class="section" open>
+        <summary class="btn">
+          <span>Exemple : C172 (solo + sac + fuel planning)</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">Entrées (données)</span></div>
+
+            <div class="kpi">
+              <div class="box">
+                <div class="t">Profil</div>
+                <div class="v">Pilote seul + petit sac à dos</div>
+              </div>
+              <div class="box">
+                <div class="t">Distance / Temps</div>
+                <div class="v">48 NM • 0 h 26 min</div>
+              </div>
+              <div class="box">
+                <div class="t">Fuel (Little NavMap)</div>
+                <div class="v">Block 15 gal • Arrivée 10 gal</div>
+              </div>
+            </div>
+
+            <div class="callout">
+              <strong>Théorie :</strong> ton W&amp;B doit être calculé au minimum pour :
+              <ul class="list">
+                <li><strong>Décollage</strong> (fuel départ)</li>
+                <li><strong>Atterrissage</strong> (fuel restant)</li>
+              </ul>
+
+              <hr>
+
+              <strong>Données carburant (extrait cohérent avec ton POH long range tanks) :</strong>
+              <ul class="list">
+                <li>Carburant usable total : <strong>50 gal</strong> (25 gal utilisables par réservoir)</li>
+                <li>Conversion : <strong>AVGAS ≈ 6 lb/gal</strong></li>
+                <li>Fuel décollage : <strong>15 gal</strong> → <strong>91 lb</strong></li>
+                <li>Fuel arrivée : <strong>10 gal</strong> → <strong>61 lb</strong></li>
+              </ul>
+
+              <div class="note">
+                Ton POH précise bien la présence des long range tanks et le usable fuel total. 
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">Charges humaines (exemple réaliste)</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> tu mets les masses réelles (ou estimées réalistes) des occupants et bagages.
+              <ul class="list">
+                <li>Pilote : 80 kg → <strong>176 lb</strong></li>
+                <li>Sac à dos : 5 kg → <strong>11 lb</strong></li>
+              </ul>
+              <div class="note">
+                Tu peux remplacer ces valeurs par tes propres masses. La méthode reste identique.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">Tableau de calcul (structure)</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> tu remplis ce tableau avec les <strong>arms</strong> issus du POH/AFM (stations) et les masses.
+              <hr>
+              <table class="tbl" aria-label="Structure tableau W&B">
+                <thead>
+                  <tr>
+                    <th>Poste</th>
+                    <th>Poids (lb)</th>
+                    <th>Bras / Arm (in)</th>
+                    <th>Moment (lb·in)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Avion à vide</td>
+                    <td>(depuis fiche avion / sim)</td>
+                    <td>(depuis fiche avion / POH)</td>
+                    <td>= Poids × Bras</td>
+                  </tr>
+                  <tr>
+                    <td>Sièges avant (pilote)</td>
+                    <td>176</td>
+                    <td>(POH)</td>
+                    <td>= 176 × Arm</td>
+                  </tr>
+                  <tr>
+                    <td>Bagages (sac)</td>
+                    <td>11</td>
+                    <td>(POH)</td>
+                    <td>= 11 × Arm</td>
+                  </tr>
+                  <tr>
+                    <td>Fuel au décollage</td>
+                    <td>91</td>
+                    <td>(POH)</td>
+                    <td>= 91 × Arm</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="note">
+                Ensuite tu fais les mêmes calculs pour l’atterrissage en remplaçant “Fuel au décollage” par <strong>Fuel à l’arrivée (61 lb)</strong>.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">Formules finales (à appliquer)</span></div>
+            <pre class="atc">Moment = Poids × Bras
+
+Poids total = Σ Poids
+Moment total = Σ Moments
+
+CG = Moment total / Poids total</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">Vérification enveloppe (Takeoff &amp; Landing)</span></div>
+            <div class="callout">
+              <strong>Théorie :</strong> une fois CG et Poids calculés, tu dois confirmer que tes points sont dans l’enveloppe de la <strong>catégorie choisie</strong>.
+              <hr>
+              <strong>Procédure graphique :</strong>
+              <ol class="list">
+                <li>Choisir <strong>Normal</strong> ou <strong>Utility</strong> selon ton vol (généralement Normal).</li>
+                <li>Placer un point :
+                  <pre>(x = CG, y = Poids)</pre>
+                </li>
+                <li>Vérifier “inside envelope” = ✅ GO, sinon ❌ NO GO.</li>
+                <li>Refaire pour l’atterrissage (fuel restant).</li>
+              </ol>
+              <div class="note">
+                Pour un vol “normal” (navigation standard), tu utilises l’enveloppe <strong>Normal Category</strong>. L’enveloppe Utility est plus restrictive.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ===== SECTION 5 : Checklist finale ===== -->
+      <details class="section" open>
+        <summary class="btn">
+          <span>Checklist finale</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="row">
+            <div class="callout">
+              <ol class="list">
+                <li>Ouvre le POH → note <strong>MTOW/MLW + limites bagages + enveloppe CG</strong> (Normal/Utility).</li>
+                <li>Note les <strong>arms/stations</strong> de chaque poste.</li>
+                <li>Récupère <strong>empty weight + empty moment/CG</strong> (fiche avion / sim).</li>
+                <li>Liste tes charges (pilotes, pax, bagages, fuel).</li>
+                <li>Convertis tout en <strong>lb</strong> (kg→lb ; gal→lb).</li>
+                <li>Calcule chaque <strong>moment = poids × bras</strong>.</li>
+                <li>Somme : <strong>poids total</strong> et <strong>moment total</strong>.</li>
+                <li>Calcule <strong>CG = moment total / poids total</strong>.</li>
+                <li>Recalcule pour <strong>l’atterrissage</strong> (fuel restant prévu).</li>
+                <li>Place les points (CG, poids) dans l’enveloppe → <strong>OK / NO GO</strong> + interprétation (avant/arrière).</li>
+              </ol>
+
+              <hr>
+
+              <strong>Rappel important :</strong>
+              <ul class="list">
+                <li>Tu ne mélanges jamais Normal et Utility.</li>
+                <li>Tu vérifies toujours <strong>décollage</strong> ET <strong>atterrissage</strong>.</li>
+                <li>Si un paramètre change (fuel, pax, bagages) → tu refais le W&amp;B.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+    </div>
+  </div>
+  
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+
+		  // Si au moins 1 est ouvert -> on ferme tout
+		  // Si tous sont fermés -> on ouvre tout
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		// Bonus accessibilité : Entrée / Espace déclenche aussi
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+  
+</body>
+</html>

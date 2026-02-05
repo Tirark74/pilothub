@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WEATHER &amp; NOTAM</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+	/* =========================================================
+	   ✅ UNIVERSAL CHECKMATE THEME (SUPerset)
+	   Compatible avec tes 6 pages (1→6)
+	   ========================================================= */
+
+	/* -------------------------
+	   0) Variables (thème)
+	   ------------------------- */
+	:root{
+	  /* Palette */
+	  --outerBlue:#2a69b0;
+	  --deepBlue:#1f5f9e;
+	  --ink:#1b1f24;
+	  --ink2:#3e4a57;
+	  --paper:#fbfbfb;
+	  --panel:#f1f2f3;
+	  --gridLine:#b9c2cc;
+	  --shadow: rgba(0,0,0,.12);
+
+	  /* Boutons jaunes */
+	  --btnTop:#f4edb7;
+	  --btnMid:#e5d675;
+	  --btnBot:#d6c55a;
+	  --btnEdge:#4d5863;
+	  --btnText:#1f5f9e;
+
+	  /* Bande olive (vspeeds) */
+	  --oliveBandTop:#f2eaa9;
+	  --oliveBandBot:#e5d772;
+
+	  /* Statuts */
+	  --red:#b42318;
+	  --green:#1e6f36;
+	  --orange:#b96a00;
+
+	  /* Typo / lisibilité */
+	  --baseFont: 18px;
+	  --baseLine: 1.22;
+
+	  /* Tooltips */
+	  --tipBg:#0f172a;
+	  --tipText:#ffffff;
+	  --tipShadow: rgba(0,0,0,.35);
+
+	  /* Code blocks */
+	  --codeBg:#ffffff;
+	  --codeBorder:#b9c2cc;
+
+	  /* Badges */
+	  --you:#1e6f36;
+	  --atc:#b96a00;
+	  --note:#b42318;
+
+	  /* Callouts */
+	  --calloutBg:#ffffff;
+	  --calloutBorder:#b9c2cc;
+
+	  /* PERF2 alignment (pages perf) */
+	  --perfHdrH: 30px;
+	  --perfRowH3: 26px;
+	  --perfRowH2: 26px;
+
+	  /* Largeurs “fixes” header (optionnel) */
+	  --hdrSideW: 260px;
+	}
+
+	/* Densité (si tu veux reproduire la page #4 très compacte) */
+	.density-compact{
+	  --baseFont: 11.5px;
+	  --baseLine: 1.22;
+	}
+
+	/* -------------------------
+	   1) Reset / Base
+	   ------------------------- */
+	*{ box-sizing:border-box; }
+
+	body{
+	  margin:0;
+	  background:#e9eef5;
+	  font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+	  color:var(--ink);
+
+	  display:flex;
+	  justify-content:center;
+
+	  padding:18px;
+	  font-size:var(--baseFont);
+	  line-height:var(--baseLine);
+	}
+
+	/* Liens */
+	a{
+	  color:var(--deepBlue);
+	  text-decoration:none;
+	  font-weight:900;
+	}
+	a:hover{ text-decoration:underline; }
+
+	/* Utilitaires texte */
+	.note{ font-size:14px; color:var(--ink2); line-height:1.25; }
+	.mono{ font-family:"Arial Narrow", Arial, Helvetica, sans-serif; }
+	.green{ color:var(--green); font-weight:900; }
+	.red{ color:var(--red); font-weight:900; }
+	.blue{ color:var(--deepBlue); font-weight:900; }
+
+	.divider{
+	  height:1px;
+	  background:rgba(0,0,0,.18);
+	  margin:8px 0;
+	}
+
+	hr{
+	  border:none;
+	  border-top:1px solid rgba(0,0,0,.15);
+	  margin:10px 0;
+	}
+
+	/* -------------------------
+	   2) Card + sheen
+	   ------------------------- */
+	.card{
+	  width:min(1080px, 100%);
+	  background:var(--paper);
+	  border:6px solid var(--outerBlue);
+	  border-radius:6px;
+	  box-shadow:0 8px 22px var(--shadow);
+	  overflow:hidden;
+	  position:relative;
+	}
+
+	/* sheen léger */
+	.card::after{
+	  content:"";
+	  position:absolute;
+	  inset:0;
+	  pointer-events:none;
+	  background:
+		radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+		linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+	  z-index:1;
+	}
+
+	/* -------------------------
+	   3) Header (brand / logo / variant)
+	   ------------------------- */
+	.header{
+	  position:relative;
+	  z-index:4;
+	  padding:10px 14px 8px;
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	}
+
+	.header-top{
+	  display:flex;
+	  align-items:flex-end;
+	  justify-content:space-between;
+	  gap:10px;
+	}
+
+	.brand{
+	  width:var(--hdrSideW);
+	  display:flex;
+	  align-items:flex-end;
+	  gap:10px;
+	}
+
+	.cessna{
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:40px;
+	  color:var(--deepBlue);
+	  line-height:1;
+	  letter-spacing:.2px;
+	  white-space:nowrap;
+	}
+
+	.airplains{
+	  font-size:8px;
+	  color:var(--ink2);
+	  line-height:1.1;
+	  margin-bottom:3px;
+	}
+
+	.logo{
+	  flex:1;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  padding:0 6px;
+	}
+
+	.checkwrap{
+	  position:relative;
+	  display:inline-block;
+	  padding:0 72px;
+	}
+
+	.checkwrap:before,
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+	.checkwrap:before{ left:0; }
+	.checkwrap:after{
+	  right:0;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	}
+
+	.checkmate{
+	  display:inline-block;
+	  background:#fff;
+	  border:2px solid #6b7785;
+	  border-radius:10px;
+	  padding:4px 16px 6px;
+	  font-weight:900;
+	  font-size:34px;
+	  color:#2b3b4f;
+	  line-height:1;
+	  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+	  white-space:nowrap;
+	  text-align:center;
+	}
+
+	/* Variante à droite */
+	.variant{
+	  width:var(--hdrSideW);
+	  text-align:right;
+	  color:var(--deepBlue);
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:22px;
+	  line-height:1.05;
+	  white-space:nowrap;
+	}
+	.variant small{
+	  display:block;
+	  font-style:normal;
+	  font-weight:700;
+	  font-size:10px;
+	  color:var(--ink2);
+	  margin-top:3px;
+	  white-space:normal;
+	}
+
+	/* Checkmate link hover (présent dans 2/3/4/5/6) */
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+	/* -------------------------
+	   4) Main + subtitle
+	   ------------------------- */
+	.main{
+	  position:relative;
+	  z-index:2;
+	  background:var(--panel);
+	  padding:10px 10px 12px;
+	}
+
+	.subtitle{
+	  text-align:center;
+	  color:var(--ink2);
+	  margin:6px 0 12px;
+	  font-size:15px;
+	}
+
+	/* -------------------------
+	   5) Boutons / titres jaunes
+	   ------------------------- */
+	.nav-btn{
+	  display:block;
+	  margin:0 0 14px;
+	  padding:12px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:8px;
+	  font-weight:900;
+	  font-style:italic;
+	  color:var(--btnText);
+	  text-transform:uppercase;
+	  font-size:20px;
+	  text-decoration:none;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.15);
+	  transition:transform 120ms ease, box-shadow 120ms ease;
+	}
+	.nav-btn:hover{
+	  transform:translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	.nav-desc{
+	  display:block;
+	  margin-top:4px;
+	  font-style:normal;
+	  font-size:14px;
+	  text-transform:none;
+	  color:#2b3b4f;
+	  opacity:.85;
+	}
+
+	.btn{
+	  margin:-4px -4px 7px;
+	  padding:6px 6px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:7px;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.12);
+	  color:var(--btnText);
+	  font-weight:900;
+	  font-style:italic;
+	  letter-spacing:.35px;
+	  text-transform:uppercase;
+	  white-space:nowrap;
+	  font-size:19px;
+	}
+	.btn.btn--sm{ font-size:12px; }
+	.btn.btn--xs{ font-size:11px; }
+
+	/* Accordéon (summary) */
+	summary.btn{
+	  list-style:none;
+	  cursor:pointer;
+	  user-select:none;
+
+	  margin:0;
+	  padding:8px 10px;
+
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  gap:10px;
+	}
+	summary.btn::-webkit-details-marker{ display:none; }
+
+	.pill{
+	  display:inline-block;
+	  padding:1px 8px;
+	  border-radius:999px;
+	  font-size:12px;
+	  font-weight:900;
+	  letter-spacing:.35px;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  color:#20324a;
+	  text-transform:none;
+	  font-style:normal;
+	  white-space:nowrap;
+	}
+
+	.chev{
+	  margin-left:auto;
+	  font-weight:900;
+	  color:#2b3b4f;
+	  opacity:.85;
+	  transition: transform 180ms ease;
+	  font-style:normal;
+	}
+	details.section[open] .chev{ transform: rotate(90deg); }
+
+	.section-body{
+	  margin-top:8px;
+	  background:transparent;
+	  padding:0 2px 4px;
+	}
+	details.section .section-body{
+	  overflow:hidden;
+	  max-height:0;
+	  opacity:0;
+	  transform: translateY(-6px);
+	  transition:
+		max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 260ms ease,
+		transform 260ms ease;
+	}
+	details.section[open] .section-body{
+	  max-height: 8000px;
+	  opacity:1;
+	  transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce){
+	  .nav-btn,
+	  .checkmate-link .checkmate,
+	  .chev,
+	  details.section .section-body{
+		transition:none !important;
+	  }
+	}
+
+	/* -------------------------
+	   6) Sections
+	   ------------------------- */
+	.section{
+	  break-inside: avoid;
+	  -webkit-column-break-inside: avoid;
+	  page-break-inside: avoid;
+
+	  background:transparent;
+	  border:none;
+	  border-radius:0;
+	  padding:6px 8px;
+	  margin:0 0 10px;
+	  display:block;
+	}
+	.section:last-child{ margin-bottom:0; }
+	details.section{ margin:0 0 12px; padding:0; }
+
+	/* -------------------------
+	   7) Grilles
+	   ------------------------- */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0;
+
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	  align-items:start;
+	}
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+	.grid.grid--1{ grid-template-columns:1fr; }
+	.grid.grid--1::before{ display:none; }
+
+	/* -------------------------
+	   8) Lists
+	   ------------------------- */
+	ul{ list-style:none; padding-left:0; margin:0; }
+	li{ margin:2px 0; }
+
+	.dash li::before{
+	  content:"– ";
+	  color:#2b3b4f;
+	  font-weight:900;
+	}
+	.sub{ margin-top:4px; padding-left:12px; }
+	.sub li::before{
+	  content:"• ";
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	/* -------------------------
+	   9) Tables / KPI / Callouts
+	   ------------------------- */
+	.grid2{
+	  display:grid;
+	  grid-template-columns:1fr 1fr;
+	  gap:10px;
+	}
+	.grid3{
+	  display:grid;
+	  grid-template-columns:1fr 1fr 1fr;
+	  gap:10px;
+	}
+
+	.tbl{
+	  width:100%;
+	  border-collapse:collapse;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:6px;
+	  overflow:hidden;
+	  font-size:14px;
+	}
+	.tbl th, .tbl td{
+	  border-bottom:1px solid rgba(0,0,0,.12);
+	  border-right:1px solid rgba(0,0,0,.08);
+	  padding:8px 10px;
+	  vertical-align:top;
+	}
+	.tbl th{
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	  color:#2b3b4f;
+	  font-weight:900;
+	  text-transform:uppercase;
+	  letter-spacing:.06em;
+	  font-size:12px;
+	}
+	.tbl tr:last-child td{ border-bottom:none; }
+	.tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+	.kpi{
+	  display:flex;
+	  gap:10px;
+	  flex-wrap:wrap;
+	  justify-content:center;
+	  margin:6px 0 10px;
+	}
+	.kpi .box{
+	  min-width:220px;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:8px;
+	  padding:8px 10px;
+	}
+	.kpi .box .t{
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  color:var(--ink2);
+	  font-weight:900;
+	  margin-bottom:2px;
+	}
+	.kpi .box .v{
+	  font-size:16px;
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	.callout{
+	  background:var(--calloutBg);
+	  border:1px solid var(--calloutBorder);
+	  border-radius:6px;
+	  padding:10px 12px;
+	  margin:6px 0 10px;
+	}
+	.callout strong{ font-weight:900; }
+
+	.h2{
+	  margin:0 0 4px;
+	  font-size:18px;
+	  font-weight:900;
+	  color:var(--deepBlue);
+	  font-style:italic;
+	  letter-spacing:.2px;
+	  text-transform:uppercase;
+	  text-align:center;
+	}
+
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+	/* -------------------------
+	   10) Code blocks
+	   ------------------------- */
+	pre{
+	  margin: 6px 0 10px;
+	  padding: 10px 12px;
+	  background: var(--codeBg);
+	  border-radius: 6px;
+	  border: 1px solid var(--codeBorder);
+	  font-size: 14px;
+	  overflow-x: auto;
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  color: var(--ink);
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	}
+	code{
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	  color: inherit;
+	}
+
+	/* -------------------------
+	   11) Responsive
+	   ------------------------- */
+	@media (max-width:1020px){
+	  body{ padding:10px; }
+	  .main{ padding:10px; }
+
+	  .grid{ grid-template-columns: 1fr; }
+	  .grid::before{ display:none; }
+
+	  .checkwrap{ padding:0 24px; }
+	  .checkwrap:before,.checkwrap:after{ display:none; }
+
+	  .brand,.variant{ width:auto; }
+	  .grid2,.grid3{ grid-template-columns:1fr; }
+	  .kpi .box{ min-width:unset; width:100%; }
+	  summary.btn{ font-size:18px; }
+	  .pill{ font-size:11px; }
+	}
+
+	@media (max-width:800px){
+	  .variant{ display:none; }
+	}
+	
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* cache la colonne droite */
+	  .variant{ display:none; }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;           /* laisse la place aux barres */
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;  /* on force l’affichage */
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;       /* autorise le wrap */
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  /* le texte principal prend la largeur pour éviter le serrage */
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  /* chevron toujours à droite */
+	  .chev{
+		margin-left:auto;
+	  }
+	}
+	@media (max-width: 520px){
+	  .tbl{ display:block; overflow-x:auto; }
+	}
+	
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* cache la colonne droite */
+	  .variant{ display:none; }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;           /* laisse la place aux barres */
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;  /* on force l’affichage */
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;       /* autorise le wrap */
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  /* le texte principal prend la largeur pour éviter le serrage */
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  /* chevron toujours à droite */
+	  .chev{
+		margin-left:auto;
+	  }
+	}
+	/* =========================================================
+	   ANTI-OVERFLOW PATCH (Fuel Planning)
+	   - titres qui wrap
+	   - pre/code qui ne débordent pas
+	   - tables lisibles sur mobile
+	   ========================================================= */
+
+	/* 1) Autorise le wrap partout où ça déborde souvent */
+	.h2,
+	.callout strong,
+	.btn{
+	  white-space: normal;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 2) Les PRE/CODE : pas de débordement + wrap des longues formules */
+	pre, code{
+	  max-width: 100%;
+	}
+	pre{
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  overflow-wrap: anywhere;
+	}
+
+	/* 3) Tables : elles sont la cause #1.
+		  -> desktop: normal
+		  -> mobile: scroll horizontal propre (pas de casse du layout) */
+	.tbl{
+	  width:100%;
+	  max-width:100%;
+	}
+
+	/* 4) Mobile (gros patch) */
+	@media (max-width: 620px){
+
+	  /* Titres un peu moins gros pour éviter la ligne qui dépasse */
+	  .h2{
+		font-size: 16px;
+		line-height: 1.15;
+	  }
+
+	  /* Callouts : évite que des mots/formules poussent le container */
+	  .callout{
+		max-width: 100%;
+		overflow-wrap: anywhere;
+	  }
+
+	  /* TABLE -> mode "carte" (meilleur que scroll pour ta table 4 colonnes) */
+	  .tbl thead{ display:none; }
+	  .tbl, .tbl tbody, .tbl tr, .tbl td{ display:block; width:100%; }
+	  .tbl tr{
+		border:1px solid rgba(0,0,0,.12);
+		border-radius:8px;
+		background:#fff;
+		margin:10px 0;
+		overflow:hidden;
+	  }
+	  .tbl td{
+		border:none;
+		border-bottom:1px solid rgba(0,0,0,.08);
+		padding:8px 10px;
+	  }
+	  .tbl td:last-child{ border-bottom:none; }
+
+	  /* Labels automatiques pour tes 4 colonnes (dans l’ordre actuel) */
+	  .tbl td:nth-child(1)::before{ content:"Bloc — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(2)::before{ content:"Données — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(3)::before{ content:"Formule — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(4)::before{ content:"Résultat — "; font-weight:900; color:var(--ink2); }
+
+	  /* Empêche les valeurs longues (0.117 × 10.5) de casser le layout */
+	  .tbl td{
+		overflow-wrap:anywhere;
+		word-break:break-word;
+	  }
+	}
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains">
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Weather &amp; NOTAM</div>
+            </a>
+          </div>
+        </div>
+		
+        <div class="variant">
+          
+          <small></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+  <!-- =======================================================
+       1) CHECKLIST “COMPLÈTE” À COLLECTER
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      Checklist à collecter (Départ / Route / Arrivée)
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="grid">
+        <!-- Colonne gauche : Aérodromes -->
+        <div class="section">
+          <div class="h2">A. Pour chaque aérodrome : Départ, Destination, Déroutement(s)</div>
+
+          <div class="callout">
+            <strong>Météo</strong>
+            <ul class="dash">
+              <li><strong>METAR</strong> (actuel) + <strong>SPECI</strong> (spécial : changement significatif)</li>
+              <li><strong>TAF</strong> (tendance) + <strong>TREND</strong> (si présent dans METAR : <strong>NOSIG</strong> / <strong>BECMG</strong> / <strong>TEMPO</strong>)</li>
+              <li><strong>QNH / QFE</strong> (selon pays), température, point de rosée</li>
+              <li><strong>Vent</strong> (moyen + rafales), variations (VRB, variation directionnelle)</li>
+              <li><strong>Visibilité</strong> + <strong>RVR</strong> (si IFR / faible visi)</li>
+              <li><strong>Nuages</strong> : bases, couverture, CB/TCU, plafond (BKN/OVC)</li>
+              <li><strong>Phénomènes</strong> : pluie, neige, brume, brouillard, orage, givrage, etc.</li>
+              <li><strong>Tendance</strong> : BECMG/TEMPO/PROB dans TAF</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Opérations (NOTAM/AD)</strong>
+            <ul class="dash">
+              <li><strong>Pistes</strong> : fermetures, longueur réduite, travaux, contamination (SNOWTAM s’il y en a)</li>
+              <li><strong>Aides radio</strong> : VOR/NDB/ILS/DME hors service</li>
+              <li><strong>Approches / procédures</strong> : RNAV indispo, changement minima, SID/STAR modifiés</li>
+              <li><strong>Taxiways / Apron</strong> : fermetures, limitation</li>
+              <li><strong>Éclairage</strong> : PAPI/VASI, ALS, balisage piste</li>
+              <li><strong>Fréquences ATS</strong> : tours/approches, horaires</li>
+              <li><strong>Carburant</strong> : indisponible / restriction</li>
+              <li><strong>Obstacles</strong> : grue, obstacle temporaire</li>
+              <li><strong>Horaires</strong> : AD fermé, PPR requis</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Colonne droite : En route -->
+        <div class="section">
+          <div class="h2">B. En route (important même en C172)</div>
+
+          <div class="callout">
+            <ul class="dash">
+              <li><strong>Winds aloft</strong> (vent/Temp en altitude)</li>
+              <li><strong>SIGMET</strong> (phénomènes dangereux : orages sévères, turbulence forte, givrage sévère, cendres volcaniques)</li>
+              <li><strong>AIRMET / G-AIRMET</strong> (selon zone : turbulence modérée, givrage modéré, plafonds bas étendus)</li>
+              <li><strong>Cartes TEMSI / Significant weather</strong> (si dispo)</li>
+              <li><strong>Givrage</strong> : niveau 0°C, humidité + nuages</li>
+              <li><strong>Topographie</strong> : effet vent/relief (ondes, rotor)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- =======================================================
+       2) METAR — THÉORIE + DÉCRYPTAGE COMPLET
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      METAR — Théorie & décryptage 
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="callout">
+        <strong>2.1 Ce qu’est un METAR</strong>
+        <ul class="dash">
+          <li>Rapport d’observation (ce qui est mesuré / observé).</li>
+          <li>Fréquence souvent toutes les 30 ou 60 min + SPECI si changement important.</li>
+          <li>Standard ICAO : format très codé.</li>
+          <li><strong>Structure générale (ordre typique)</strong> : Type (METAR/SPECI) → Indicateur station (OACI) → Date/heure UTC (Z) → Vent → Visibilité (et RVR si besoin) → Phénomènes présents (wx) → Nuages → Temp/Dew point → Pression (QNH) → Remarques / tendances (NOSIG, BECMG, TEMPO, RMK…)</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>2.2 Vent (le cœur pour C172)</strong>
+        <div class="grid2">
+          <div>
+            <div class="h2">Exemples de groupes</div>
+            <pre><code>24012KT      = 240° / 12 kt
+24012G22KT   = rafales à 22 kt
+VRB03KT      = direction variable, 3 kt
+180V260      = variation directionnelle observée</code></pre>
+          </div>
+          <div>
+            <div class="h2">Ce que tu en fais (décisions)</div>
+            <ul class="dash">
+              <li><strong>Choix piste</strong> : piste la plus face au vent (composante de face)</li>
+              <li><strong>Limites avion/pilote</strong> : crosswind max (C172 typiquement “démontré” ~15 kt selon version, mais un pilote s’impose souvent une limite plus basse)</li>
+              <li><strong>Turbulence</strong> : rafales + obstacles = turbulence mécanique</li>
+              <li><strong>Performances</strong> : fort vent arrière = décollage/atterrissage dangereux</li>
+              <li><strong>Règle pratique rapide</strong> : si la direction du vent est à ~90° de la piste, c’est quasi 100% de vent de travers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>2.3 Visibilité</strong>
+        <pre><code>9999 = 10 km ou plus
+6000 = 6 km
+0500 = 500 m</code></pre>
+        <div class="divider"></div>
+        <strong>C172 (VFR)</strong>
+        <ul class="dash">
+          <li>Tu compares à tes minima VFR (selon pays et classe d’espace) + ton propre confort.</li>
+          <li>En-dessous d’un certain seuil, même si “légal”, ça peut être stressant et risqué.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>2.4 RVR (Runway Visual Range)</strong>
+        <pre><code>Ex : R26/1200
+Ex : R26/1200V1500 (variable)</code></pre>
+        <ul class="dash">
+          <li>→ surtout IFR / faible visi, mais ça te donne le niveau de dégradation.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>2.5 Phénomènes météo (WX)</strong>
+        <div class="grid2">
+          <div>
+            <div class="h2">Intensité / proximité</div>
+            <ul class="dash">
+              <li>- faible, (rien) modéré, + fort</li>
+              <li>VC = à proximité (5-10 km)</li>
+            </ul>
+
+            <div class="h2">Phénomènes fréquents</div>
+            <ul class="dash">
+              <li>RA pluie, SN neige, DZ bruine</li>
+              <li>BR brume (souvent 1–5 km), FG brouillard (&lt;1000 m)</li>
+              <li>TS orage</li>
+              <li>SH averses (showers)</li>
+              <li>FZRA pluie verglaçante (très critique)</li>
+              <li>GR grêle, GS grésil</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="h2">Ce que tu en fais (C172)</div>
+            <ul class="dash">
+              <li><strong>TS / +TSRA</strong> : éviter (orage = danger majeur VFR/IFR léger)</li>
+              <li><strong>FG</strong> : décollage/atterro VFR souvent impossible</li>
+              <li><strong>FZRA</strong> : no-go en petit avion non équipé (danger extrême)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>2.6 Nuages (SKY) — ultra important</strong>
+        <div class="grid2">
+          <div>
+            <div class="h2">Groupes</div>
+            <pre><code>FEW020 = 1-2/8 à 2000 ft AGL
+SCT030 = 3-4/8 à 3000 ft
+BKN015 = 5-7/8 à 1500 ft (plafond)
+OVC008 = 8/8 à 800 ft (plafond)
+NSC    = pas de nuages significatifs
+CAVOK  = vis ≥10km, pas de nuages < 5000 ft, pas de wx significatif</code></pre>
+            <div class="h2">Ajouts</div>
+            <ul class="dash">
+              <li>CB cumulonimbus (orage probable)</li>
+              <li>TCU towering cumulus (convection forte)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="h2">Ce que tu en fais (C172)</div>
+            <ul class="dash">
+              <li><strong>Plafond</strong> : avec BKN/OVC, tu as un “ceiling” → crucial pour VFR.</li>
+              <li><strong>CB/TCU</strong> : convection, turbulences, grains, orages → éviter, route à adapter.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>2.7 Température / Point de rosée</strong>
+        <pre><code>Ex : 03/M01 = 3°C, -1°C</code></pre>
+        <div class="divider"></div>
+        <ul class="dash">
+          <li>Le point de rosée proche de la temp = air humide → brume/brouillard possible.</li>
+          <li><strong>Red flags</strong></li>
+        </ul>
+        <ul class="sub">
+          <li>Temp proche dewpoint + vent faible → risque de brouillard</li>
+          <li>Temp proche de 0°C + précipitations → givrage</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>2.8 Pression : QNH</strong>
+        <pre><code>Ex : Q1013</code></pre>
+        <ul class="dash">
+          <li>→ réglage altimètre. Important pour altitudes, circuit, et sécurité relief.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>2.9 Tendances dans METAR</strong>
+        <ul class="dash">
+          <li><strong>NOSIG</strong> : pas de changement significatif imminent</li>
+          <li><strong>BECMG</strong> : changement durable attendu</li>
+          <li><strong>TEMPO</strong> : changement temporaire</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <!-- =======================================================
+       3) TAF — THÉORIE + DÉCRYPTAGE COMPLET
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      TAF — Théorie & décryptage 
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="callout">
+        <strong>3.1 Ce qu’est un TAF</strong>
+        <ul class="dash">
+          <li>Prévision aérodrome sur une période (souvent 9, 24 ou 30h selon l’aéroport).</li>
+          <li>Il te dit : base forecast + évolutions (BECMG, TEMPO, PROB).</li>
+        </ul>
+
+        <div class="divider"></div>
+        <strong>Structure</strong>
+        <ul class="dash">
+          <li>TAF + code + heure émission</li>
+          <li>Période de validité DDHH/DDHH</li>
+          <li>Conditions de base</li>
+          <li>Groupes de changement</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>3.2 Les groupes de changement</strong>
+
+        <div class="grid2">
+          <div>
+            <div class="h2">BECMG (becoming)</div>
+            <ul class="dash">
+              <li>Changement progressif sur une fenêtre, puis reste.</li>
+            </ul>
+            <pre><code>Ex : BECMG 1214 30015KT
+→ entre 12 et 14Z, le vent devient 300/15, puis c’est la nouvelle norme.</code></pre>
+
+            <div class="h2">TEMPO</div>
+            <ul class="dash">
+              <li>Changement temporaire (fluctuation), ne dure pas tout le temps.</li>
+            </ul>
+            <pre><code>Ex : TEMPO 1822 4000 SHRA BKN020
+→ entre 18-22Z, parfois ça descend à 4 km, averses, plafond 2000 ft.</code></pre>
+          </div>
+
+          <div>
+            <div class="h2">PROB30 / PROB40</div>
+            <ul class="dash">
+              <li>Probabilité (souvent combinée avec TEMPO)</li>
+            </ul>
+            <pre><code>Ex : PROB30 TEMPO 1822 TSRA
+→ 30% de chance d’orages temporaires dans cette fenêtre.</code></pre>
+
+            <div class="h2">FM (from)</div>
+            <ul class="dash">
+              <li>Changement net à une heure donnée.</li>
+            </ul>
+            <pre><code>Ex : FM1800 22018G28KT
+→ à partir de 18Z, c’est le nouveau régime.</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>3.3 Comment l’utiliser</strong>
+        <ul class="dash">
+          <li>Tu prends : <strong>Ton ETD</strong> (heure départ) et <strong>ton ETA</strong> (heure arrivée)</li>
+          <li>Tu regardes ce qui couvre ton <strong>ETA</strong> à destination</li>
+          <li>Tu repères les fenêtres où ça passe sous tes minima → tu planifies :</li>
+        </ul>
+        <ul class="sub">
+          <li>décaler le départ</li>
+          <li>changer destination</li>
+          <li>ajouter déroutement + carburant</li>
+          <li>choisir une route évitant convection / relief</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <!-- =======================================================
+       4) NOTAM — THÉORIE + DÉCRYPTAGE COMPLET
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      NOTAM — Théorie & décryptage
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="callout">
+        <strong>4.1 Ce qu’est un NOTAM</strong>
+        <ul class="dash">
+          <li>“Notice to Air Missions” (ou “Airmen” historiquement)</li>
+          <li>→ Message court, standardisé, qui annonce une info temporaire ou critique non encore dans les publications permanentes.</li>
+          <li>But : te dire ce qui peut impacter la sécurité ou la légalité : pistes, aides, espace aérien, obstacles, procédures, etc.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>4.2 Catégories pratiques (celles qui t’intéressent)</strong>
+        <div class="grid2">
+          <div>
+            <div class="h2">Aérodrome (AD)</div>
+            <ul class="dash">
+              <li>RWY fermée/réduite</li>
+              <li>TWY fermée</li>
+              <li>Balisage HS</li>
+              <li>PAPI/VASI HS</li>
+              <li>Carburant indispo</li>
+              <li>Horaires / PPR</li>
+            </ul>
+
+            <div class="h2">Navigation / procédures (NAV)</div>
+            <ul class="dash">
+              <li>ILS/VOR/NDB/DME hors service</li>
+              <li>RNAV/GNSS indispo</li>
+              <li>PROC modifiées</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="h2">Espace aérien (AIRSPACE)</div>
+            <ul class="dash">
+              <li>Zones dangereuses/temporaires actives</li>
+              <li>Restrictions (TFR)</li>
+              <li>Activité militaire</li>
+              <li>Vols interdits à certaines altitudes</li>
+            </ul>
+
+            <div class="h2">Obstacles / Divers</div>
+            <ul class="dash">
+              <li><strong>OBST</strong> : Grue, mât, obstacle temporaire</li>
+              <li><strong>COM / ATS</strong> : Fréquences changées, services ATS limités</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>4.3 Structure d’un NOTAM (comment les lire vraiment)</strong>
+        <ul class="dash">
+          <li>Identifiant : ex <strong>A1234/26</strong></li>
+          <li><strong>Q-line</strong> : énorme résumé codé (zone, type, altitude, coords, rayon)</li>
+          <li><strong>A)</strong> : lieu (aérodrome / FIR)</li>
+          <li><strong>B)</strong> : début validité (date/heure UTC)</li>
+          <li><strong>C)</strong> : fin validité (ou PERM)</li>
+          <li><strong>D)</strong> : horaires si applicable</li>
+          <li><strong>E)</strong> : texte clair (le plus important)</li>
+          <li><strong>F)/G)</strong> : limites verticales si espace aérien</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>4.4 Les NOTAM “pièges” à connaître</strong>
+
+        <div class="grid2">
+          <div>
+            <div class="h2">1) RWY CLSD / RWY shortened</div>
+            <ul class="dash">
+              <li>Décollage impossible, ou performance modifiée.</li>
+              <li>Sur C172 : longueur mini + pente + vent + température.</li>
+            </ul>
+
+            <div class="h2">2) Aides d’approche HS</div>
+            <ul class="dash">
+              <li>En VFR : PAPI HS = approche moins stable la nuit / mauvaise pente</li>
+              <li>En IFR : ILS HS = approche de précision indisponible → minima plus hauts</li>
+            </ul>
+
+            <div class="h2">3) Restrictions d’espace aérien</div>
+            <ul class="dash">
+              <li>Peut rendre ta route illégale.</li>
+              <li>Peut t’obliger à contourner → carburant.</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="h2">4) Lighting inop (nuit)</div>
+            <ul class="dash">
+              <li>En C172, vol de nuit avec balisage partiel = gros risque.</li>
+            </ul>
+
+            <div class="h2">5) Divers</div>
+            <ul class="dash">
+              <li>Tout ce qui dégrade la stabilité / marge / options au sol.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- =======================================================
+       5) MÉTHODE PILOTE : TRANSFORMER DONNÉES → DÉCISIONS
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      Méthode : données → décisions
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="callout">
+        <strong>5.1 La “chaîne” de décision (universelle)</strong>
+        <ul class="dash">
+          <li><strong>Légalité</strong> (VFR/IFR, minima, espaces aériens, NOTAM)</li>
+          <li><strong>Sécurité</strong> (orages, givrage, turbulence, crosswind)</li>
+          <li><strong>Performance</strong> (densité altitude, distance TO/LDG)</li>
+          <li><strong>Plan B</strong> (déroutement(s), carburant, stratégie)</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>5.2 Pour un C172 : paramètres clés</strong>
+        <ul class="dash">
+          <li><strong>Vent de travers</strong> : fixe ta limite perso (ex : 12 kt au début)</li>
+          <li><strong>Plafond/visibilité VFR</strong> : fixe tes minima perso (ex : ceiling ≥ 2500 ft, vis ≥ 8 km)</li>
+          <li><strong>Convection</strong> : évite TS/CB/TCU sur la route</li>
+          <li><strong>Temp/dewpoint</strong> : attention brume + brouillard</li>
+          <li><strong>Pression/temp</strong> : densité altitude = perfs</li>
+          <li><strong>Piste</strong> : herbe mouillée / contamination / NOTAM → distance augmente</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <!-- =======================================================
+       6) EXEMPLE COMPLET (C172) — BRIEFING RÉALISTE
+       ======================================================= -->
+  <details class="section" open>
+    <summary class="btn">
+      Exemple Cessna 172 — Briefing
+      <span class="chev">›</span>
+    </summary>
+
+    <div class="section-body">
+      <div class="callout">
+        <strong>Scénario</strong>
+        <ul class="dash">
+          <li>Avion : <strong>Cessna 172</strong> (VFR)</li>
+          <li>Vol : <strong>LFXX</strong> (départ) → <strong>LFYY</strong> (destination) (vol générique)</li>
+          <li>ETD : <strong>16:30Z</strong></li>
+          <li>Route : <strong>1h20</strong></li>
+          <li>Objectif : <strong>décision réaliste + plan B</strong></li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>6.1 METAR Départ</strong>
+        <pre><code>METAR LFXX 041600Z 22014G22KT 7000 -RA BKN020 12/10 Q1006 TEMPO 4000 RA</code></pre>
+
+        <div class="h2">Lecture</div>
+        <ul class="dash">
+          <li>Vent 220° 14 kt raf 22 → rafales fortes</li>
+          <li>Vis 7 km + pluie faible</li>
+          <li>Plafond BKN020 = 2000 ft (ceiling)</li>
+          <li>QNH 1006 (bas)</li>
+          <li>TEMPO : parfois 4 km pluie</li>
+        </ul>
+
+        <div class="h2">Décisions C172</div>
+        <ul class="dash">
+          <li>Crosswind : dépend de la piste. Si piste proche 22 → OK, si piste 27 → crosswind notable.</li>
+          <li>Minima perso VFR : plafond 2000 ft + pluie + rafales → dégradé.</li>
+          <li>Go/No-go provisoire : possible si route simple + alternates proches, sinon prudence.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>6.2 TAF Destination (valable sur ton ETA)</strong>
+        <pre><code>TAF LFYY 041100Z 0412/0512
+18008KT 9999 SCT030
+TEMPO 0417/0421 3000 SHRA BKN015
+PROB30 TEMPO 0418/0420 TSRA</code></pre>
+
+        <div class="h2">Lecture</div>
+        <ul class="dash">
+          <li>Base : bon (vis OK, nuages 3000 ft)</li>
+          <li>Entre 17-21Z : averses, vis 3 km, plafond 1500 ft</li>
+          <li>PROB30 orages 18-20Z</li>
+        </ul>
+
+        <div class="h2">Décisions C172</div>
+        <ul class="dash">
+          <li>Ton ETA est ~17:50Z → pile dans TEMPO + possible TS.</li>
+          <li>VFR avec plafond 1500 ft + vis 3 km = très limite (et désagréable)</li>
+          <li>TSRA même à 30% = gros warning</li>
+        </ul>
+
+        <div class="divider"></div>
+        <strong>Conclusion pilote réaliste</strong>
+        <ul class="dash">
+          <li>Option A : décaler départ pour arriver après 21Z</li>
+          <li>Option B : choisir une destination alternative “meteo stable”</li>
+          <li>Option C : partir mais avec déroutement très sérieux + décision en route</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>6.3 NOTAM Destination</strong>
+        <pre><code>RWY 18/36 CLSD
+PAPI RWY 22 U/S</code></pre>
+
+        <div class="h2">Impact</div>
+        <ul class="dash">
+          <li>Piste 18/36 fermée → moins de choix vent</li>
+          <li>PAPI RWY22 HS → approche visuelle moins aidée (surtout si mauvaise météo / fin de journée)</li>
+        </ul>
+
+        <div class="h2">Décision</div>
+        <ul class="dash">
+          <li>Avec météo déjà borderline : ça rajoute du risque.</li>
+          <li>Un pilote prudent en C172 va : renforcer le plan B OU décider no-go / report</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>6.4 Plan final “comportement pilote”</strong>
+        <ul class="dash">
+          <li>Décision : départ décalé (ou no-go) car TAF prévoit plafond 1500 ft + risque TS à l’arrivée sur mon ETA.</li>
+          <li>Minima perso : ceiling ≥ 2500 ft et pas de TS dans la fenêtre ETA.</li>
+          <li>Alternate : terrain ZZ avec TAF stable, pistes dispo, pas de NOTAM bloquant.</li>
+        </ul>
+
+        <div class="divider"></div>
+        <strong>Stratégie en route</strong>
+        <ul class="dash">
+          <li>Si à mi-route, METAR/ATIS destination dégrade sous minima → déroutement immédiat</li>
+          <li>Si CB/TS repérés visuellement → détour large / abandon</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+</div><!-- /main -->
+  </div><!-- /card -->
+
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+
+		  // Si au moins 1 est ouvert -> on ferme tout
+		  // Si tous sont fermés -> on ouvre tout
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		// Bonus accessibilité : Entrée / Espace déclenche aussi
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+</body>
+</html>
