@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NAVIGATION &amp; PROCEDURES</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      /* Palette proche du support imprimé */
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+
+      --gridLine:#b9c2cc;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --oliveBandTop:#f2eaa9;
+      --oliveBandBot:#e5d772;
+
+      --red:#b42318;
+      --green:#1e6f36;
+      --orange:#b96a00;
+
+      --shadow: rgba(0,0,0,.12);
+
+      /* Tooltips */
+      --tipBg:#0f172a;
+      --tipText:#ffffff;
+      --tipShadow: rgba(0,0,0,.35);
+
+      /* Lisibilité */
+      --baseFont: 18px;
+      --baseLine: 1.22;
+
+      /* PERF2 alignment (non utilisé ici mais gardé pour cohérence) */
+      --perfHdrH: 30px;
+      --perfRowH3: 26px;
+      --perfRowH2: 26px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+      font-size:var(--baseFont);
+      line-height:var(--baseLine);
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    /* léger “sheen” plastifié */
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    /* ===== HEADER ===== */
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+	.checkwrap:before{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  left:0;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  right:0;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+    }
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:8px 6px 10px;
+    }
+
+    /* =====================================================
+       ✅ GRID : 2 colonnes équilibrées (PLUS DE CASE VIDE)
+       ===================================================== */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0; /* tu gères déjà l’espacement via margin/padding */
+
+	  /* Bordures comme ton support */
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	}
+
+	/* trait vertical central */
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+	.grid{
+	  align-items:start; /* chaque cellule prend la hauteur de son contenu */
+	}
+	.section{
+	  margin:0 0 10px; /* tu gardes */
+	}
+
+
+    /* Blocs : éviter qu'une section soit coupée entre colonnes */
+    .section{
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+
+      background:transparent;
+      border:none;
+      border-radius:0;
+      padding:6px 8px;   /* un peu d’air + éloigne du trait central */
+      margin:0 0 10px;
+      display:block;
+    }
+    .section:last-child{margin-bottom:0}
+
+    /* Yellow headers */
+    .btn{
+      margin:-4px -4px 7px;
+      padding:6px 6px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:19px;
+      white-space:nowrap;
+    }
+
+    /* Text utilities */
+    .note{font-size:14px; color:var(--ink2); line-height:1.25}
+    .green{color:var(--green); font-weight:900}
+    .red{color:var(--red); font-weight:900}
+    .blue{color:var(--deepBlue); font-weight:900}
+    .mono{font-family:"Arial Narrow", Arial, Helvetica, sans-serif;}
+    .pill{
+      display:inline-block;
+      padding:1px 6px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.35px;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.45);
+      color:#20324a;
+      text-transform:uppercase;
+      vertical-align:1px;
+    }
+    .pill.ok{color:#0f5132; border-color:rgba(30,111,54,.35)}
+    .pill.warn{color:#7a4a00; border-color:rgba(185,106,0,.35)}
+    .pill.bad{color:#7a1a13; border-color:rgba(180,35,24,.35)}
+
+    /* Lists */
+    ul{
+      list-style:none;
+      padding-left:0;
+      margin:0;
+    }
+    li{margin:2px 0}
+    .dash li::before{
+      content:"– ";
+      color:#2b3b4f;
+      font-weight:900;
+    }
+    .sub{
+      margin-top:4px;
+      padding-left:12px;
+    }
+    .sub li::before{content:"• "; font-weight:900; color:#2b3b4f;}
+
+    /* Small “field” look */
+    .field{
+      display:inline-block;
+      padding:0 5px;
+      border:1px solid rgba(0,0,0,.18);
+      background:#fff;
+      border-radius:3px;
+      font-weight:900;
+      color:#2b3b4f;
+    }
+
+    /* Notes blocks */
+    .blue-note{
+      border:1px solid #7ea2cf;
+      background:#f2f8ff;
+      padding:6px 8px;
+      border-radius:3px;
+      font-size:10px;
+      line-height:1.2;
+      color:#2b4f7f;
+    }
+    .blue-note .star{color:var(--red); font-weight:900; margin-right:4px;}
+    .yellow-note{
+      margin-top:6px;
+      border:1px solid #d6b100;
+      background:#fff6c7;
+      padding:6px 8px;
+      border-radius:3px;
+      font-size:12px;
+      line-height:1.2;
+      color:#b06b00;
+      font-style:italic;
+      font-weight:800;
+    }
+
+    /* ===== Tooltips ===== */
+    .item{
+      position:relative;
+      cursor:help;
+      text-decoration:none;
+      outline:none;
+    }
+    .item:focus-visible{
+      box-shadow:0 0 0 2px rgba(31,95,158,.25);
+      border-radius:3px;
+    }
+    .item::after{
+      content:attr(data-tip);
+      position:absolute;
+      left:0;
+      top:100%;
+      margin-top:6px;
+      min-width:240px;
+      max-width:380px;
+      background:var(--tipBg);
+      color:var(--tipText);
+      padding:8px 10px;
+      border-radius:10px;
+      box-shadow:0 12px 30px var(--tipShadow);
+      font-size:11px;
+      line-height:1.25;
+      opacity:0;
+      transform:translateY(-4px);
+      pointer-events:none;
+      transition:opacity .12s ease, transform .12s ease;
+      z-index:50;
+      white-space:normal;
+    }
+    .item::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      top:100%;
+      margin-top:2px;
+      border:7px solid transparent;
+      opacity:0;
+      transform:translateY(-4px);
+      transition:opacity .12s ease, transform .12s ease;
+      pointer-events:none;
+      z-index:51;
+    }
+    .item:hover::after,.item:hover::before,
+    .item:focus-visible::after,.item:focus-visible::before{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* “TOC” links */
+    .toc a{
+      display:block;
+      text-decoration:none;
+      color:var(--ink);
+      padding:2px 0;
+    }
+    .toc a:hover{color:var(--deepBlue); text-decoration:underline;}
+    .divider{
+      height:1px;
+      background:rgba(0,0,0,.18);
+      margin:8px 0;
+    }
+	
+		/* Image pédagogique dans une section */
+	.img-zone{
+	  margin-top:12px;
+	  padding-top:8px;
+	  text-align:center;
+	}
+
+	.img-zone img{
+	  max-width:95%;
+	  height:auto;
+	}
+
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}		
+	
+
+    /* ===== Responsive ===== */
+	@media (max-width:1020px){
+	  body{padding:10px}
+	  .main{padding:10px}
+
+	  .grid{
+		grid-template-columns: 1fr;
+	  }
+	  .grid::before{
+		display:none;
+	  }
+
+	  .checkwrap{padding:0 24px}
+	  .checkwrap:before,.checkwrap:after{display:none}
+	  .brand,.variant{width:auto}
+	  .item::after{max-width:320px}
+	}
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  .chev{
+		margin-left:auto;
+	  }
+
+	  /* 2) Titres jaunes : mobile uniquement */
+	  .btn{
+		white-space: normal;
+		line-height: 1.15;
+		font-size: 17px;
+		padding: 10px 8px;
+	  }
+
+	  /* 3) Sécuriser les longs textes / listes */
+	  .section,
+	  .dash,
+	  .sub,
+	  li{
+		overflow-wrap: anywhere;
+		word-break: break-word;
+	  }
+
+	  /* 4) Tooltips : éviter qu’ils sortent de l’écran */
+	  .item::after{
+		min-width: 0;
+		width: min(320px, 92vw);
+		max-width: 92vw;
+	  }
+	}
+
+
+
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna">VFR</div>
+          <div class="airplains">
+            <div>Visual</div>
+		    <div>Flight</div>
+            <div>Rules</div>
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">Navigation &amp; Procedures</div>
+			</a>
+          </div>
+        </div>
+
+        <div class="variant">
+           
+          <small> </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="grid">
+
+        <!-- 1 -->
+        <div class="section" id="objectif">
+          <div class="btn">1) Pré-vol</div>
+		  <ul class="dash">
+            <li>A. Préparation de vol & Checklist </li>
+          </ul>
+          <ul class="sub">
+            <li>Préparation</li>
+            <li>Checklist</li>
+          </ul>
+		  	  <div class="divider"></div>
+          <ul class="dash">
+            <li>B. Radios / infos&nbsp;</li>
+          </ul>
+          <ul class="sub">
+            <li><strong>ATIS</strong> (si dispo) → QNH, piste en service, vent.</li>
+            <li><strong>Ground</strong> (ou CTAF si non contrôlé) → taxi.</li>
+            <li><strong>Tower</strong> → décollage.</li>
+          </ul>
+		  	  <div class="divider"></div>
+		          <ul class="dash">
+            <li>C. Instruments&nbsp; &nbsp; &nbsp;&nbsp;</li>
+          </ul>
+          <ul class="sub">
+            <li><strong>Compas magnétique</strong> (au pare-brise) → Sert à vérifier / recaler. Pas à piloter au cap (trop d’erreurs/oscillations).</li>
+            <li><strong>Heading Indicator </strong>/ DG (rose “VACUUM”)&nbsp;→ C’est l'instrument principal pour tenir un cap.</li>
+            <li><strong>GPS</strong> → Cross-check seulement (TRK). A utiliser pour confirmer la route.</li>
+			<li><strong>Altimètre</strong> → calé au QNH, cross-check terrain connu.</li>
+			
+			
+          </ul>
+		  	  <div class="divider"></div>
+			          <ul class="dash">
+            <li>D. Calage DG</li>
+          </ul>
+          <ul class="sub">
+            <li>S'aligner sur l’axe de piste.</li>
+            <li>Régler le DG sur le cap magnétique publié de la piste (ex : si RWY 35 = 352°M → DG = 352).</li>
+          </ul>
+        </div>
+
+        <!-- 2 -->
+	<div class="section" id="apres-rotation">
+	  <div class="btn">2) Décollage &amp; sortie du circuit</div>
+
+	  <ul class="dash">
+		<li>A. Après rotation : priorités</li>
+	  </ul>
+	  <ul class="sub">
+		<li><b>Axe</b> → vitesse → montée → scan trafic</li>
+		<li>
+		  Pas de gros virage immédiat “plein cap destination”
+		</li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>B. Quand prendre le cap navigation&nbsp;?</li>
+	  </ul>
+
+	  <div class="note" style="margin-bottom:4px;">
+		<b>Règle simple :</b>
+	  </div>
+
+	  <ul class="sub">
+		<li>Monter d’abord vers l’altitude du traffic pattern (~1000 ft AGL)</li>
+		<li>Quitter le circuit proprement</li>
+		<li>
+		  <b>Ensuite seulement :</b> cap navigation
+		</li>
+	  </ul>
+
+	  <div class="note" style="margin-top:4px;">
+		<b>Repère pratique :</b><br>
+		Souvent ~2 à 3 minutes après décollage (selon avion / taux de montée / vent)<br>
+		et quand le terrain est clairement derrière
+	  </div>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>C. Sortie du circuit : straight-out ou 45°</li>
+	  </ul>
+
+	  <ul class="sub">
+		<li>
+		  <b>Straight-out</b> : continuer dans l’axe, cap navigation pris plus tard
+		</li>
+		<li>
+		  <b>Sortie 45°</b> : très “école US”, toujours côté <b>crosswind</b>
+		</li>
+	  </ul>
+
+	  <div class="note" style="margin-top:4px;">
+		<b>Règle d’or :</b> on sort toujours à l’opposé du <b>downwind</b><br>
+		Left traffic → sortie à droite<br>
+		Right traffic → sortie à gauche
+	  </div>
+	</div>
+
+
+	<!-- 3 -->
+	<div class="section" id="altitudes-vfr">
+	  <div class="btn">3) Altitudes VFR</div>
+
+	  <ul class="dash">
+		<li>Règle des altitudes VFR</li>
+	  </ul>
+
+	  <ul class="sub">
+		<li>
+		  La règle <b>“pair / impair + 500”</b> est obligatoire
+		  <b>au-dessus de 3000 ft AGL</b>
+		  &nbsp;&nbsp;Cap 000°–179°	→ Impair + 500 ft &nbsp;&&nbsp;
+		  Cap 180°–359°	→ Pair + 500 ft
+		</li>
+
+		<li>
+		  En dessous : choix d’une altitude <b>pratique</b>
+		  (trafic / espace aérien / confort)
+		</li>
+	  </ul>
+
+	  <div style="margin:4px 0;">
+		Pour un trajet court et “dense” : <b>2500 ft</b> est très réaliste
+	  </div>
+	  	<div class="note" style="margin-top:4px;">
+		<b>Pourquoi +500 ft en VFR ?</b><br>
+		IFR : niveaux “ronds” (4000, 6000, 8000…)<br>
+		VFR : niveaux décalés de +500 ft<br>
+		→ Cela crée une séparation verticale naturelle entre VFR et IFR
+	  </div>
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>À l’arrivée</li>
+	  </ul>
+
+	  <ul class="sub">
+		<li>
+		  Viser l’altitude du circuit ~<b>1000 ft AGL</b>
+		</li>
+	  </ul>
+
+	</div>
+
+
+        <!-- 4 -->
+	<div class="section" id="little-navmap-degres">
+	  <div class="btn">4) Navigation</div>
+
+	  <ul class="dash">
+		<li><b>°T (True course)</b> : nord géographique</li>
+	  </ul>
+	  <ul class="sub">
+		<li>Utilisé pour les <b>cartes</b> et la <b>planification</b></li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li><b>°M (Magnetic course)</b> : nord magnétique</li>
+	  </ul>
+	  <ul class="sub">
+		<li>Ce que tu <b>pilotes réellement</b> (DG / compas)</li>
+	  </ul>
+
+	  <div style="margin-top:6px;">
+		Si le plan donne des <b>courses en °M</b> :
+		<b>parfait</b> → pilotage directement en magnétique
+	  </div>
+	
+	
+	  <div class="divider"></div>
+
+	  <ul class="sub">
+	  	<li><b>DG (Directional Gyro)</b> = indique le cap magnétique au nivveau du nez de l’avion</li>
+		<li><b>HDG (Heading)</b> = où pointe le nez de l’avion</li>
+		<li><b>TRK (Track)</b> = où tu vas réellement <b>au sol</b></li>
+		<li>
+		  Avec du vent :
+		  <b>HDG ≠ TRK</b> → le <b>crabe</b> est normal
+		</li>
+	  </ul>
+	</div>
+	  
+	<!-- 5 -->
+	<div class="section" id="correction-vent-sans-gps">
+	  <div class="btn">5) Correction de vent  (AVEC / SANS GPS)</div>
+
+	  <ul class="dash">
+		<li>Instruments utilisés</li>
+	  </ul>
+	  <ul class="sub">
+		<li><b>DG</b> pour tenir le cap</li>
+		<li><b>Carte + repères visuels</b></li>
+		<li><b>Chrono</b></li>
+		<li>(Altimètre + IAS + trim pour rester stable)</li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>Procédure standard</li>
+	  </ul>
+	  <ul class="sub">
+		<li>
+		  Stabiliser : <b>2500 ft</b>, vitesse de croisière, trim OK
+		</li>
+		<li>
+		  Choisir un <b>repère lointain</b> aligné sur la route
+		  (idéalement 5–10 NM devant)
+		</li>
+		<li>
+		  Tenir le cap <b>1 à 2 minutes</b> sans toucher
+		</li>
+		<li>
+		  Observer le repère :
+		  <ul class="sub">
+			<li>
+			  Repère qui glisse à <b>droite</b> → dérive à <b>gauche</b>
+			  → ajouter <b>2–3° à droite</b>
+			</li>
+			<li>
+			  Repère qui glisse à <b>gauche</b> → dérive à <b>droite</b>
+			  → ajouter <b>2–3° à gauche</b>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  Attendre encore <b>1–2 minutes</b>, ré-évaluer,
+		  ré-ajuster par <b>petits pas</b>
+		</li>
+	  </ul>
+
+	  <div style="margin-top:4px;">
+		Quand le repère reste <b>fixe</b> : correction correcte
+	  </div>
+	  <div style="margin-top:2px;">
+		Crabe <b>stable</b> accepté : c’est exactement ce qu’on veut
+	  </div>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>Méthode “double-angle”</li>
+	  </ul>
+	  <ul class="sub">
+		<li>
+		  Si tu dois tourner de <b>X°</b> pour revenir sur la route,
+		</li>
+		<li>
+		  alors tu gardes environ <b>2X°</b> comme correction de maintien
+		</li>
+	  </ul>
+	  
+	  	  <div class="divider"></div>
+		  
+	  <ul class="dash">
+		<li>Méthode avec GPS</li>
+	  </ul>
+
+	  <ul class="sub">
+		<li>
+		  Le GPS est utilisé <b>uniquement en vérification</b>
+		</li>
+		<li>
+		  Route prévue (course) : par ex. <b>004°M</b>
+		</li>
+		<li>
+		  Le GPS affiche : <b>TRK</b>
+		</li>
+		<li>
+		  Ajuster le <b>HDG</b> pour ramener le <b>TRK</b> vers la course
+		</li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>Règle de correction cockpit</li>
+	  </ul>
+
+	  <ul class="sub">
+		<li>
+		  Erreur <b>5–10°</b> → changer le heading de <b>2–3°</b>
+		</li>
+		<li>
+		  Erreur <b>~15°</b> → changer le heading de <b>5°</b>
+		</li>
+		<li>
+		  Attendre <b>30–60 s</b> entre chaque correction
+		  (sinon <b>zigzag</b>)
+		</li>
+	  </ul>
+	  <div class="note" style="margin-top:4px;">
+		 GPS = aide à la décision
+	  </div>
+	</div>		  
+		  
+	<!-- 6 -->
+	<div class="section" id="arrivee-ktiw">
+	  <div class="btn">6) Approche</div>
+
+	  <ul class="dash">
+		<li>A. 10–15 NM avant</li>
+	  </ul>
+	  <ul class="sub">
+		<li><b>ATIS</b></li>
+		<li>Contact : <b>“inbound full stop”</b></li>
+		<li>
+		  Descente planifiée pour arriver à <b>1000 ft AGL</b>
+		</li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>B. Intégration pattern</li>
+	  </ul>
+	  <ul class="sub">
+		<li><b>Exemple : KTIW RWY 35</b> : <b>RIGHT traffic</b></li>
+		<li>Downwind à <b>droite</b> de la piste</li>
+		<li>Base à <b>droite</b>, etc.</li>
+		<li>
+		  Intégration standard : entrée <b>45°</b> sur la downwind du bon côté
+		  (<b>côté droit</b> pour RWY 35)
+		</li>
+	  </ul>
+
+	  <div class="divider"></div>
+
+	  <ul class="dash">
+		<li>C. Atterrissage &amp; taxi</li>
+	  </ul>
+	  <ul class="sub">
+		<li>Finale, atterrissage</li>
+		<li>Sortie de piste</li>
+		<li>Contact <b>Ground</b> (si contrôlé)</li>
+	  </ul>
+	  <div class="img-zone">
+		<img src="pattern-vfr.png" alt="Schéma pattern VFR">
+	  </div>
+	</div>
+  </div>
+</body>
+</html>

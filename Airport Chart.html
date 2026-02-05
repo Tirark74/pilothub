@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Airport Diagrams — Explained</title>
+
+  <style>
+    /* =========================
+       THEME (reprend ton style)
+       ========================= */
+    :root{
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+      --gridLine:#b9c2cc;
+      --shadow: rgba(0,0,0,.12);
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --calloutBg:#ffffff;
+      --calloutBorder:#b9c2cc;
+
+      --baseFont: 18px;
+      --baseLine: 1.22;
+      --hdrSideW: 260px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+      font-size:var(--baseFont);
+      line-height:var(--baseLine);
+    }
+
+    a{ color:var(--deepBlue); text-decoration:none; font-weight:900; }
+    a:hover{ text-decoration:underline; }
+
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:var(--hdrSideW);
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      user-select:none;
+      cursor:pointer;
+    }
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before,
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:before{ left:0; }
+    .checkwrap:after{
+      right:0;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+      text-align:center;
+    }
+    .variant{
+      width:var(--hdrSideW);
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:10px 10px 12px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:var(--ink2);
+      margin:6px 0 12px;
+      font-size:15px;
+    }
+
+    .btn{
+      margin:-4px -4px 7px;
+      padding:6px 6px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:19px;
+      white-space:nowrap;
+    }
+
+    summary.btn{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+      margin:0;
+      padding:8px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      white-space:normal;
+    }
+    summary.btn::-webkit-details-marker{ display:none; }
+    .chev{
+      margin-left:auto;
+      font-weight:900;
+      color:#2b3b4f;
+      opacity:.85;
+      transition: transform 180ms ease;
+      font-style:normal;
+    }
+    details.section[open] .chev{ transform: rotate(90deg); }
+
+    .section-body{
+      margin-top:8px;
+      padding:0 2px 4px;
+    }
+    details.section .section-body{
+      overflow:hidden;
+      max-height:0;
+      opacity:0;
+      transform: translateY(-6px);
+      transition:
+        max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 260ms ease,
+        transform 260ms ease;
+    }
+    details.section[open] .section-body{
+      max-height: 8000px;
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    .section{
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      background:transparent;
+      border:none;
+      padding:6px 8px;
+      margin:0 0 10px;
+      display:block;
+    }
+    details.section{ margin:0 0 12px; padding:0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:0;
+      border-top: 1.5px solid #111111;
+      border-bottom: 1.5px solid #111111;
+      border-left: 1.5px solid #111111;
+      border-right: 1px solid #8a8f98;
+      position:relative;
+      align-items:start;
+    }
+    .grid::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      left:50%;
+      width:1px;
+      background:#111111;
+      pointer-events:none;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    ul{ list-style:none; padding-left:0; margin:0; }
+    li{ margin:2px 0; }
+    .dash li::before{
+      content:"– ";
+      color:#2b3b4f;
+      font-weight:900;
+    }
+    .sub{ margin-top:4px; padding-left:12px; }
+    .sub li::before{
+      content:"• ";
+      font-weight:900;
+      color:#2b3b4f;
+    }
+
+    .callout{
+      background:var(--calloutBg);
+      border:1px solid var(--calloutBorder);
+      border-radius:6px;
+      padding:10px 12px;
+      margin:6px 0 10px;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+    .callout strong{ font-weight:900; }
+
+    .h2{
+      margin:0 0 4px;
+      font-size:18px;
+      font-weight:900;
+      color:var(--deepBlue);
+      font-style:italic;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+      text-align:center;
+      white-space:normal;
+    }
+
+    .divider{
+      height:1px;
+      background:rgba(0,0,0,.18);
+      margin:8px 0;
+    }
+
+    figure{
+      margin:8px 0 10px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:8px;
+      overflow:hidden;
+    }
+    figure .ph{
+      aspect-ratio: 16 / 9;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--ink2);
+      font-weight:900;
+      letter-spacing:.04em;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    figcaption{
+      padding:8px 10px;
+      font-size:13px;
+      color:var(--ink2);
+      border-top:1px solid rgba(0,0,0,.08);
+    }
+
+    .toc{
+      background:#fff;
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:8px;
+      padding:10px 12px;
+      margin:0 0 12px;
+    }
+    .toc .title{
+      font-weight:900;
+      color:#2b3b4f;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-size:12px;
+      margin-bottom:6px;
+      text-align:center;
+    }
+    .toc a{
+      display:block;
+      padding:4px 0;
+    }
+
+    @media (max-width:1020px){
+      body{ padding:10px; }
+      .main{ padding:10px; }
+      .grid{ grid-template-columns: 1fr; }
+      .grid::before{ display:none; }
+      .checkwrap{ padding:0 24px; }
+      .checkwrap:before,.checkwrap:after{ display:none; }
+      .brand,.variant{ width:auto; }
+      .grid2{ grid-template-columns:1fr; }
+      summary.btn{ font-size:18px; }
+    }
+    @media (max-width:800px){
+      .variant{ display:none; }
+    }
+    @media (max-width:520px){
+      .header-top{ flex-direction: column; align-items: center; gap: 10px; }
+      .brand{ width:100%; justify-content:flex-start; }
+      .logo{ width:100%; padding:0; justify-content:center; }
+      .variant{ display:none; }
+      .checkwrap{ padding: 0 38px; max-width: 100%; }
+      .checkwrap:before, .checkwrap:after{
+        display:block !important;
+        width: clamp(18px, 7vw, 34px);
+        height: 3px;
+      }
+      .checkmate{
+        font-size: 22px;
+        max-width: 88vw;
+        white-space: normal;
+        line-height: 1.15;
+        padding: 8px 14px;
+      }
+      summary.btn{ flex-wrap: wrap; row-gap: 6px; font-size: 16px; padding: 10px 10px; }
+      summary.btn > :first-child{ flex: 1 1 100%; }
+      .chev{ margin-left:auto; }
+    }
+	
+	figure img{
+	  width:100%;
+	  height:auto;
+	  display:block;
+	}
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">Airport Chart</div>
+			</a>
+          </div>
+        </div>
+
+        <div class="variant">
+        </div>
+      </div>
+    </div>
+
+    <div class="main" id="top">
+
+      <!-- 1) ELEMENTS -->
+      <details class="section" open id="elements">
+        <summary class="btn">
+          1) Éléments d’un Airport Diagram
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>Pourquoi c’est utile ?</strong>
+            <ul class="dash">
+              <li>Pour se repérer au sol et rejoindre une piste, un parking, une rampe ou un point d’attente sans improviser.</li>
+              <li>Pour “pré-visualiser” une clairance de roulage et réduire la charge de travail (surtout sur un terrain inconnu).</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Les blocs qu’on retrouve presque toujours</strong>
+            <ul class="dash">
+              <li>Données en marge (dates, type de carte, nom/identifiants, période d’effectivité).</li>
+              <li>Liste de fréquences.</li>
+              <li>Réseau des taxiways (zones de mouvement).</li>
+              <li>Pistes + informations associées (dimensions, caps, pentes, seuils déplacés, etc.).</li>
+              <li>Informations diverses (balise, tour, élévation, variation magnétique, grille lat/long).</li>
+              <li>Hot spots (zones à risque d’incursion/conflit).</li>
+            </ul>
+          </div>
+			<figure>
+			  <img
+				src="img/example-airport-diagram-full.jpg"
+				alt="Diagramme d’aérodrome – vue générale avec pistes, taxiways et zones de mouvement"
+			  >
+			  <figcaption>
+				Exemple de diagramme d’aérodrome : pistes, taxiways, zones de mouvement et informations principales.
+			  </figcaption>
+			</figure>
+
+        </div>
+      </details>
+
+      <!-- 2) MARGINS -->
+      <details class="section" open id="margins">
+        <summary class="btn">
+          2) Données de marge (Margin Data)
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>À quoi servent les marges ?</strong>
+            <ul class="dash">
+              <li>À vérifier que tu as la bonne carte, à jour, pour le bon aérodrome.</li>
+              <li>À fournir des infos “métadonnées” qui cadrent la fiabilité (révision, effectivité, type).</li>
+            </ul>
+          </div>
+
+          <div class="grid">
+            <div class="section">
+              <div class="h2">Date de dernière révision</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Souvent donnée sous forme “année + jour julien”.</li>
+                  <li>Lecture : <em>YYDDD</em> (YY = année, DDD = jour dans l’année).</li>
+                  <li>Utilité : savoir si la carte a été amendée récemment. :contentReference[oaicite:2]{index=2}</li>
+                </ul>
+              </div>
+
+              <div class="h2">Type de carte</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Le libellé “Airport Diagram” t’évite de confondre avec une autre planche (approche, SID/STAR, etc.). :contentReference[oaicite:3]{index=3}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">Nom &amp; identifiant</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Nom complet du terrain + identifiants (selon publication : ICAO/IATA/FAA).</li>
+                  <li>Objectif : confirmer sans ambiguïté que tu es sur le bon aérodrome. :contentReference[oaicite:4]{index=4}</li>
+                </ul>
+              </div>
+
+              <div class="h2">Période d’effectivité</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Indique la plage de dates où la carte est considérée “courante”.</li>
+                  <li>Au-delà, elle est à traiter comme expirée → ne pas l’utiliser pour la nav sol. :contentReference[oaicite:5]{index=5}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- 3) FREQUENCIES -->
+      <details class="section" open id="freq">
+        <summary class="btn">
+          3) Liste de fréquences (Frequency List)
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>Où la trouver ?</strong>
+            <ul class="dash">
+              <li>Généralement en haut à gauche du diagramme.</li>
+              <li>Tu y retrouves ATIS/AWOS, Ground, Tower, Approach/Departure, etc. :contentReference[oaicite:7]{index=7}</li>
+            </ul>
+            <div class="divider"></div>
+            <strong>Comment l’utiliser</strong>
+            <ul class="dash">
+              <li>Préparer tes fréquences avant le taxi (réduit la “tête dans le cockpit”).</li>
+              <li>Repérer les services disponibles et leurs horaires le cas échéant.</li>
+            </ul>
+          </div>
+
+			<figure>
+			  <img src="img/frequency-list-highlight.jpg"
+				   alt="Liste des fréquences de l’aérodrome sur le diagramme">
+			</figure>
+        </div>
+      </details>
+
+      <!-- 4) TAXIWAYS -->
+      <details class="section" open id="taxiways">
+        <summary class="btn">
+          4) Taxiways (zones de mouvement)
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>Ce que tu dois savoir</strong>
+            <ul class="dash">
+              <li>Les zones de mouvement (taxiways/aprons) sont souvent représentées en gris : là où tu peux rencontrer d’autres aéronefs/vehicules.</li>
+              <li>Les taxiways sont identifiés par lettres/chiffres : utile pour lire/relire une clairance (“via A, B2, hold short…”). :contentReference[oaicite:9]{index=9}</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Technique “brief taxi”</strong>
+            <ul class="dash">
+              <li>Trace mentalement ton chemin : parking → taxiway → point d’arrêt → piste.</li>
+              <li>Annonce-toi une règle simple : “je ne roule jamais sans savoir où est le prochain point de décision (intersection / stop-bar / hold short).”</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- 5) RUNWAYS -->
+      <details class="section" open id="runways">
+        <summary class="btn">
+          5) Runways — infos à lire sur le diagramme
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>Ce que le diagramme te donne autour d’une piste</strong>
+            <div class="grid2">
+              <div class="callout" style="margin:0;">
+                <div class="h2">Caractéristiques</div>
+                <ul class="dash">
+                  <li>Longueur/largeur.</li>
+                  <li>Cap magnétique détaillé (au dixième dans certains cas).</li>
+                  <li>Élévation des seuils (indiquée aux extrémités).</li>
+                  <li>Indications de pente (ex : upslope/downslope) si publiées. :contentReference[oaicite:10]{index=10}</li>
+                </ul>
+              </div>
+
+              <div class="callout" style="margin:0;">
+                <div class="h2">Particularités</div>
+                <ul class="dash">
+                  <li>Seuil déplacé : portion utilisable au décollage, pas forcément à l’atterrissage → impact perf.</li>
+                  <li>LAHSO : opération “land and hold short” possible (accept/refuse selon conditions).</li>
+                  <li>EMAS : zone d’arrêt en bout (si installée) et marquée sur certains terrains. :contentReference[oaicite:11]{index=11}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Exemple d’usage (anticipation)</strong>
+            <ul class="dash">
+              <li>Selon le vent, tu peux deviner la piste probable et déjà prévoir un trajet type depuis ta rampe.</li>
+              <li>But : être moins “task saturated” quand la clairance arrive, et faire un readback plus propre. :contentReference[oaicite:12]{index=12}</li>
+            </ul>
+          </div>
+
+			<figure>
+			  <img src="img/runway-info-highlight.jpg">
+			</figure>
+        </div>
+      </details>
+
+      <!-- 6) MISC -->
+      <details class="section" open id="misc">
+        <summary class="btn">
+          6) Informations diverses (Beacon, Tower, Field Elev, Mag Var, Lat/Long)
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="grid">
+            <div class="section">
+              <div class="h2">Airport Beacon</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Symbolisé sur le diagramme : aide au repérage (nuit / météo dégradée).</li>
+                  <li>Te permet d’estimer l’orientation des pistes par rapport à la balise. :contentReference[oaicite:14]{index=14}</li>
+                </ul>
+              </div>
+
+              <div class="h2">Tower</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Position de la tour et hauteur indiquée (utile obstacle-awareness).</li>
+                  <li>Important si panne radio : tu peux avoir des signaux lumineux (light gun). :contentReference[oaicite:15]{index=15}</li>
+                </ul>
+              </div>
+
+              <div class="h2">Field Elevation</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Élévation du terrain (MSL) : aide pour réglages altimétriques et conscience perf.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">Variation magnétique</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Indique la variation locale + tendance (changement annuel).</li>
+                  <li>Explique pourquoi les numéros de piste peuvent évoluer avec le temps. :contentReference[oaicite:16]{index=16}</li>
+                </ul>
+              </div>
+
+              <div class="h2">Latitude / Longitude</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Grille lat/long : repère géographique, cohérence avec la position GNSS.</li>
+                  <li>Peut aider à vérifier un positionnement si doute (surtout avec applications). :contentReference[oaicite:17]{index=17}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+			<figure>
+			  <img src="img/Airport-Diagram-Magnetic-Variation-and-Change-667x1024.jpg">
+			</figure>
+        </div>
+      </details>
+
+      <!-- 7) HOTSPOTS -->
+      <details class="section" open id="hotspots">
+        <summary class="btn">
+          7) Hot Spots — zones à risque
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>Définition</strong>
+            <ul class="dash">
+              <li>Un “hot spot” est un endroit du terrain historiquement (ou potentiellement) propice aux incursions piste / conflits sol.</li>
+              <li>Il est identifié sur le diagramme (souvent cercle brun + label HS1, HS2…). :contentReference[oaicite:19]{index=19}</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Comment s’en servir</strong>
+            <ul class="dash">
+              <li>Avant le taxi : repère les HS sur ta route probable.</li>
+              <li>Pendant le taxi : ralentis, “stop & verify” aux intersections complexes.</li>
+              <li>Lis la description détaillée dans la documentation associée (chart supplement) si disponible. :contentReference[oaicite:20]{index=20}</li>
+            </ul>
+          </div>
+
+			<figure>
+			  <img src="img/Airport-Diagram-Hot-Spots-667x1024.jpg">
+			</figure>
+        </div>
+      </details>
+
+      <!-- 8) CONCLUSION -->
+      <details class="section" open id="conclusion">
+        <summary class="btn">
+          8) Conclusion — réflexes “pilote”
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="callout">
+            <strong>À retenir</strong>
+            <ul class="dash">
+              <li>Vérifie toujours : bon terrain + bonne édition + période d’effectivité.</li>
+              <li>Prépare les fréquences et briefe ton taxi (chemin + points de décision).</li>
+              <li>Lis les infos piste (dimensions, seuil déplacé, LAHSO/EMAS si présents).</li>
+              <li>Sois particulièrement vigilant sur les hot spots.</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Si tu es perdu</strong>
+            <ul class="dash">
+              <li>Annonce-le : demander du “progressive taxi” est normal et améliore la sécurité.</li>
+              <li>Priorité : arrêter l’avion, comprendre, puis repartir.</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <strong>Source</strong>
+            <ul>
+              <li>
+				<a class="nav-btn" href="https://pilotinstitute.com/airport-diagrams-explained/" target="_blank" rel="noopener noreferrer">
+				 Pilot Institute - Airport diagrams explained 
+				</a>
+			  </li>
+
+            </ul>
+          </div>
+        </div>
+      </details>
+
+    </div><!-- /main -->
+  </div><!-- /card -->
+
+  <script>
+    (function(){
+      const btn = document.getElementById("icaoToggle");
+      if(!btn) return;
+
+      const getSections = () => Array.from(document.querySelectorAll("details.section"));
+      const anyOpen = (sections) => sections.some(d => d.open);
+      const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+      const toggleAll = () => {
+        const sections = getSections();
+        if(sections.length === 0) return;
+        setAll(sections, !anyOpen(sections));
+      };
+
+      btn.addEventListener("click", toggleAll);
+      btn.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          toggleAll();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

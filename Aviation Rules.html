@@ -1,0 +1,1112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AVIATION RULES</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+	/* =========================================================
+	   ✅ UNIVERSAL CHECKMATE THEME (SUPerset)
+	   Compatible avec tes 6 pages (1→6)
+	   ========================================================= */
+
+	/* -------------------------
+	   0) Variables (thème)
+	   ------------------------- */
+	:root{
+	  /* Palette */
+	  --outerBlue:#2a69b0;
+	  --deepBlue:#1f5f9e;
+	  --ink:#1b1f24;
+	  --ink2:#3e4a57;
+	  --paper:#fbfbfb;
+	  --panel:#f1f2f3;
+	  --gridLine:#b9c2cc;
+	  --shadow: rgba(0,0,0,.12);
+
+	  /* Boutons jaunes */
+	  --btnTop:#f4edb7;
+	  --btnMid:#e5d675;
+	  --btnBot:#d6c55a;
+	  --btnEdge:#4d5863;
+	  --btnText:#1f5f9e;
+
+	  /* Bande olive (vspeeds) */
+	  --oliveBandTop:#f2eaa9;
+	  --oliveBandBot:#e5d772;
+
+	  /* Statuts */
+	  --red:#b42318;
+	  --green:#1e6f36;
+	  --orange:#b96a00;
+
+	  /* Typo / lisibilité */
+	  --baseFont: 18px;
+	  --baseLine: 1.22;
+
+	  /* Tooltips */
+	  --tipBg:#0f172a;
+	  --tipText:#ffffff;
+	  --tipShadow: rgba(0,0,0,.35);
+
+	  /* Code blocks */
+	  --codeBg:#ffffff;
+	  --codeBorder:#b9c2cc;
+
+	  /* Badges */
+	  --you:#1e6f36;
+	  --atc:#b96a00;
+	  --note:#b42318;
+
+	  /* Callouts */
+	  --calloutBg:#ffffff;
+	  --calloutBorder:#b9c2cc;
+
+	  /* PERF2 alignment (pages perf) */
+	  --perfHdrH: 30px;
+	  --perfRowH3: 26px;
+	  --perfRowH2: 26px;
+
+	  /* Largeurs “fixes” header (optionnel) */
+	  --hdrSideW: 260px;
+	}
+
+	/* Densité (si tu veux reproduire la page #4 très compacte) */
+	.density-compact{
+	  --baseFont: 11.5px;
+	  --baseLine: 1.22;
+	}
+
+	/* -------------------------
+	   1) Reset / Base
+	   ------------------------- */
+	*{ box-sizing:border-box; }
+
+	body{
+	  margin:0;
+	  background:#e9eef5;
+	  font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+	  color:var(--ink);
+
+	  display:flex;
+	  justify-content:center;
+
+	  padding:18px;
+	  font-size:var(--baseFont);
+	  line-height:var(--baseLine);
+	}
+
+	/* Liens */
+	a{
+	  color:var(--deepBlue);
+	  text-decoration:none;
+	  font-weight:900;
+	}
+	a:hover{ text-decoration:underline; }
+
+	/* Utilitaires texte */
+	.note{ font-size:14px; color:var(--ink2); line-height:1.25; }
+	.mono{ font-family:"Arial Narrow", Arial, Helvetica, sans-serif; }
+	.green{ color:var(--green); font-weight:900; }
+	.red{ color:var(--red); font-weight:900; }
+	.blue{ color:var(--deepBlue); font-weight:900; }
+
+	.divider{
+	  height:1px;
+	  background:rgba(0,0,0,.18);
+	  margin:8px 0;
+	}
+
+	hr{
+	  border:none;
+	  border-top:1px solid rgba(0,0,0,.15);
+	  margin:10px 0;
+	}
+
+	/* -------------------------
+	   2) Card + sheen
+	   ------------------------- */
+	.card{
+	  width:min(1080px, 100%);
+	  background:var(--paper);
+	  border:6px solid var(--outerBlue);
+	  border-radius:6px;
+	  box-shadow:0 8px 22px var(--shadow);
+	  overflow:hidden;
+	  position:relative;
+	}
+
+	/* sheen léger */
+	.card::after{
+	  content:"";
+	  position:absolute;
+	  inset:0;
+	  pointer-events:none;
+	  background:
+		radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+		linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+	  z-index:1;
+	}
+
+	/* -------------------------
+	   3) Header (brand / logo / variant)
+	   ------------------------- */
+	.header{
+	  position:relative;
+	  z-index:4;
+	  padding:10px 14px 8px;
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	}
+
+	.header-top{
+	  display:flex;
+	  align-items:flex-end;
+	  justify-content:space-between;
+	  gap:10px;
+	}
+
+	.brand{
+	  width:var(--hdrSideW);
+	  display:flex;
+	  align-items:flex-end;
+	  gap:10px;
+	}
+
+	.cessna{
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:40px;
+	  color:var(--deepBlue);
+	  line-height:1;
+	  letter-spacing:.2px;
+	  white-space:nowrap;
+	}
+
+	.airplains{
+	  font-size:8px;
+	  color:var(--ink2);
+	  line-height:1.1;
+	  margin-bottom:3px;
+	}
+
+	.logo{
+	  flex:1;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  padding:0 6px;
+	}
+
+	.checkwrap{
+	  position:relative;
+	  display:inline-block;
+	  padding:0 72px;
+	}
+
+	.checkwrap:before,
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+	.checkwrap:before{ left:0; }
+	.checkwrap:after{
+	  right:0;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	}
+
+	.checkmate{
+	  display:inline-block;
+	  background:#fff;
+	  border:2px solid #6b7785;
+	  border-radius:10px;
+	  padding:4px 16px 6px;
+	  font-weight:900;
+	  font-size:34px;
+	  color:#2b3b4f;
+	  line-height:1;
+	  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+	  white-space:nowrap;
+	  text-align:center;
+	}
+
+	/* Variante à droite */
+	.variant{
+	  width:var(--hdrSideW);
+	  text-align:right;
+	  color:var(--deepBlue);
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:22px;
+	  line-height:1.05;
+	  white-space:nowrap;
+	}
+	.variant small{
+	  display:block;
+	  font-style:normal;
+	  font-weight:700;
+	  font-size:10px;
+	  color:var(--ink2);
+	  margin-top:3px;
+	  white-space:normal;
+	}
+
+	/* Checkmate link hover (présent dans 2/3/4/5/6) */
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+	/* -------------------------
+	   4) Main + subtitle
+	   ------------------------- */
+	.main{
+	  position:relative;
+	  z-index:2;
+	  background:var(--panel);
+	  padding:10px 10px 12px;
+	}
+
+	.subtitle{
+	  text-align:center;
+	  color:var(--ink2);
+	  margin:6px 0 12px;
+	  font-size:15px;
+	}
+
+	/* -------------------------
+	   5) Boutons / titres jaunes
+	   ------------------------- */
+	.nav-btn{
+	  display:block;
+	  margin:0 0 14px;
+	  padding:12px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:8px;
+	  font-weight:900;
+	  font-style:italic;
+	  color:var(--btnText);
+	  text-transform:uppercase;
+	  font-size:20px;
+	  text-decoration:none;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.15);
+	  transition:transform 120ms ease, box-shadow 120ms ease;
+	}
+	.nav-btn:hover{
+	  transform:translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	.nav-desc{
+	  display:block;
+	  margin-top:4px;
+	  font-style:normal;
+	  font-size:14px;
+	  text-transform:none;
+	  color:#2b3b4f;
+	  opacity:.85;
+	}
+
+	.btn{
+	  margin:-4px -4px 7px;
+	  padding:6px 6px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:7px;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.12);
+	  color:var(--btnText);
+	  font-weight:900;
+	  font-style:italic;
+	  letter-spacing:.35px;
+	  text-transform:uppercase;
+	  white-space:nowrap;
+	  font-size:19px;
+	}
+	.btn.btn--sm{ font-size:12px; }
+	.btn.btn--xs{ font-size:11px; }
+
+	/* Accordéon (summary) */
+	summary.btn{
+	  list-style:none;
+	  cursor:pointer;
+	  user-select:none;
+
+	  margin:0;
+	  padding:8px 10px;
+
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  gap:10px;
+	}
+	summary.btn::-webkit-details-marker{ display:none; }
+
+	.pill{
+	  display:inline-block;
+	  padding:1px 8px;
+	  border-radius:999px;
+	  font-size:12px;
+	  font-weight:900;
+	  letter-spacing:.35px;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  color:#20324a;
+	  text-transform:none;
+	  font-style:normal;
+	  white-space:nowrap;
+	}
+
+	.chev{
+	  margin-left:auto;
+	  font-weight:900;
+	  color:#2b3b4f;
+	  opacity:.85;
+	  transition: transform 180ms ease;
+	  font-style:normal;
+	}
+	details.section[open] .chev{ transform: rotate(90deg); }
+
+	.section-body{
+	  margin-top:8px;
+	  background:transparent;
+	  padding:0 2px 4px;
+	}
+	details.section .section-body{
+	  overflow:hidden;
+	  max-height:0;
+	  opacity:0;
+	  transform: translateY(-6px);
+	  transition:
+		max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 260ms ease,
+		transform 260ms ease;
+	}
+	details.section[open] .section-body{
+	  max-height: 8000px;
+	  opacity:1;
+	  transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce){
+	  .nav-btn,
+	  .checkmate-link .checkmate,
+	  .chev,
+	  details.section .section-body{
+		transition:none !important;
+	  }
+	}
+
+	/* -------------------------
+	   6) Sections
+	   ------------------------- */
+	.section{
+	  break-inside: avoid;
+	  -webkit-column-break-inside: avoid;
+	  page-break-inside: avoid;
+
+	  background:transparent;
+	  border:none;
+	  border-radius:0;
+	  padding:6px 8px;
+	  margin:0 0 10px;
+	  display:block;
+	}
+	.section:last-child{ margin-bottom:0; }
+	details.section{ margin:0 0 12px; padding:0; }
+
+	/* -------------------------
+	   7) Grilles
+	   ------------------------- */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0;
+
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	  align-items:start;
+	}
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+	.grid.grid--1{ grid-template-columns:1fr; }
+	.grid.grid--1::before{ display:none; }
+
+	/* -------------------------
+	   8) Lists
+	   ------------------------- */
+	ul{ list-style:none; padding-left:0; margin:0; }
+	li{ margin:2px 0; }
+
+	.dash li::before{
+	  content:"– ";
+	  color:#2b3b4f;
+	  font-weight:900;
+	}
+	.sub{ margin-top:4px; padding-left:12px; }
+	.sub li::before{
+	  content:"• ";
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	/* -------------------------
+	   9) Tables / KPI / Callouts
+	   ------------------------- */
+	.grid2{
+	  display:grid;
+	  grid-template-columns:1fr 1fr;
+	  gap:10px;
+	}
+	.grid3{
+	  display:grid;
+	  grid-template-columns:1fr 1fr 1fr;
+	  gap:10px;
+	}
+
+	.tbl{
+	  width:100%;
+	  border-collapse:collapse;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:6px;
+	  overflow:hidden;
+	  font-size:14px;
+	}
+	.tbl th, .tbl td{
+	  border-bottom:1px solid rgba(0,0,0,.12);
+	  border-right:1px solid rgba(0,0,0,.08);
+	  padding:8px 10px;
+	  vertical-align:top;
+	}
+	.tbl th{
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	  color:#2b3b4f;
+	  font-weight:900;
+	  text-transform:uppercase;
+	  letter-spacing:.06em;
+	  font-size:12px;
+	}
+	.tbl tr:last-child td{ border-bottom:none; }
+	.tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+	.kpi{
+	  display:flex;
+	  gap:10px;
+	  flex-wrap:wrap;
+	  justify-content:center;
+	  margin:6px 0 10px;
+	}
+	.kpi .box{
+	  min-width:220px;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:8px;
+	  padding:8px 10px;
+	}
+	.kpi .box .t{
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  color:var(--ink2);
+	  font-weight:900;
+	  margin-bottom:2px;
+	}
+	.kpi .box .v{
+	  font-size:16px;
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	.callout{
+	  background:var(--calloutBg);
+	  border:1px solid var(--calloutBorder);
+	  border-radius:6px;
+	  padding:10px 12px;
+	  margin:6px 0 10px;
+	}
+	.callout strong{ font-weight:900; }
+
+	.h2{
+	  margin:0 0 4px;
+	  font-size:18px;
+	  font-weight:900;
+	  color:var(--deepBlue);
+	  font-style:italic;
+	  letter-spacing:.2px;
+	  text-transform:uppercase;
+	  text-align:center;
+	}
+
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+	/* -------------------------
+	   10) Code blocks
+	   ------------------------- */
+	pre{
+	  margin: 6px 0 10px;
+	  padding: 10px 12px;
+	  background: var(--codeBg);
+	  border-radius: 6px;
+	  border: 1px solid var(--codeBorder);
+	  font-size: 14px;
+	  overflow-x: auto;
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  color: var(--ink);
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	}
+	code{
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	  color: inherit;
+	}
+
+	/* -------------------------
+	   11) Responsive
+	   ------------------------- */
+	@media (max-width:1020px){
+	  body{ padding:10px; }
+	  .main{ padding:10px; }
+
+	  .grid{ grid-template-columns: 1fr; }
+	  .grid::before{ display:none; }
+
+	  .checkwrap{ padding:0 24px; }
+	  .checkwrap:before,.checkwrap:after{ display:none; }
+
+	  .brand,.variant{ width:auto; }
+	  .grid2,.grid3{ grid-template-columns:1fr; }
+	  .kpi .box{ min-width:unset; width:100%; }
+	  summary.btn{ font-size:18px; }
+	  .pill{ font-size:11px; }
+	}
+
+	@media (max-width:800px){
+	  .variant{ display:none; }
+	}
+	
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* cache la colonne droite */
+	  .variant{ display:none; }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;           /* laisse la place aux barres */
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;  /* on force l’affichage */
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;       /* autorise le wrap */
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  /* le texte principal prend la largeur pour éviter le serrage */
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  /* chevron toujours à droite */
+	  .chev{
+		margin-left:auto;
+	  }
+	}
+	@media (max-width: 520px){
+	  .tbl{ display:block; overflow-x:auto; }
+	}
+	
+	
+	/* =========================================================
+	   ANTI-OVERFLOW PATCH
+	   ========================================================= */
+
+	/* Autorise le wrap partout où ça déborde souvent */
+	.h2,
+	.callout strong,
+	.btn{
+	  white-space: normal;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	pre, code{
+	  max-width: 100%;
+	}
+	pre{
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  overflow-wrap: anywhere;
+	}
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains"></div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Aviation Rules</div>
+            </a>
+          </div>
+        </div>
+		
+        <div class="variant">
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+
+      <!-- =======================================================
+           1) FRANCE
+           ======================================================= -->
+      <details class="section" open>
+        <summary class="btn">
+          FRANCE — SERA + compléments
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid grid--1">
+
+            <div class="section">
+              <div class="h2">1) Les réflexes “toujours” (peu importe l’espace aérien)</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>See &amp; Avoid</strong> : en VFR tu restes responsable de l’anticollision, même si tu as une clairance (sauf séparation ATC spécifique).</li>
+                  <li><strong>Priorités (logique ICAO/SERA)</strong> :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>Convergence</strong> : celui qui voit l’autre sur sa droite cède.</li>
+                  <li><strong>Face à face</strong> : chacun évite par la droite.</li>
+                  <li><strong>Dépassement</strong> : tu dépasses en restant bien clair (généralement par la droite en pratique).</li>
+                  <li><strong>Atterrissage</strong> : un aéronef en finale/atterrissage est prioritaire (sans “forcer le passage”).</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Anti-collision au sol/vol, éclairage nuit, vigilance intégration</strong> : habitudes pro (pas “réglementaire partout”, mais discipline pilote pro).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">2) Hauteurs minimales (le “plancher” à ne pas violer)</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>Socle</strong> : SERA + restrictions nationales possibles (survol d’agglomérations, rassemblements, bruit, zones sensibles).</li>
+                  <li><strong>Principe</strong> : ne pas voler si bas que tu ne peux pas gérer une panne “sans danger indu” + marges minimales selon zone/obstacles (références SERA).</li>
+                  <li><strong>France</strong> : attention aux textes nationaux (ex. arrêtés sur survol agglos/rassemblements) ; l’AIP rappelle que les minima SERA s’appliquent <strong>sans préjudice</strong> de ces règles françaises.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : avant vol, repérer <strong>agglos / rassemblements / sites sensibles</strong> + décider d’une <strong>hauteur plancher perso</strong> (souvent &gt; minima).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">3) VMC / météo VFR : les minima “visibilité + distance aux nuages”</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li>Les vols VFR doivent respecter les <strong>VMC minima</strong> (table SERA) sauf <strong>Special VFR (SVFR)</strong>.</li>
+                  <li><strong>Habitude pilote</strong> : “si je dois <em>argumenter</em> que je suis VMC, je suis déjà trop près”.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">4) Altitudes “semi-circulaires” (niveaux de croisière)</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li>En Europe, la règle de base : niveaux de croisière en <strong>altitudes</strong> sous la <strong>TA</strong> (transition altitude) et en <strong>flight levels</strong> au-dessus.</li>
+                  <li>En pratique VFR : on applique la <strong>règle semi-circulaire</strong> (niveaux selon la route magnétique) quand on n’est pas sous guidage ATC, typiquement au-dessus d’un seuil publié/commun (souvent 3000 ft sol/eau dans beaucoup de publications) ; l’AIP France la traite dans ses sections règles VFR.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : annoncer/penser “cap → niveau” (évite de te retrouver à contre-parité).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">5) Espaces aériens (France) : ce que ça “veut dire” en pratique pilote</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li>France : classes <strong>ICAO A à G</strong> + réalité terrain :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>Classe A</strong> : IFR uniquement (en pratique).</li>
+                  <li><strong>Classe C / D</strong> : contrôlé ; entrée VFR = généralement <strong>contact radio</strong> + <strong>clairance/autorisation</strong> (selon classe/secteur).</li>
+                  <li><strong>Classe E</strong> : contrôlé pour IFR, VFR souvent sans clairance (mais règles VMC + vigilance).</li>
+                  <li><strong>Classe G</strong> : non contrôlé (auto-information, vigilance, parfois fréquences).</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li>Couches/règles fréquentes :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>CTR / TMA</strong> : zones autour des terrains contrôlés (souvent classe D/E selon endroits).</li>
+                  <li><strong>Zones réglementées</strong> : <strong>P / R / D</strong> : vérifier conditions d’activité (AIP/NOTAM) avant traversée.</li>
+                  <li><strong>RMZ/TMZ</strong> : radio/transpondeur obligatoires si publié.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : lecture carte = “classe + plancher/plafond + exigences (radio, transpondeur) + activités (R/D)”.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">6) Radio / clairances : les automatismes</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>Quand tu dois parler</strong> : dès que l’espace l’exige (CTR/TMA contrôlée, RMZ, zones avec service ATS publié) + quand l’intégration l’impose (sécurité).</li>
+                  <li><strong>Clairance ≠ autorisation de tout</strong> : une clairance de transit ne t’exonère pas des minima VMC, des hauteurs mini, ni de la vigilance trafic.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">7) Plan de vol, transpondeur, équipements : l’esprit</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>Plan de vol</strong> : requis dans certains cas (traversée frontière, IFR, certains vols spécifiques, etc.) — décrit par l’AIP (sections “Flight planning” + règles VFR).</li>
+                  <li><strong>Équipement</strong> : dépend du type de vol (jour/nuit, radio requise, transpondeur requis, éventuellement GNSS/8.33, etc.) → c’est <strong>AIP + réglementation avion</strong> qui commandent.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">8) Nuit VFR (France) : possible, mais encadré</div>
+
+              <div class="callout">
+                <ul class="dash">
+                  <li>La France autorise le <strong>VFR de nuit</strong> sous conditions, avec des <strong>niveaux minimaux</strong> et des règles spécifiques décrites dans l’AIP (ENR 1.2).</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : nuit = marges +++ (météo, carburant, terrains de dégagement, altitudes).</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /grid -->
+        </div><!-- /section-body -->
+      </details>
+
+      <!-- =======================================================
+           2) USA
+           ======================================================= -->
+      <details class="section" open>
+        <summary class="btn">
+          USA — FAA (Part 91 + AIM)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid grid--1">
+
+            <div class="section">
+              <div class="h2">1) Minimum safe altitudes (le classique à connaître par cœur)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.119</strong> :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>Congested area / rassemblement</strong> : <strong>1000 ft</strong> au-dessus de l’obstacle le plus haut dans un <strong>rayon horizontal de 2000 ft</strong>.</li>
+                  <li><strong>Autres zones</strong> : <strong>500 ft AGL</strong>, sauf au-dessus d’eau/zone peu peuplée : pas plus près que <strong>500 ft</strong> de toute personne/véhicule/structure.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote US</strong> : “je suis congested ou pas ?” (ça change tout) + attention aux rassemblements (stades, événements).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">2) VFR weather minimums (visibilité + clairance nuages)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.155</strong> fixe les minima selon <strong>classe d’espace</strong> et <strong>altitude</strong>.</li>
+                  <li><strong>Habitude pilote</strong> : savoir instantanément la règle “<strong>3-152</strong>” (3 SM / 500 below / 1000 above / 2000 horizontal) en Class E sous 10 000 ft, et les exceptions Class G, Class B “clear of clouds”, etc. (l’AIM résume très bien).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">3) VFR cruising altitudes (semi-circulaire version US)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.159</strong> (en croisière <strong>au-dessus de 3000 ft AGL</strong>, hors exceptions) :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>Course magnétique 000–179°</strong> : <strong>odd thousands + 500</strong> (ex : 3500, 5500, 7500).</li>
+                  <li><strong>180–359°</strong> : <strong>even thousands + 500</strong> (ex : 4500, 6500, 8500).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">4) Airspace US : ce que ça implique (très “procédural”)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>Classes : <strong>A/B/C/D/E/G</strong>, exigences d’entrée codifiées :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>Class B</strong> : clairance explicite (“Cleared into the Bravo”).</li>
+                  <li><strong>Class C/D</strong> : contact radio + instructions (et souvent transpondeur).</li>
+                  <li><strong>Class E</strong> : contrôlé pour IFR, VFR souvent sans clairance sauf surface area/conditions spéciales.</li>
+                  <li><strong>Class G</strong> : non contrôlé (mais règles VFR + vigilance).</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li>L’AIM donne la vue d’ensemble + les minima VFR par classe.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">5) Speed limits (souvent oubliés)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.117</strong> :</li>
+                </ul>
+                <ul class="sub">
+                  <li><strong>≤ 250 KIAS</strong> sous <strong>10 000 ft MSL</strong> (sauf autorisation).</li>
+                  <li><strong>≤ 200 KIAS</strong> (cas fréquents) : sous certaines zones (ex. sous certains planchers Bravo, proche aéroports C/D à basse hauteur – cf. texte complet).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">6) Right-of-way rules (à connaître)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.113</strong> : règles de priorité (convergence, face à face, dépassement, atterrissage).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">7) Carburant VFR (super concret, super contrôlé)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.151</strong> :</li>
+                </ul>
+                <ul class="sub">
+                  <li>VFR <strong>jour</strong> : assez pour aller au point prévu + <strong>30 min</strong>.</li>
+                  <li>VFR <strong>nuit</strong> : + <strong>45 min</strong>.</li>
+                  <li>(Rotorcraft : règle spécifique).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">8) Équipement minimum (VFR day/night, IFR)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>14 CFR 91.205</strong> : liste des instruments/équipements requis selon VFR jour, VFR nuit, IFR.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : si un équipement requis est inop, tu appliques la logique MEL/KOEL/91.213 (pas “on verra bien”).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="h2">9) Transpondeur / ADS-B Out (réalité US moderne)</div>
+              <div class="callout">
+                <ul class="dash">
+                  <li>ADS-B Out requis dans la plupart des espaces contrôlés définis par la règle (Class A, B, C, et d’autres volumes autour/au-dessus, etc.).</li>
+                  <li>Cadre réglementaire ADS-B : <strong>91.225</strong>.</li>
+                </ul>
+                <div class="divider"></div>
+                <ul class="dash">
+                  <li><strong>Habitude pilote</strong> : “où suis-je par rapport à la rule airspace ADS-B / Mode C veil ?” avant même de démarrer.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /grid -->
+        </div><!-- /section-body -->
+      </details>
+
+      <!-- =======================================================
+           3) MINI CHECK MENTAL
+           ======================================================= -->
+      <details class="section" open>
+        <summary class="btn">
+          Mini check (valable France &amp; US)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid grid--1">
+            <div class="section">
+              <div class="callout">
+                <ul class="dash">
+                  <li><strong>1) Où je vole ?</strong> (classe, plancher/plafond, zones P/R/D, RMZ/TMZ / ADS-B/Mode C veil).</li>
+                  <li><strong>2) Suis-je légal météo ?</strong> (VMC minima / 91.155 / SERA).</li>
+                  <li><strong>3) Suis-je légal hauteur ?</strong> (minima + congested/agglos + rassemblements).</li>
+                  <li><strong>4) Mon niveau de croisière est cohérent ?</strong> (semi-circulaire + TA/FL en Europe).</li>
+                  <li><strong>5) Radio &amp; clairances</strong> : ai-je le bon contact/autorisation ?</li>
+                  <li><strong>6) Carburant &amp; dégagements</strong> : réserve légale + marge perso.</li>
+                  <li><strong>7) Équipement</strong> : requis OK (jour/nuit/IFR, transpondeur/ADS-B, lumières).</li>
+                  <li><strong>8) Priorités &amp; intégration</strong> : see&amp;avoid, annonces, discipline.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div><!-- /main -->
+  </div><!-- /card -->
+
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+</body>
+</html>

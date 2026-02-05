@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FLIGHT PLAN</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+
+	/* =========================================================
+	   ✅ UNIVERSAL CHECKMATE THEME (SUPerset)
+	   Compatible avec tes 6 pages (1→6)
+	   ========================================================= */
+
+	/* -------------------------
+	   0) Variables (thème)
+	   ------------------------- */
+	:root{
+	  /* Palette */
+	  --outerBlue:#2a69b0;
+	  --deepBlue:#1f5f9e;
+	  --ink:#1b1f24;
+	  --ink2:#3e4a57;
+	  --paper:#fbfbfb;
+	  --panel:#f1f2f3;
+	  --gridLine:#b9c2cc;
+	  --shadow: rgba(0,0,0,.12);
+
+	  /* Boutons jaunes */
+	  --btnTop:#f4edb7;
+	  --btnMid:#e5d675;
+	  --btnBot:#d6c55a;
+	  --btnEdge:#4d5863;
+	  --btnText:#1f5f9e;
+
+	  /* Bande olive (vspeeds) */
+	  --oliveBandTop:#f2eaa9;
+	  --oliveBandBot:#e5d772;
+
+	  /* Statuts */
+	  --red:#b42318;
+	  --green:#1e6f36;
+	  --orange:#b96a00;
+
+	  /* Typo / lisibilité */
+	  --baseFont: 18px;
+	  --baseLine: 1.22;
+
+	  /* Tooltips */
+	  --tipBg:#0f172a;
+	  --tipText:#ffffff;
+	  --tipShadow: rgba(0,0,0,.35);
+
+	  /* Code blocks */
+	  --codeBg:#ffffff;
+	  --codeBorder:#b9c2cc;
+
+	  /* Badges */
+	  --you:#1e6f36;
+	  --atc:#b96a00;
+	  --note:#b42318;
+
+	  /* Callouts */
+	  --calloutBg:#ffffff;
+	  --calloutBorder:#b9c2cc;
+
+	  /* PERF2 alignment (pages perf) */
+	  --perfHdrH: 30px;
+	  --perfRowH3: 26px;
+	  --perfRowH2: 26px;
+
+	  /* Largeurs “fixes” header (optionnel) */
+	  --hdrSideW: 260px;
+	}
+
+	/* Densité (si tu veux reproduire la page #4 très compacte) */
+	.density-compact{
+	  --baseFont: 11.5px;
+	  --baseLine: 1.22;
+	}
+
+	/* -------------------------
+	   1) Reset / Base
+	   ------------------------- */
+	*{ box-sizing:border-box; }
+
+	body{
+	  margin:0;
+	  background:#e9eef5;
+	  font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+	  color:var(--ink);
+
+	  display:flex;
+	  justify-content:center;
+
+	  padding:18px;
+	  font-size:var(--baseFont);
+	  line-height:var(--baseLine);
+	}
+
+	/* Liens */
+	a{
+	  color:var(--deepBlue);
+	  text-decoration:none;
+	  font-weight:900;
+	}
+	a:hover{ text-decoration:underline; }
+
+	/* Utilitaires texte */
+	.note{ font-size:14px; color:var(--ink2); line-height:1.25; }
+	.mono{ font-family:"Arial Narrow", Arial, Helvetica, sans-serif; }
+	.green{ color:var(--green); font-weight:900; }
+	.red{ color:var(--red); font-weight:900; }
+	.blue{ color:var(--deepBlue); font-weight:900; }
+
+	.divider{
+	  height:1px;
+	  background:rgba(0,0,0,.18);
+	  margin:8px 0;
+	}
+
+	hr{
+	  border:none;
+	  border-top:1px solid rgba(0,0,0,.15);
+	  margin:10px 0;
+	}
+
+	/* -------------------------
+	   2) Card + sheen
+	   ------------------------- */
+	.card{
+	  width:min(1080px, 100%);
+	  background:var(--paper);
+	  border:6px solid var(--outerBlue);
+	  border-radius:6px;
+	  box-shadow:0 8px 22px var(--shadow);
+	  overflow:hidden;
+	  position:relative;
+	}
+
+	/* sheen léger */
+	.card::after{
+	  content:"";
+	  position:absolute;
+	  inset:0;
+	  pointer-events:none;
+	  background:
+		radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+		linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+	  z-index:1;
+	}
+
+	/* -------------------------
+	   3) Header (brand / logo / variant)
+	   ------------------------- */
+	.header{
+	  position:relative;
+	  z-index:4;
+	  padding:10px 14px 8px;
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	}
+
+	.header-top{
+	  display:flex;
+	  align-items:flex-end;
+	  justify-content:space-between;
+	  gap:10px;
+	}
+
+	.brand{
+	  width:var(--hdrSideW);
+	  display:flex;
+	  align-items:flex-end;
+	  gap:10px;
+	}
+
+	.cessna{
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:40px;
+	  color:var(--deepBlue);
+	  line-height:1;
+	  letter-spacing:.2px;
+	  white-space:nowrap;
+	}
+
+	.airplains{
+	  font-size:8px;
+	  color:var(--ink2);
+	  line-height:1.1;
+	  margin-bottom:3px;
+	}
+
+	.logo{
+	  flex:1;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  padding:0 6px;
+	}
+
+	.checkwrap{
+	  position:relative;
+	  display:inline-block;
+	  padding:0 72px;
+	}
+
+	.checkwrap:before,
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+	.checkwrap:before{ left:0; }
+	.checkwrap:after{
+	  right:0;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	}
+
+	.checkmate{
+	  display:inline-block;
+	  background:#fff;
+	  border:2px solid #6b7785;
+	  border-radius:10px;
+	  padding:4px 16px 6px;
+	  font-weight:900;
+	  font-size:34px;
+	  color:#2b3b4f;
+	  line-height:1;
+	  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+	  white-space:nowrap;
+	  text-align:center;
+	}
+
+	/* Variante à droite */
+	.variant{
+	  width:var(--hdrSideW);
+	  text-align:right;
+	  color:var(--deepBlue);
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:20px;
+	  line-height:1.05;
+	  white-space:nowrap;
+	}
+	.variant small{
+	  display:block;
+	  font-style:normal;
+	  font-weight:700;
+	  font-size:10px;
+	  color:var(--ink2);
+	  margin-top:3px;
+	  white-space:normal;
+	}
+
+	/* Checkmate link hover */
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+	/* -------------------------
+	   4) Main + subtitle
+	   ------------------------- */
+	.main{
+	  position:relative;
+	  z-index:2;
+	  background:var(--panel);
+	  padding:10px 10px 12px;
+	}
+
+	.subtitle{
+	  text-align:center;
+	  color:var(--ink2);
+	  margin:6px 0 12px;
+	  font-size:15px;
+	}
+
+	/* -------------------------
+	   5) Boutons / titres jaunes
+	   ------------------------- */
+	.nav-btn{
+	  display:block;
+	  margin:0 0 14px;
+	  padding:12px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:8px;
+	  font-weight:900;
+	  font-style:italic;
+	  color:var(--btnText);
+	  text-transform:uppercase;
+	  font-size:20px;
+	  text-decoration:none;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.15);
+	  transition:transform 120ms ease, box-shadow 120ms ease;
+	}
+	.nav-btn:hover{
+	  transform:translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	.nav-desc{
+	  display:block;
+	  margin-top:4px;
+	  font-style:normal;
+	  font-size:14px;
+	  text-transform:none;
+	  color:#2b3b4f;
+	  opacity:.85;
+	}
+
+	.btn{
+	  margin:-4px -4px 7px;
+	  padding:6px 6px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:7px;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.12);
+	  color:var(--btnText);
+	  font-weight:900;
+	  font-style:italic;
+	  letter-spacing:.35px;
+	  text-transform:uppercase;
+	  white-space:nowrap;
+	  font-size:19px;
+	}
+
+	summary.btn{
+	  list-style:none;
+	  cursor:pointer;
+	  user-select:none;
+
+	  margin:0;
+	  padding:8px 10px;
+
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  gap:10px;
+	}
+	summary.btn::-webkit-details-marker{ display:none; }
+
+	.pill{
+	  display:inline-block;
+	  padding:1px 8px;
+	  border-radius:999px;
+	  font-size:12px;
+	  font-weight:900;
+	  letter-spacing:.35px;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  color:#20324a;
+	  text-transform:none;
+	  font-style:normal;
+	  white-space:nowrap;
+	}
+
+	.chev{
+	  margin-left:auto;
+	  font-weight:900;
+	  color:#2b3b4f;
+	  opacity:.85;
+	  transition: transform 180ms ease;
+	  font-style:normal;
+	}
+	details.section[open] .chev{ transform: rotate(90deg); }
+
+	.section-body{
+	  margin-top:8px;
+	  background:transparent;
+	  padding:0 2px 4px;
+	}
+	details.section .section-body{
+	  overflow:hidden;
+	  max-height:0;
+	  opacity:0;
+	  transform: translateY(-6px);
+	  transition:
+		max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 260ms ease,
+		transform 260ms ease;
+	}
+	details.section[open] .section-body{
+	  max-height: 8000px;
+	  opacity:1;
+	  transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce){
+	  .nav-btn,
+	  .checkmate-link .checkmate,
+	  .chev,
+	  details.section .section-body{
+		transition:none !important;
+	  }
+	}
+
+	/* -------------------------
+	   6) Sections
+	   ------------------------- */
+	.section{
+	  break-inside: avoid;
+	  -webkit-column-break-inside: avoid;
+	  page-break-inside: avoid;
+
+	  background:transparent;
+	  border:none;
+	  border-radius:0;
+	  padding:6px 8px;
+	  margin:0 0 10px;
+	  display:block;
+	}
+	.section:last-child{ margin-bottom:0; }
+	details.section{ margin:0 0 12px; padding:0; }
+
+	/* -------------------------
+	   7) Grilles
+	   ------------------------- */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0;
+
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	  align-items:start;
+	}
+
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+
+	.grid.grid--1{ grid-template-columns:1fr; }
+	.grid.grid--1::before{ display:none; }
+
+	.grid.grid--2{ grid-template-columns:1fr 1fr; }
+
+	/* -------------------------
+	   8) Lists
+	   ------------------------- */
+	ul{ list-style:none; padding-left:0; margin:0; }
+	li{ margin:2px 0; }
+
+	.dash li::before{ content:"– "; color:#2b3b4f; font-weight:900; }
+	.sub{ margin-top:4px; padding-left:12px; }
+	.sub li::before{ content:"• "; font-weight:900; color:#2b3b4f; }
+
+	/* -------------------------
+	   9) Badges
+	   ------------------------- */
+	.badge{
+	  display:inline-block;
+	  padding:2px 10px;
+	  border-radius:999px;
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  margin:0 6px 6px 0;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  font-weight:900;
+	  color:#20324a;
+	  vertical-align:2px;
+	  white-space:nowrap;
+	}
+	.badge-you{ color:var(--you); border-color:rgba(30,111,54,.35); }
+	.badge-atc{ color:var(--atc); border-color:rgba(185,106,0,.35); }
+	.badge-note{ color:var(--note); border-color:rgba(180,35,24,.35); }
+
+	/* -------------------------
+	   10) Code blocks
+	   ------------------------- */
+	pre{
+	  margin: 6px 0 10px;
+	  padding: 10px 12px;
+	  background: var(--codeBg);
+	  border-radius: 6px;
+	  border: 1px solid var(--codeBorder);
+	  font-size: 14px;
+	  overflow-x: auto;
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  color: var(--ink);
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	}
+	code{ font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+	em{ font-style:italic; }
+
+	/* -------------------------
+	   11) Tables / KPI / Callouts
+	   ------------------------- */
+	.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+	.tbl{
+	  width:100%;
+	  border-collapse:collapse;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:6px;
+	  overflow:hidden;
+	  font-size:14px;
+	}
+	.tbl th, .tbl td{
+	  border-bottom:1px solid rgba(0,0,0,.12);
+	  border-right:1px solid rgba(0,0,0,.08);
+	  padding:8px 10px;
+	  vertical-align:top;
+	}
+	.tbl th{
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	  color:#2b3b4f;
+	  font-weight:900;
+	  text-transform:uppercase;
+	  letter-spacing:.06em;
+	  font-size:12px;
+	}
+	.tbl tr:last-child td{ border-bottom:none; }
+	.tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+	.kpi{
+	  display:flex;
+	  gap:10px;
+	  flex-wrap:wrap;
+	  justify-content:center;
+	  margin:6px 0 10px;
+	}
+	.kpi .box{
+	  min-width:220px;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:8px;
+	  padding:8px 10px;
+	}
+	.kpi .box .t{
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  color:var(--ink2);
+	  font-weight:900;
+	  margin-bottom:2px;
+	}
+	.kpi .box .v{
+	  font-size:16px;
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	.callout{
+	  background:var(--calloutBg);
+	  border:1px solid var(--calloutBorder);
+	  border-radius:6px;
+	  padding:10px 12px;
+	  margin:6px 0 10px;
+	}
+	.callout strong{ font-weight:900; }
+
+	.h2{
+	  margin:0 0 4px;
+	  font-size:18px;
+	  font-weight:900;
+	  color:var(--deepBlue);
+	  font-style:italic;
+	  letter-spacing:.2px;
+	  text-transform:uppercase;
+	  text-align:center;
+	}
+
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+
+	/* -------------------------
+	   17) Responsive
+	   ------------------------- */
+	@media (max-width:1020px){
+	  body{ padding:10px; }
+	  .main{ padding:10px; }
+	  .grid{ grid-template-columns: 1fr; }
+	  .grid::before{ display:none; }
+	  .checkwrap{ padding:0 24px; }
+	  .checkwrap:before,.checkwrap:after{ display:none; }
+	  .brand,.variant{ width:auto; }
+	  .grid2{ grid-template-columns:1fr; }
+	  .kpi .box{ min-width:unset; width:100%; }
+	}
+
+	@media (max-width:800px){
+	  .variant{ display:none; }
+	}
+	
+		/* =========================================================
+		   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+		   + summary.btn qui wrap proprement
+		   ========================================================= */
+		@media (max-width: 520px){
+
+		  /* ----- Header layout ----- */
+		  .header-top{
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		  }
+
+		  /* OPS reste en haut à gauche */
+		  .brand{
+			width:100%;
+			justify-content:flex-start;
+		  }
+
+		  /* Titre centré (ligne du milieu) */
+		  .logo{
+			width:100%;
+			padding:0;
+			display:flex;
+			justify-content:center;
+		  }
+
+		  /* cache la colonne droite */
+		  .variant{ display:none; }
+
+		  /* ----- Titre + barres rouges conservées ----- */
+		  .checkwrap{
+			padding: 0 38px;           /* laisse la place aux barres */
+			max-width: 100%;
+		  }
+
+		  .checkwrap:before,
+		  .checkwrap:after{
+			display:block !important;  /* on force l’affichage */
+			width: clamp(18px, 7vw, 34px);
+			height: 3px;
+		  }
+
+		  /* Le titre peut passer sur 2 lignes */
+		  .checkmate{
+			font-size: 22px;
+			max-width: 88vw;
+			white-space: normal;       /* autorise le wrap */
+			line-height: 1.15;
+			padding: 8px 14px;
+			text-align:center;
+		  }
+
+		  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+		  summary.btn{
+			white-space: normal;
+			flex-wrap: wrap;
+			row-gap: 6px;
+			font-size: 16px;
+			padding: 10px 10px;
+		  }
+
+		  /* le texte principal prend la largeur pour éviter le serrage */
+		  summary.btn > :first-child{
+			flex: 1 1 100%;
+		  }
+
+		  /* chevron toujours à droite */
+		  .chev{
+			margin-left:auto;
+		  }
+		}
+	/* =========================================================
+	   ANTI-OVERFLOW PATCH (Flight Plan)
+	   - titres qui wrap
+	   - pre/code sans débordement
+	   - tables lisibles sur mobile
+	   ========================================================= */
+
+	/* 1) Autorise le retour à la ligne sur les titres */
+	.btn,
+	.h2,
+	.callout strong{
+	  white-space: normal;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 2) PRE/CODE : wrap + pas de débordement */
+	pre, code{
+	  max-width: 100%;
+	}
+	pre{
+	  white-space: pre-wrap;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 3) Empêche les contenus “flex” (summary.btn) de forcer la largeur */
+	summary.btn{
+	  min-width: 0;
+	}
+	summary.btn > *{
+	  min-width: 0;
+	}
+
+	/* 4) Tables : desktop OK / mobile -> mode cartes */
+	.tbl{
+	  width:100%;
+	  max-width:100%;
+	}
+
+	@media (max-width: 620px){
+
+	  /* Un poil plus petit pour éviter les lignes trop longues */
+	  .checkmate{ font-size: 26px; }
+	  summary.btn{ font-size: 17px; }
+
+	  .h2{
+		font-size: 16px;
+		line-height: 1.15;
+	  }
+
+	  /* TABLE -> cartes (3 colonnes) */
+	  .tbl thead{ display:none; }
+	  .tbl, .tbl tbody, .tbl tr, .tbl td{
+		display:block;
+		width:100%;
+	  }
+	  .tbl tr{
+		border:1px solid rgba(0,0,0,.12);
+		border-radius:8px;
+		background:#fff;
+		margin:10px 0;
+		overflow:hidden;
+	  }
+	  .tbl td{
+		border:none;
+		border-bottom:1px solid rgba(0,0,0,.08);
+		padding:8px 10px;
+		overflow-wrap:anywhere;
+		word-break:break-word;
+	  }
+	  .tbl td:last-child{ border-bottom:none; }
+
+	  /* Labels pour tes tables à 3 colonnes */
+	  .tbl td:nth-child(1)::before{ content:"Élément — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(2)::before{ content:"Valeur — ";  font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(3)::before{ content:"Remarque — "; font-weight:900; color:var(--ink2); }
+	}
+
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains">
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Flight Plan Form</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="variant">
+          
+          <small></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <div class="subtitle">
+        
+      </div>
+
+
+      <!-- =====================================================
+           1) PHILOSOPHIE
+           ===================================================== -->
+	<details id="philo" class="section" open>
+	  <summary class="btn">
+		1) PHILOSOPHIE GÉNÉRALE D’UN PLAN DE VOL VFR
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+		<div class="callout">
+		  <strong>Point clé :</strong> un plan de vol VFR <span class="red">n’est pas une clairance</span>.
+		  C’est surtout un outil <span class="blue">SAR (Search And Rescue)</span> et une information aux services ATS.
+		</div>
+
+		<div class="grid">
+		  <div class="section" style="padding:10px 12px;">
+			<div class="h2">À quoi ça sert ?</div>
+			<ul class="dash">
+			  <li><span class="blue">Sécurité / SAR</span> : aider à te retrouver si tu n’arrives pas.</li>
+			  <li><span class="blue">Information ATS</span> : donner une intention de route, de temps et d’autonomie crédible.</li>
+			  <li><span class="blue">Traçabilité</span> : une intention officielle (utile aussi en formation).</li>
+			</ul>
+		  </div>
+
+		  <div class="section" style="padding:10px 12px;">
+			<div class="h2">Particularités VFR</div>
+			<ul class="dash">
+			  <li>La route peut être <span class="blue">simple</span> (DIRECT / repères) : pas besoin de route ATS IFR.</li>
+			  <li>La vitesse/altitude/durée et le carburant doivent rester <span class="blue">cohérents</span>.</li>
+			  <li>Tu dois <span class="red">FERMER</span> le plan de vol à l’arrivée (USA: FSS / France: ATC ou BRIA selon contexte).</li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	</details>
+
+      <!-- =====================================================
+           2) USA — FAA 7233-1
+           ===================================================== -->
+	<details id="usa" class="section" open>
+	  <summary class="btn">
+		2) PLAN DE VOL US — FAA FORM 7233-1 (THÉORIE)
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+
+		<div class="kpi">
+          <div class="box">
+            <div class="t">Formulaire</div>
+            <div class="v">FAA 7233-1 — VFR Flight Plan</div>
+          </div>
+          <div class="box">
+            <div class="t">Philosophie</div>
+            <div class="v">Lisible “humain”, orienté SAR</div>
+          </div>
+          <div class="box">
+            <div class="t">Heures</div>
+            <div class="v">UTC (Zulu)</div>
+          </div>
+        </div>
+
+		<details class="section" open>
+		  <summary class="btn">
+			Champs 1 → 17 (explication + quoi mettre)
+			<span class="chev">›</span>
+		  </summary>
+		  <div class="section-body">
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Champ</th>
+                  <th>Ce que tu écris</th>
+                  <th>À quoi ça correspond / conseils</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. TYPE</strong></td>
+                  <td><code>VFR</code></td>
+                  <td>
+                    <ul class="sub">
+                      <li><code>VFR</code> dans ton cas.</li>
+                      <li><code>DVFR</code> si franchissement ADIZ/conditions spécifiques.</li>
+                      <li><code>IFR</code> si plan IFR.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2. AIRCRAFT IDENTIFICATION</strong></td>
+                  <td>Immat / callsign : <code>N884CT</code></td>
+                  <td>Indicatif radio (max 7 caractères alphanumériques en pratique). Évite tirets et espaces.</td>
+                </tr>
+                <tr>
+                  <td><strong>3. AIRCRAFT TYPE / SPECIAL EQUIPMENT</strong></td>
+                  <td><code>C172/G</code></td>
+                  <td>
+                    <ul class="sub">
+                      <li><code>C172</code> = type avion (Cessna 172).</li>
+                      <li><code>/G</code> = GPS à bord (convention très utilisée en VFR aux USA).</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>4. TRUE AIRSPEED</strong></td>
+                  <td><code>120</code> kt</td>
+                  <td>
+                    <ul class="sub">
+                      <li>La <strong>TAS</strong> en croisière (pas la GS).</li>
+                      <li>Si tu n’as que la GS, estime TAS (mais toi tu as la TAS: 120 kt).</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>5. DEPARTURE POINT</strong></td>
+                  <td><code>KPSC</code></td>
+                  <td>Terrain de départ (OACI). En VFR, c’est généralement l’aéroport.</td>
+                </tr>
+                <tr>
+                  <td><strong>6. DEPARTURE TIME</strong></td>
+                  <td><code>1730Z</code> (exemple)</td>
+                  <td>Heure de départ en <strong>UTC/Zulu</strong>. Choisis une heure réaliste (météo, jour, dispo).</td>
+                </tr>
+                <tr>
+                  <td><strong>7. CRUISING ALTITUDE</strong></td>
+                  <td><code>5500</code> ft</td>
+                  <td>
+                    <ul class="sub">
+                      <li>Règle semi-circulaire: cap Est = impair + 500.</li>
+                      <li>Tu as prévu 5500 ft, cohérent pour la zone.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>8. ROUTE OF FLIGHT</strong></td>
+                  <td><code>DIRECT</code></td>
+                  <td>
+                    <ul class="sub">
+                      <li>En VFR: <code>DIRECT</code>, repères visuels, VOR fixes, points VRP, etc.</li>
+                      <li>Plus c’est clair, plus c’est utile au SAR.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>9. DESTINATION</strong></td>
+                  <td><code>KALW</code> (Walla Walla Regional)</td>
+                  <td>Nom + code (terrain/city). Sur le formulaire: “Name of airport and city”.</td>
+                </tr>
+                <tr>
+                  <td><strong>10. EST. TIME ENROUTE</strong></td>
+                  <td><code>0:26</code></td>
+                  <td>Temps estimé <strong>bloc à bloc</strong> (ou du moins en route très proche de la réalité).</td>
+                </tr>
+                <tr>
+                  <td><strong>11. REMARKS</strong></td>
+                  <td><code>VFR DAY</code> (optionnel)</td>
+                  <td>Infos utiles: training, “touch and go”, parking, intention de fermeture au sol, etc.</td>
+                </tr>
+                <tr>
+                  <td><strong>12. FUEL ON BOARD</strong></td>
+                  <td><code>4:34</code></td>
+                  <td>
+                    <ul class="sub">
+                      <li>Autonomie totale au départ (endurance), pas le trip fuel.</li>
+                      <li>Tu as: 4 h 34 m (cohérent avec ton “Estimated range with reserve”).</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>13. ALTERNATE AIRPORT(S)</strong></td>
+                  <td><code>KPSC</code> (optionnel)</td>
+                  <td>VFR: facultatif, mais utile pour SAR et logique opérationnelle.</td>
+                </tr>
+                <tr>
+                  <td><strong>14. PILOT INFO</strong></td>
+                  <td>Nom + adresse + téléphone + home base</td>
+                  <td>En simu: tu peux mettre des infos fictives cohérentes (mais réalistes).</td>
+                </tr>
+                <tr>
+                  <td><strong>15. NUMBER ABOARD</strong></td>
+                  <td><code>1</code></td>
+                  <td>Nombre de personnes à bord (POB).</td>
+                </tr>
+                <tr>
+                  <td><strong>16. COLOR OF AIRCRAFT</strong></td>
+                  <td><code>WHITE/BLUE</code> (exemple)</td>
+                  <td>Crucial pour SAR: couleurs visibles, marquages si utile.</td>
+                </tr>
+                <tr>
+                  <td><strong>17. DESTINATION CONTACT</strong></td>
+                  <td>Optionnel</td>
+                  <td>Contact au terrain (FBO, tour, personne à prévenir).</td>
+                </tr>
+              </tbody>
+            </table>
+		  </div>
+		</details>
+
+	  </div>
+	</details>
+
+	<!-- =====================================================
+		 3) FRANCE — CERFA / ICAO  (MENU JAUNE DÉROULANT)
+		 ===================================================== -->
+	<details id="fr" class="section" open>
+	  <summary class="btn">
+		3) PLAN DE VOL FRANCE / OACI — CERFA 14806-01 (THÉORIE)
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+
+		<div class="kpi">
+		  <div class="box">
+			<div class="t">Formulaire</div>
+			<div class="v">OACI — CERFA 14806-01</div>
+		  </div>
+		  <div class="box">
+			<div class="t">Philosophie</div>
+			<div class="v">Syntaxe stricte / message FPL</div>
+		  </div>
+		  <div class="box">
+			<div class="t">Route</div>
+			<div class="v">Codifiée (Vitesse/Niveau/Route)</div>
+		  </div>
+		</div>
+
+		<details class="section" open>
+		  <summary class="btn">
+			Champs principaux (7, 8, 9, 10, 13, 15, 16, 18, 19)
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="grid">
+			  <div class="section" style="padding:10px 12px;">
+				<div class="h2">Champs “essentiels”</div>
+				<ul class="dash">
+				  <li><strong>Case 7</strong> — Identification : immatriculation/callsign (ex: <code>N884CT</code>).</li>
+				  <li><strong>Case 8</strong> — Règles/Type de vol : <code>V</code> (VFR) et <code>G</code> (aviation générale) → <code>VG</code>.</li>
+				  <li><strong>Case 9</strong> — Nombre/Type/WTC : <code>1 C172 L</code> (Light).</li>
+				  <li><strong>Case 10a/10b</strong> — Équipements : ex <code>SG/C</code> (standard + GNSS / transpondeur Mode C).</li>
+				  <li><strong>Case 13</strong> — Départ + heure : <code>KPSC1730</code>.</li>
+				  <li><strong>Case 15</strong> — Vitesse/Niveau/Route : ex <code>N0120 A055 DCT</code>.</li>
+				  <li><strong>Case 16</strong> — Destination/EET/ALTN : <code>KALW0026 KPSC</code>.</li>
+				  <li><strong>Case 18</strong> — Infos diverses : ex <code>DOF/260203</code>.</li>
+				  <li><strong>Case 19</strong> — Endurance/POB + survie : ex <code>0434</code> et <code>1</code>.</li>
+				</ul>
+			  </div>
+
+			  <div class="section" style="padding:10px 12px;">
+				<div class="h2">Rappels de syntaxe utiles</div>
+				<ul class="dash">
+				  <li><strong>Vitesse</strong>: préfixe <code>N</code> + 4 chiffres (kt) → <code>N0120</code>.</li>
+				  <li><strong>Niveau</strong>: souvent <code>A</code> + 3 chiffres (centaines de ft) → <code>A055</code> pour 5500 ft.</li>
+				  <li><strong>Route</strong>: en VFR simple → <code>DCT</code> (direct).</li>
+				  <li><strong>EET</strong>: 4 chiffres HHMM → <code>0026</code>.</li>
+				  <li><strong>DOF</strong>: date YYMMDD → <code>DOF/260203</code> pour 03/02/2026.</li>
+				</ul>
+				<div class="callout" style="margin-top:10px;">
+				  <strong>Astuce :</strong> même si certains champs sont “optionnels”, en pratique un FPL propre est
+				  <span class="blue">cohérent</span>, <span class="blue">sobre</span>, et <span class="blue">sans ambiguïté</span>.
+				</div>
+			  </div>
+			</div>
+
+			<hr />
+
+			<div class="callout">
+			  <strong>Note équipements (Case 10) :</strong>
+			  <ul class="sub">
+				<li><code>S</code> = équipement standard COM/NAV (VHF RTF, VOR, ILS).</li>
+				<li><code>G</code> = GNSS.</li>
+				<li><code>C</code> (10b) = transpondeur Mode A + Mode C.</li>
+			  </ul>
+			</div>
+		  </div>
+		</details>
+
+	  </div>
+	</details>
+
+
+	<!-- =====================================================
+		 4) EXEMPLE COMPLET  (MENU JAUNE DÉROULANT)
+		 ===================================================== -->
+	<details id="exemple" class="section" open>
+	  <summary class="btn">
+		4) EXEMPLE COMPLET — TON VOL KPSC → KALW
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+
+		<div class="callout">
+		  <strong>Données fournies :</strong> Tri-Cities (KPSC) / Parking 44 → Walla Walla Regional (KALW),
+		  48 NM, 0 h 26, 5500 ft, VFR jour, 03/02/2026, Callsign <code>N884CT</code>.
+		  <div class="note" style="margin-top:6px;">
+			S’il manque une donnée “administrative” (nom/téléphone/couleurs), elle est inventée ci-dessous en restant cohérente et réaliste.
+		  </div>
+		</div>
+
+		<div class="kpi">
+		  <div class="box">
+			<div class="t">Distance / Temps</div>
+			<div class="v">48 NM / 0 h 26</div>
+		  </div>
+		  <div class="box">
+			<div class="t">Alt / Règles</div>
+			<div class="v">5500 ft / VFR jour</div>
+		  </div>
+		  <div class="box">
+			<div class="t">TAS / GS</div>
+			<div class="v">120 kt / 112 kt</div>
+		  </div>
+		  <div class="box">
+			<div class="t">Vent moyen</div>
+			<div class="v">263°T / 12 kt (≈ +9 kt TW)</div>
+		  </div>
+		  <div class="box">
+			<div class="t">Endurance</div>
+			<div class="v">4 h 34</div>
+		  </div>
+		</div>
+
+		<div class="grid">
+		  <div class="section" style="padding:10px 12px;">
+			<div class="h2">A) Exemple — FAA 7233-1 (résumé rempli)</div>
+			<span class="badge badge-you">USA</span>
+			<pre><code>TYPE: VFR
+	AIRCRAFT ID: N884CT
+	AIRCRAFT TYPE: C172/G
+	TAS: 120
+	DEPARTURE: KPSC
+	TIME: 1730Z
+	ALTITUDE: 5500
+	ROUTE: DIRECT
+	DESTINATION: KALW (Walla Walla Regional)
+	ETE: 0:26
+	REMARKS: VFR DAY
+	FUEL ON BOARD: 4:34
+	ALTERNATE: KPSC
+	PILOT: Alex Martin, +1 (555) 014-8842, Home base KPSC
+	POB: 1
+	COLOR: WHITE/BLUE
+	DESTINATION CONTACT (opt): Walla Walla FBO +1 (555) 011-2255</code></pre>
+			<div class="note">Heure (1730Z), nom et téléphones sont inventés pour l’exemple (cohérents et réalistes).</div>
+		  </div>
+
+		  <div class="section" style="padding:10px 12px;">
+			<div class="h2">B) Exemple — OACI / CERFA (message FPL)</div>
+			<span class="badge badge-atc">FRANCE / OACI</span>
+			<pre><code>(FPL-N884CT-VG
+	-1/C172/L-SG/C
+	-KPSC1730
+	-N0120 A055 DCT
+	-KALW0026 KPSC
+	-DOF/260203)</code></pre>
+			<div class="note">
+			  Lecture rapide :
+			  <ul class="sub">
+				<li><code>VG</code> = VFR / aviation générale</li>
+				<li><code>1/C172/L</code> = 1 avion, type C172, turbulence de sillage Light</li>
+				<li><code>SG/C</code> = équipements (S + GNSS) / transpondeur Mode C</li>
+				<li><code>N0120 A055</code> = 120 kt, 5500 ft</li>
+				<li><code>DCT</code> = direct</li>
+				<li><code>0026</code> = 26 min</li>
+				<li><code>DOF/260203</code> = 03/02/2026</li>
+			  </ul>
+			</div>
+		  </div>
+		</div>
+
+		<hr />
+
+		<details class="section" open>
+		  <summary class="btn">
+			Détails carburant & cohérence opérationnelle
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="grid">
+			  <div class="section" style="padding:10px 12px;">
+				<div class="h2">Carburant (rappel de tes chiffres)</div>
+				<table class="tbl">
+				  <thead>
+					<tr><th>Élément</th><th>Valeur</th><th>Remarque</th></tr>
+				  </thead>
+				  <tbody>
+					<tr><td>Type</td><td>Avgas</td><td>Standard C172</td></tr>
+					<tr><td>Usable Fuel</td><td>50 gal (≈ 300 lbs)</td><td>Correspond à un C172 avec long range tanks 50 gal utilisables</td></tr>
+					<tr><td>Trip Fuel</td><td>3 gal</td><td>Trajet très court (48 NM)</td></tr>
+					<tr><td>Taxi Fuel</td><td>2 gal</td><td>Conservateur (mais réaliste si tu simules attente/roulage)</td></tr>
+					<tr><td>Reserve Fuel</td><td>10 gal</td><td>Réserve confortable</td></tr>
+					<tr><td>Endurance</td><td>4 h 34</td><td>Reprise directe pour FAA “Fuel on board”</td></tr>
+				  </tbody>
+				</table>
+				<div class="note">Tes valeurs “50 gal utilisables” et l’endurance sont cohérentes avec un C172 équipé long range tanks.</div>
+			  </div>
+
+			  <div class="section" style="padding:10px 12px;">
+				<div class="h2">Climb / Descent</div>
+				<table class="tbl">
+				  <thead>
+					<tr><th>Phase</th><th>Donnée</th><th>Valeur</th></tr>
+				  </thead>
+				  <tbody>
+					<tr><td>Climb</td><td>Rate / Speed</td><td>700 fpm @ 80 kt</td></tr>
+					<tr><td>Climb</td><td>Time to climb</td><td>0 h 07</td></tr>
+					<tr><td>Descent</td><td>Rate / Speed</td><td>600 fpm @ 100 kt</td></tr>
+					<tr><td>Descent</td><td>Rule of thumb</td><td>2.7 NM / 1000 ft</td></tr>
+				  </tbody>
+				</table>
+				<div class="callout" style="margin-top:10px;">
+				  <strong>Conseil réalisme :</strong> si tu veux être “pilot-like”, note ton <span class="blue">Top of Climb</span> et ton
+				  <span class="blue">Top of Descent</span> (avec la règle des 2.7 NM/1000 ft) dans tes notes de nav.
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</details>
+
+	  </div>
+	</details>
+
+    </div> <!-- /.main -->
+  </div>   <!-- /.card -->
+
+
+
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+
+		  // Si au moins 1 est ouvert -> on ferme tout
+		  // Si tous sont fermés -> on ouvre tout
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		// Bonus accessibilité : Entrée / Espace déclenche aussi
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+</body>
+</html>

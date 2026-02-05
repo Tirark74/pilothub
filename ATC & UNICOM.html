@@ -1,0 +1,2016 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ATC & UNICOM</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      /* Même thème que tes 3 autres sites */
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+      --gridLine:#b9c2cc;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --shadow: rgba(0,0,0,.12);
+
+      /* Lisibilité */
+      --baseFont: 18px;
+      --baseLine: 1.22;
+
+      /* Blocs "code" en clair */
+      --codeBg:#ffffff;
+      --codeBorder:#b9c2cc;
+
+      /* Badges */
+      --you:#1e6f36;
+      --atc:#b96a00;
+      --note:#b42318;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+      font-size:var(--baseFont);
+      line-height:var(--baseLine);
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    /* sheen léger (comme tes autres pages) */
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    /* ===== HEADER ===== */
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+      text-align:center;
+    }
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:10px 10px 12px;
+    }
+
+    /* ===== Subtitle (badges) ===== */
+    .subtitle{
+      text-align:center;
+      color:var(--ink2);
+      margin:6px 0 12px;
+      font-size:15px;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin:0 6px 6px 0;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.55);
+      font-weight:900;
+      color:#20324a;
+      vertical-align:2px;
+      white-space:nowrap;
+    }
+    .badge-you{ color:var(--you); border-color:rgba(30,111,54,.35); }
+    .badge-atc{ color:var(--atc); border-color:rgba(185,106,0,.35); }
+    .badge-note{ color:var(--note); border-color:rgba(180,35,24,.35); }
+
+    /* ===== Sections / accordéons ===== */
+    details.section{
+      display:block;
+      margin:0 0 12px;
+      padding:0;
+    }
+
+    /* En-tête jaune cliquable (summary) */
+    summary.btn{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+
+      margin:0;
+      padding:8px 10px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:19px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    summary.btn::-webkit-details-marker{display:none}
+
+    /* petit "pill" à droite du titre */
+    .pill{
+      display:inline-block;
+      padding:1px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.35px;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.55);
+      color:#20324a;
+      text-transform:none;
+      font-style:normal;
+      white-space:nowrap;
+    }
+
+    /* chevron */
+    .chev{
+      margin-left:auto;
+      font-weight:900;
+      color:#2b3b4f;
+      opacity:.85;
+      transition: transform 180ms ease;
+      font-style:normal;
+    }
+    details.section[open] .chev{ transform: rotate(90deg); }
+
+    /* Corps */
+    .section-body{
+      margin-top:8px;
+      background:transparent;
+      padding:0 2px 4px;
+    }
+
+    /* animation douce d’ouverture */
+    details.section .section-body{
+      overflow:hidden;
+      max-height:0;
+      opacity:0;
+      transform: translateY(-6px);
+      transition:
+        max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 260ms ease,
+        transform 260ms ease;
+    }
+    details.section[open] .section-body{
+      max-height: 8000px;
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    /* ===== Rows ===== */
+    .row{ margin-top:10px; }
+    .row-label{
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--ink2);
+      margin-bottom:4px;
+    }
+    .note{
+      font-size:14px;
+      color:var(--ink2);
+      line-height:1.25;
+      margin:8px 0 6px;
+    }
+
+    /* ===== Pre/code en thème clair ===== */
+    pre, pre.atc{
+      margin: 6px 0 10px;
+      padding: 10px 12px;
+      background: var(--codeBg);
+      border-radius: 6px;
+      border: 1px solid var(--codeBorder);
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--ink);
+      font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    code{
+      font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: inherit;
+    }
+    em{ font-style:italic; }
+
+    /* Tokens conservés (couleurs identiques au fichier original, OK en fond clair) */
+    .tok-facility { color: #ff5252; font-weight: 700; }
+    .tok-info     { color: #b96a00; font-weight: 900; } /* un peu plus lisible en clair */
+    .tok-blue     { color: #1f5f9e; font-weight: 900; } /* bleu thème */
+    .tok-green    { color: #1e6f36; font-weight: 900; } /* vert thème */
+    .tok-twy      { color: #b42318; font-weight: 900; }
+    .tok-warn     { color: #111111; font-weight: 900; }
+
+    .tok-freq   { color: #1f5f9e; font-weight: 900; }
+    .tok-alt    { color: #1f5f9e; font-weight: 900; }
+    .tok-code   { color: #b96a00; font-weight: 900; }
+    .tok-hdg    { color: #1f5f9e; font-weight: 900; }
+    .tok-rwy    { color: #1e6f36; font-weight: 900; }
+    .tok-place  { color: #b42318; font-weight: 900; }
+
+    /* séparateur doux (utilisé dans le contenu existant via <hr>) */
+    hr{
+      border:none;
+      border-top:1px solid rgba(0,0,0,.15);
+      margin:10px 0;
+    }
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+    /* Responsive */
+    @media (max-width:1020px){
+      body{padding:10px}
+      .main{padding:10px}
+      .checkwrap{padding:0 24px}
+      .checkwrap:before,.checkwrap:after{display:none}
+      .brand,.variant{width:auto}
+      summary.btn{font-size:18px}
+      .pill{font-size:11px}
+    }
+	
+		/* =========================================================
+		   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+		   + summary.btn qui wrap proprement
+		   ========================================================= */
+		@media (max-width: 520px){
+
+		  /* ----- Header layout ----- */
+		  .header-top{
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		  }
+
+		  /* OPS reste en haut à gauche */
+		  .brand{
+			width:100%;
+			justify-content:flex-start;
+		  }
+
+		  /* Titre centré (ligne du milieu) */
+		  .logo{
+			width:100%;
+			padding:0;
+			display:flex;
+			justify-content:center;
+		  }
+
+		  /* cache la colonne droite */
+		  .variant{ display:none; }
+
+		  /* ----- Titre + barres rouges conservées ----- */
+		  .checkwrap{
+			padding: 0 38px;           /* laisse la place aux barres */
+			max-width: 100%;
+		  }
+
+		  .checkwrap:before,
+		  .checkwrap:after{
+			display:block !important;  /* on force l’affichage */
+			width: clamp(18px, 7vw, 34px);
+			height: 3px;
+		  }
+
+		  /* Le titre peut passer sur 2 lignes */
+		  .checkmate{
+			font-size: 22px;
+			max-width: 88vw;
+			white-space: normal;       /* autorise le wrap */
+			line-height: 1.15;
+			padding: 8px 14px;
+			text-align:center;
+		  }
+
+		  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+		  summary.btn{
+			white-space: normal;
+			flex-wrap: wrap;
+			row-gap: 6px;
+			font-size: 16px;
+			padding: 10px 10px;
+		  }
+
+		  /* le texte principal prend la largeur pour éviter le serrage */
+		  summary.btn > :first-child{
+			flex: 1 1 100%;
+		  }
+
+		  /* chevron toujours à droite */
+		  .chev{
+			margin-left:auto;
+		  }
+		}
+
+	  /* 3) Badges : autoriser wrap pour éviter overflow */
+	  .badge{
+		white-space: normal;
+		max-width: 100%;
+		line-height: 1.15;
+		text-align: center;
+	  }
+
+	  .row-label{
+		text-align:center;  /* plus clean sur mobile */
+	  }
+	}
+
+
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">ICAO</div>
+          <div class="airplains">
+            <div>International</div>
+            <div>Civil</div>
+            <div>Aviation</div>
+			<div>Organization</div>
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">ATC & UNICOM</div>
+			</a>
+          </div>
+        </div>
+
+        <div class="variant">
+          N884CT
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="subtitle">
+      </div>
+
+      <!-- ===== CONTENU INCHANGÉ ===== -->
+
+      <!-- Example – Olympia -->
+      <details class="section">
+        <summary class="btn">
+          <span>Example – Olympia (Startup → Departure)</span>
+          <span class="pill">Ramp → Takeoff</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Startup</span></div>
+            <pre class="atc">[<span class="tok-facility">Olympia</span>] Ground, <em>N884CT</em>, at ramp <span class="tok-blue">[14]</span>, request startup</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, engine start approved, call when ready for taxi.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Engine start approved, will call for taxi, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Taxi</span></div>
+            <pre class="atc">[<span class="tok-facility">Olympia</span>] Ground, <em>N884CT</em>, at ramp <span class="tok-blue">[14]</span>, with Information [<span class="tok-info">Yanki</span>], request taxi for VFR departure to the [west], runway <span class="tok-green">[17]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, runway <span class="tok-green">[17]</span> taxi via <span class="tok-twy">[C]</span>. Hold short runway <span class="tok-green">[17]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Taxi to runway <span class="tok-green">[17]</span> via <span class="tok-twy">[C]</span>, hold short runway <span class="tok-green">[17]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><span class="tok-warn">*</span><em>N884CT</em>, cross runway <span class="tok-green">[17]</span> at <span class="tok-twy">[C]</span> Continue taxi via <span class="tok-twy">[A]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc"><span class="tok-warn">*</span>Cross runway <span class="tok-green">[17]</span> at <span class="tok-twy">[C]</span>, continue via <span class="tok-twy">[A]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Takeoff</span></div>
+            <pre class="atc">[<span class="tok-facility">Olympia</span>] Tower, <em>N884CT</em>, holding short runway <span class="tok-green">[17]</span>, ready for departure.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, [<span class="tok-facility">Olympia</span>] Tower, wind <span class="tok-blue">[320]</span> at <span class="tok-blue">[6]</span>, fly heading <span class="tok-blue">[270]</span>, runway <span class="tok-green">[17]</span>, cleared for takeoff.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Fly heading <span class="tok-blue">[270]</span>, cleared for takeoff runway <span class="tok-green">[17]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, reset transponder. Squawk <span class="tok-blue">[3030]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Squawk <span class="tok-blue">[3030]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, contact Springfield-Branson Natl Departure <span class="tok-blue">[126.35]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc"><span class="tok-blue">[126.35]</span>, <em>N884CT</em>.</pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- Example – Seattle-Tacoma → Tacoma -->
+      <details class="section">
+        <summary class="btn">
+          <span>Example – Seattle-Tacoma → Tacoma (Arrival)</span>
+          <span class="pill">Vectors → ILS → Taxi</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">[<span class="tok-place">Seattle-Tacoma</span>], <em>N884CT</em>, <span class="tok-alt">[1,100]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, [<span class="tok-place">Seattle-Tacoma</span>] Departure, good day, radar contact, climb and maintain <span class="tok-alt">[2,400]</span>, <span class="tok-code">[A3001]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Climb and maintain <span class="tok-alt">[2,400]</span>, <span class="tok-code">[A3001]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, [<span class="tok-place">Seattle-Tacoma</span>], expect radar vectors, ILS <span class="tok-rwy">[17]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Expect radar vectors, ILS <span class="tok-rwy">[17]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, turn right, heading <span class="tok-hdg">[280]</span>. Expect further clearance in about 20 miles.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Turn right, heading <span class="tok-hdg">[280]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, turn right, heading <span class="tok-hdg">[355]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Turn right, heading <span class="tok-hdg">[355]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, Tacoma Narrows airport landing runway <span class="tok-rwy">[17]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Tacoma Narrows airport, landing runway <span class="tok-rwy">[17]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, contact [<span class="tok-place">Seattle-Tacoma</span>] Approach <span class="tok-freq">[120.1]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Contact [<span class="tok-place">Seattle-Tacoma</span>] Approach <span class="tok-freq">[120.1]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Tacoma Tower, <em>N884CT</em>, ILS <span class="tok-rwy">[17]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, Tacoma Tower, wind calm, runway <span class="tok-rwy">[17]</span> cleared to land.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Runway <span class="tok-rwy">[17]</span> cleared to land, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, exit left at <span class="tok-twy">[A]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Exit left at <span class="tok-twy">[A]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, contact ground <span class="tok-freq">[121.8]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc">Ground <span class="tok-freq">[121.8]</span>, <em>N884CT</em>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre class="atc"><em>N884CT</em>, request taxi to the ramp <span class="tok-blue">[11]</span>.</pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre class="atc"><em>N884CT</em>, Ramp <span class="tok-blue">[11]</span> taxi via <span class="tok-twy">[A]</span>.</pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- ===== Le reste du contenu (inchangé) ===== -->
+      <!-- IMPORTANT : à partir d’ici, je conserve ton HTML mot pour mot, -->
+      <!-- seule la classe summary devient "btn" (en-tête jaune) -->
+
+      <!-- Example Flight – Full Dialogue -->
+      <details class="section">
+        <summary class="btn">
+          <span>Example Flight – N884CT (VFR with Flight Following)</span>
+          <span class="pill">Startup → Landing</span>
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <!-- Startup / Taxi -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Startup</span></div>
+            <pre><code>Branson Ground, N884CT, at ramp 14, request startup</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, engine start approved, call when ready for taxi.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Engine start approved, will call for taxi, N884CT.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Taxi</span></div>
+            <pre><code>Branson Tower, N884CT, at ramp 14, with Information Zulu, request taxi for VFR departure to the west, runway 32.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, runway 32 taxi via C. Hold short runway 32.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Taxi to runway 32 via C, hold short runway 32, N884CT.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, cross runway 32 at C. Continue taxi via A.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Cross runway 32 at C, continue via A, N884CT.</code></pre>
+          </div>
+
+          <!-- Takeoff -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Takeoff</span></div>
+            <pre><code>Branson Tower, N884CT, holding short runway 32, ready for departure.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Branson Tower, wind 320 at 6, fly heading 270, runway 32, cleared for takeoff.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Fly heading 270, cleared for takeoff runway 32, N884CT.</code></pre>
+          </div>
+
+          <!-- Transponder -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, reset transponder. Squawk 3030.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Squawk 3030, N884CT.</code></pre>
+          </div>
+
+          <!-- Departure handoff -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, contact Springfield-Branson Natl Departure 126.35.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>126.35, N884CT.</code></pre>
+          </div>
+
+          <!-- Departure check-in -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Departure</span></div>
+            <pre><code>Springfield-Branson Natl Departure, N884CT, climbing through 4,000 for 5,000.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Springfield-Branson Natl Departure, radar contact.</code></pre>
+          </div>
+
+          <!-- Direct-to -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, cleared direct 3631N09336W. Resume own navigation.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Direct 3631N09336W, then resume own navigation, N884CT.</code></pre>
+          </div>
+
+          <!-- Center handoff -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, contact Memphis Center 126.85, have a good afternoon.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>126.85, thanks, N884CT.</code></pre>
+          </div>
+
+          <!-- Center check-in -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Center</span></div>
+            <pre><code>Memphis Center, N884CT, level 5,000.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Memphis Center.</code></pre>
+          </div>
+
+          <!-- New Center sector -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, contact Memphis Center 126.1.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>126.1, N884CT.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Memphis Center, N884CT, level 5,000.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Memphis Center, copy.</code></pre>
+          </div>
+
+          <!-- Expect vectors -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Memphis Center, expect radar vectors, runway 26.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Expect radar vectors runway 26, N884CT.</code></pre>
+          </div>
+
+          <!-- New Center frequency -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, contact Memphis Center 119.25.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>119.25, N884CT, take care.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Check-in</span></div>
+            <pre><code>Memphis Center, N884CT, level 5,000.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Memphis Center.</code></pre>
+          </div>
+
+          <!-- Arrival info -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Ft Smith Regl airport landing runway 26.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Landing runway 26, N884CT.</code></pre>
+          </div>
+
+          <!-- Handoff to Approach -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, contact Razorback Approach 134.525.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>134.525, N884CT.</code></pre>
+          </div>
+
+          <!-- Approach check-in -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Approach</span></div>
+            <pre><code>Razorback Approach, N884CT, level 4,900, with information India.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>Razorback, N884CT, Razorback Approach, A3042 expect the visual approach runway 26.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Expect the visual approach runway 26, N884CT.</code></pre>
+          </div>
+
+          <!-- Descent -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, descend and maintain 3,000, A3042.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Descend and maintain 3,000, N884CT.</code></pre>
+          </div>
+
+          <!-- New ATIS -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – ATIS</span></div>
+            <pre><code>All aircraft be advised Information B now current, A2996.</code></pre>
+          </div>
+
+          <!-- Vectors for approach -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, turn left, heading 180, vectors for the approach.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Left heading 180, N884CT.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, turn right, heading 085.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Right heading 085, N884CT.</code></pre>
+          </div>
+
+          <!-- Tower & landing -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Tower</span></div>
+            <pre><code>Fort Smith Tower, N884CT, visual runway 26.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, Fort Smith Tower, wind 100 at 7, runway 26 cleared to land.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Cleared to land runway 26, N884CT.</code></pre>
+          </div>
+
+          <!-- Exit & taxi -->
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, exit right at A.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Exit right at A, N884CT.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Ground</span></div>
+            <pre><code>Fort Smith Ground, N884CT, clear of runway 26 at A, request taxi to the ramp.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>N884CT, welcome to Ft Smith Regl airport, say parking or advise if need assignment.</code></pre>
+          </div>
+        </div>
+      </details>
+
+
+	<!-- =========================================================
+		 AIR-TO-AIR / UNCONTROLLED AERODROME (ICAO ENGLISH)
+		 Add this AFTER section 13
+		 ========================================================= -->
+
+	<details class="section">
+	  <summary class="btn">
+		<span>Air-to-Air (Uncontrolled Aerodromes) – ICAO</span>
+		<span class="pill">UNICOM / AUTO-INFO</span>
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+
+
+		
+		
+		
+		  <div class="section-body">
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">UNICOM (mostly FAA / USA term)</span></div>
+			  <pre class="atc">UNICOM = a ground station (often an FBO/handler) that can provide non-ATC information
+	(local weather, runway in use, parking, fuel, etc.).
+
+	Important: UNICOM is not a control service. At a non-controlled aerodrome, pilots self-announce
+	on a traffic frequency (CTAF). Sometimes the CTAF is the same frequency as UNICOM depending on the field.
+
+	The FAA also describes cases where UNICOM may relay certain messages for ATC if procedures exist
+	(e.g., clearance via an operator), but this is controlled/limited by published arrangements.</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">ICAO / Europe / France (Auto-Info / Air-to-Air)</span></div>
+			  <pre class="atc">In France/Europe, the concept is usually “auto-information / air-to-air (A/A)”:
+	at an aerodrome without ATS (no Tower, no AFIS), pilots broadcast position/intentions for
+	collision avoidance — not to “receive an authorization”.
+
+	Practical rule:
+	• Use the published aerodrome frequency (VAC/AIP).
+	• If none is assigned: use 123.500 MHz (common auto-information frequency).
+	• For some ULM platforms, a specific framework exists: 125.335 MHz is referenced in AIC France (case dependent).
+
+	Therefore:
+	• USA: “UNICOM / CTAF”
+	• France/ICAO: “Auto-info / A/A” on the aerodrome frequency (or 123.500 if none).</pre>
+			</div>
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Operational goals</span></div>
+			  <pre class="atc">• Build a shared mental picture (“who is where, doing what, in which direction, on which runway”).
+	• Avoid conflicts (joining, base/final, backtrack, runway occupancy, etc.).
+	• Coordinate when there is no ATC (or the tower is closed).
+	• Manage radio workload: short, clear, standard, and leave space on the frequency.</pre>
+			</div>
+						<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Message structure</span></div>
+			  <pre class="atc">A good transmission almost always contains:
+	1) Aerodrome name (at the beginning AND often at the end if frequency is shared)
+	2) Callsign
+	3) Position + altitude (especially inbound)
+	4) Intention
+	5) Runway / circuit direction (left/right) / joining method
+
+	Example (France/ICAO style):
+	“Lognes traffic, N884CT, at parking, taxiing to holding point runway 26, for circuit, Lognes.”
+
+	Example (USA/FAA style):
+	“Frederick traffic, N884CT, 10 miles southeast, descending through 3,500, inbound for landing,
+	request wind and runway, Frederick.”</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Frequency discipline</span></div>
+			  <pre class="atc">• Listen before transmitting (2–3 seconds minimum).
+	• If someone is talking: wait (avoid stepping on transmissions).
+	• No chat: traffic only.
+	• Always say the aerodrome name when the frequency can be shared (e.g., 123.500).</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">What auto-info is NOT</span></div>
+			  <pre class="atc">• You do not ask “cleared/authorized?”
+	• You do not receive “cleared to land” (except very specific published services like AFIS/INFO —
+	  but then it is no longer “pure UNICOM”).</pre>
+			</div>
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Departure (ground)</span></div>
+			  <pre class="atc">• Before engine start / at parking (optional; useful with traffic/schools)
+	• Taxi (especially if complex taxiways / runway crossings)
+	• Holding point / lining up (critical)
+	• Take-off (critical)
+	• Leaving the circuit / frequency change (when departing the area)</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Circuit</span></div>
+			  <pre class="atc">• Downwind
+	• Base
+	• Final
+	• Runway vacated (important)</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Arrival</span></div>
+			  <pre class="atc">• First inbound call (≈10 min / 10 NM / before joining)
+	• Joining (overhead / downwind / straight-in / etc.)
+	• Downwind / base / final
+	• Runway vacated
+	• Taxi to parking (optional but helpful)</pre>
+			</div>
+			
+			
+			
+		  </div>
+
+
+		<!-- =========================================================
+			 3) FREQUENCIES
+			 ========================================================= -->
+		<details class="section" >
+		  <summary class="btn">
+			<span>Typical Frequencies (quick references)</span>
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">France (practical references)</span></div>
+			  <pre class="atc">• Always prioritize the published VAC/AIP frequency.
+	• If no frequency assigned: 123.500 MHz (common auto-information).
+	• Special case: some ULM platforms use 125.335 MHz within the published framework.</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">USA (practical references)</span></div>
+			  <pre class="atc">• CTAF/UNICOM is commonly 122.7 / 122.8 / 122.9 / 123.0 (field dependent, published).
+	• 122.8 is very common at non-towered fields.
+
+	⚠️ You do not “choose” the frequency — you read it (chart / AFD / Chart Supplement / VAC).</pre>
+			</div>
+		  </div>
+		</details>
+
+
+
+		<!-- =========================================================
+			 6) ICAO ENGLISH PHRASEOLOGY
+			 ========================================================= -->
+		<details class="section" >
+		  <summary class="btn">
+			<span>ICAO Standard Phraseology – English (UNICOM / A/A)</span>
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Context</span></div>
+			  <pre class="atc">Context: Aerodrome without ATS, pilots broadcasting intentions on the aerodrome traffic frequency.
+	No clearances. No permissions. Intentions only.</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-you">Taxi & Departure (ICAO – English)</span></div>
+			  <pre class="atc">Engine start (optional, but realistic if traffic is present)
+	“Saint-Pierre traffic, N884CT, engine start at apron, VFR local flight, Saint-Pierre.”
+
+	Taxi
+	“Saint-Pierre traffic, N884CT, taxiing to holding point runway 26 via Alpha, Saint-Pierre.”
+
+	Holding point
+	“Saint-Pierre traffic, N884CT, holding point runway 26, ready for departure, Saint-Pierre.”
+
+	Lining up & take-off
+	“Saint-Pierre traffic, N884CT, lining up and taking off runway 26, left-hand circuit, Saint-Pierre.”
+
+	Leaving the circuit
+	“Saint-Pierre traffic, N884CT, leaving the circuit to the north, climbing to two thousand five hundred feet, Saint-Pierre.”</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-you">Circuit & Arrival (ICAO – English)</span></div>
+			  <pre class="atc">Initial inbound call (≈10 NM / 5–10 min)
+	“Saint-Pierre traffic, N884CT, ten miles south, altitude two thousand five hundred feet, inbound for landing, estimating overhead in five minutes, Saint-Pierre.”
+
+	Overhead / joining
+	“Saint-Pierre traffic, N884CT, overhead the field at two thousand feet, joining left-hand downwind runway 26, Saint-Pierre.”
+
+	Downwind
+	“Saint-Pierre traffic, N884CT, left-hand downwind runway 26, full stop, Saint-Pierre.”
+
+	Base
+	“Saint-Pierre traffic, N884CT, base leg runway 26, full stop, Saint-Pierre.”
+
+	Final
+	“Saint-Pierre traffic, N884CT, final runway 26, full stop, Saint-Pierre.”
+
+	Runway vacated
+	“Saint-Pierre traffic, N884CT, runway 26 vacated, taxiing to parking, Saint-Pierre.”</pre>
+			</div>
+		  </div>
+		</details>
+
+		<!-- =========================================================
+			 7) INTERACTIONS & TRAFFIC MANAGEMENT
+			 ========================================================= -->
+		<details class="section" >
+		  <summary class="btn">
+			<span>Interactions & Traffic Management (ICAO – English)</span>
+
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Two aircraft converging on final</span></div>
+			  <pre class="atc">You do not negotiate, you declare:
+
+	“Saint-Pierre traffic, N884CT, long final runway 26, I have the traffic in sight, continuing approach, Saint-Pierre.”
+
+	If spacing is insufficient:
+
+	“Saint-Pierre traffic, N884CT, going around for spacing, runway 26, Saint-Pierre.”</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Someone backtracking the runway</span></div>
+			  <pre class="atc">“Saint-Pierre traffic, N884CT, holding short runway 26 due to backtrack traffic, Saint-Pierre.”
+
+	Clear, calm, professional.</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Adjust your plan based on traffic</span></div>
+			  <pre class="atc">This is very ICAO-realistic:
+
+	“Saint-Pierre traffic, N884CT, extending downwind for spacing behind the reported traffic, Saint-Pierre.”
+
+	or
+
+	“Saint-Pierre traffic, N884CT, number two following the aircraft on base leg, Saint-Pierre.”</pre>
+			</div>
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Priority messages (mental hierarchy)</span></div>
+			  <pre class="atc">• Emergency / abnormal
+	• Runway occupancy (lining up, take-off, final, vacated)
+	• Joining / circuit legs
+	• Taxi / parking
+
+	If in doubt: shut up and listen.</pre>
+			</div>
+		  </div>
+		</details>
+
+		<!-- =========================================================
+			 8) FULL ICAO ENGLISH CONVERSATION
+			 ========================================================= -->
+		<details class="section" >
+		  <summary class="btn">
+			<span>Full ICAO English Conversation (Departure → Arrival)</span>
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Scenario</span></div>
+			  <pre class="atc">Aerodrome SAINT-PIERRE (no ATS)
+	Runway 26, left-hand circuit
+	Traffic:
+	• F-GKLM (training aircraft)
+	• F-HABC (ULM)
+	• F-CXYZ (glider operations)</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-you">Departure</span></div>
+			  <pre class="atc">N884CT:
+	“Saint-Pierre traffic, N884CT, engine start at apron, VFR local flight, Saint-Pierre.”
+
+	F-GKLM:
+	“Saint-Pierre traffic, F-GKLM, left-hand downwind runway 26, touch-and-go, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, taxiing to holding point runway 26 via Alpha, Saint-Pierre.”
+
+	F-HABC:
+	“Saint-Pierre traffic, F-HABC, lining up and taking off runway 26, departure to the west, Saint-Pierre.”
+
+	N884CT (good discipline):
+	“Saint-Pierre traffic, N884CT, holding short runway 26 for departing traffic, Saint-Pierre.”
+
+	F-GKLM:
+	“Saint-Pierre traffic, F-GKLM, final runway 26, touch-and-go, Saint-Pierre.”
+
+	F-GKLM:
+	“Saint-Pierre traffic, F-GKLM, runway 26 vacated, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, holding point runway 26, ready for departure, Saint-Pierre.”
+
+	Glider ops:
+	“Saint-Pierre traffic, glider winch operation in progress runway 26, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, holding short runway 26 due to glider operations, Saint-Pierre.”
+
+	Glider ops:
+	“Saint-Pierre traffic, winch operation completed, runway 26 available, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, lining up and taking off runway 26, left-hand circuit, Saint-Pierre.”</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-you">Circuit</span></div>
+			  <pre class="atc">N884CT:
+	“Saint-Pierre traffic, N884CT, crosswind runway 26, Saint-Pierre.”
+
+	F-GKLM:
+	“Saint-Pierre traffic, F-GKLM, backtracking runway 26 for departure, Saint-Pierre.”
+
+	N884CT (situational awareness):
+	“Saint-Pierre traffic, N884CT, extending upwind for spacing due to backtracking traffic, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, left-hand downwind runway 26, full stop, Saint-Pierre.”
+
+	F-HABC:
+	“Saint-Pierre traffic, F-HABC, base leg runway 26, full stop, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, number two following the ULM on base leg, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, base leg runway 26, full stop, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, final runway 26, full stop, Saint-Pierre.”
+
+	N884CT:
+	“Saint-Pierre traffic, N884CT, runway 26 vacated, taxiing to parking, Saint-Pierre.”</pre>
+			</div>
+
+			<hr />
+
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-you">Arrival at another uncontrolled aerodrome</span></div>
+			  <pre class="atc">Aerodrome VALRIVIÈRE, no ATS.
+
+	N884CT:
+	“Valrivière traffic, N884CT, ten miles east, altitude three thousand feet, inbound for landing,
+	estimating overhead in five minutes, Valrivière.”
+
+	F-JQRP:
+	“Valrivière traffic, F-JQRP, right-hand downwind runway 08, touch-and-go, Valrivière.”
+
+	N884CT:
+	“Valrivière traffic, N884CT, overhead the field at two thousand feet, joining right-hand downwind runway 08, Valrivière.”
+
+	N884CT:
+	“Valrivière traffic, N884CT, right-hand downwind runway 08, full stop, Valrivière.”
+
+	N884CT:
+	“Valrivière traffic, N884CT, base leg runway 08, full stop, Valrivière.”
+
+	N884CT:
+	“Valrivière traffic, N884CT, final runway 08, full stop, Valrivière.”
+
+	N884CT:
+	“Valrivière traffic, N884CT, runway 08 vacated, taxiing to parking, Valrivière.”</pre>
+			</div>
+		  </div>
+		</details>
+
+		<!-- =========================================================
+			 9) CHECKLIST
+			 ========================================================= -->
+		<details class="section" >
+		  <summary class="btn">
+			<span>Quick Checklist (before every transmission)</span>
+			<span class="chev">›</span>
+		  </summary>
+
+		  <div class="section-body">
+			<div class="row">
+			  <div class="row-label"><span class="badge badge-note">Mental checklist</span></div>
+			  <pre class="atc">Before each call, check:
+	• Aerodrome name (start + end if frequency is shared)
+	• Callsign
+	• Where am I (position/altitude)
+	• What am I doing (intention)
+	• Runway / circuit direction (left/right) / join type
+	• Keep it short (one breath)</pre>
+			</div>
+		  </div>
+		</details>
+
+	  </div>
+	</details>
+
+
+
+
+
+
+	<!-- 0. ATIS -->
+	<details class="section">
+	  <summary class="btn">
+		<span>0. ATIS / Information</span>
+		<span class="pill">Always first</span>
+		<span class="chev">›</span>
+	  </summary>
+
+	  <div class="section-body">
+
+		<div class="note">
+		  The ATIS provides the current airport status and must be fully understood
+		  <strong>before contacting ATC</strong>.  
+		  Your goal is to extract the information quickly, not to memorize the message.
+		</div>
+
+		<h4>Mental flow (always the same)</h4>
+		<pre><code>1. ATIS letter + time
+	2. Runway(s) / airport configuration
+	3. Wind
+	4. Visibility + weather
+	5. Clouds
+	6. Temperature / Dewpoint
+	7. Pressure (QNH / Altimeter)
+	8. Special information / restrictions</code></pre>
+
+		<h4>What to listen for</h4>
+		<pre><code>• Information letter (Alpha, Bravo, India, November…)
+	• Time (Zulu / UTC)
+	• Runway(s) in use + approach type (ILS, RNAV, VOR…)
+	• Wind (direction / speed / gusts / variable)
+	• Visibility (and RVR if applicable)
+	• Weather (rain, fog, snow, thunderstorms…)
+	• Clouds (FEW / SCT / BKN / OVC + altitude)
+	• Temperature and dewpoint
+	• Pressure:
+	  - Europe: QNH 1013
+	  - USA: Altimeter 29.98
+	• NOTAMs: taxiway closed, bird activity, wind shear, etc.
+	• “Advise ATC you have Information ___”</code></pre>
+
+		<h4>Example ATIS broadcast</h4>
+		<pre><code>"All aircraft be advised, Information Juliet now current.
+	Wind 230 at 8.
+	Visibility 10.
+	Temperature 20, dewpoint 11.
+	Altimeter 29.98."</code></pre>
+
+		<h4>How a pilot decodes it</h4>
+		<pre><code>ATIS: Juliet
+	Wind: 230° / 8 kt
+	Visibility: 10
+	Temperature: +20°C
+	Dewpoint: +11°C
+	Altimeter: 29.98</code></pre>
+	  </div>
+	</details>
+
+
+      <!-- 1. Engine Start -->
+      <details class="section">
+        <summary class="btn">
+          <span>1. Engine Start</span>
+          <span class="pill">Ground</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="note">
+            En FAA pur, tu peux souvent démarrer sans demander. Mais BeyondATC accepte une demande
+            de "startup" / "engine start" comme dans ton exemple, donc on garde ce format.
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Generic</span></div>
+            <pre><code>[Airport Name] Ground, [Call Sign], at ramp [Number], request engine start.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>[Call Sign], engine start approved, call when ready for taxi.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Readback</span></div>
+            <pre><code>Engine start approved, will call for taxi, [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 2. Taxi -->
+      <details class="section">
+        <summary class="btn">
+          <span>2. Taxi</span>
+          <span class="pill">Ground / Tower</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="note">
+            Dans ton exemple, tu parles directement à <b>Branson Tower</b>.
+            En réel FAA, tu parlerais plutôt à <b>Ground</b>, mais BeyondATC gère bien les deux.
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Standard VFR taxi (Ground)</span></div>
+            <pre><code>[Airport Name] Ground, [Call Sign], at ramp [Number], with Information [ATIS Letter],
+VFR to [Destination], request taxi for departure runway [Runway Number].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Style de ton exemple (Tower)</span></div>
+            <pre><code>[Airport Name] Tower, [Call Sign], at ramp [Number], with Information [ATIS Letter],
+request taxi for VFR departure to the [Direction], runway [Runway Number].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Taxi clearance</span></div>
+            <pre><code>[Call Sign], runway [Runway Number] taxi via [Taxi Route]. Hold short runway [Runway Number].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Readback</span></div>
+            <pre><code>Taxi to runway [Runway Number] via [Taxi Route], hold short runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Cross a runway</span></div>
+            <pre><code>[Call Sign], cross runway [Runway crossed] at [Taxiway]. Continue taxi via [Taxi Route].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Readback crossing</span></div>
+            <pre><code>Cross runway [Runway crossed] at [Taxiway], continue via [Taxi Route], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Handoff to Tower</span></div>
+            <pre><code>[Call Sign], contact Tower on [Tower Frequency].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Tower [Tower Frequency], [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 3. Takeoff & Rejected Takeoff -->
+      <details class="section">
+        <summary class="btn">
+          <span>3. Takeoff & Rejected Takeoff</span>
+          <span class="pill">Tower</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Ready for departure</span></div>
+            <pre><code>[Airport Name] Tower, [Call Sign], holding short runway [Runway Number], ready for departure,
+VFR to [Destination].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Takeoff clearance</span></div>
+            <pre><code>[Call Sign], wind [Direction] at [Speed], fly heading [Heading], runway [Runway Number], cleared for takeoff.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Fly heading [Heading], cleared for takeoff runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Hold short for traffic</span></div>
+            <pre><code>[Call Sign], hold short runway [Runway Number] for traffic.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Holding short runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Line up and wait</span></div>
+            <pre><code>[Call Sign], line up and wait runway [Runway Number].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Line up and wait runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Rejected takeoff</span></div>
+            <pre><code>[Airport Name] Tower, [Call Sign], aborting takeoff, remaining on the runway.</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 4. Transponder -->
+      <details class="section">
+        <summary class="btn">
+          <span>4. Transponder / Squawk</span>
+          <span class="pill">Any phase</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Code incorrect</span></div>
+            <pre><code>[Call Sign], reset transponder, squawk [Transponder Code].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Squawk [Transponder Code], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – IDENT</span></div>
+            <pre><code>[Call Sign], squawk IDENT.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Ident, [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 5. After Takeoff / Departure & Flight Following -->
+      <details class="section">
+        <summary class="btn">
+          <span>5. After Takeoff – Departure & Flight Following</span>
+          <span class="pill">Tower → Departure / Center</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Handoff after departure</span></div>
+            <pre><code>[Call Sign], contact [Departure Name] Departure on [Frequency].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Short readback (comme ton exemple)</span></div>
+            <pre><code>[Frequency], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Initial call Departure</span></div>
+            <pre><code>[Departure Name] Departure, [Call Sign], passing [Altitude] for [Altitude], VFR to [Destination].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Request VFR flight following (BeyondATC OK)</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], VFR request.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>[Call Sign], go ahead.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Full request</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], [Position] at [Altitude], VFR to [Destination],
+request flight following.</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 6. Enroute – Altitude -->
+      <details class="section">
+        <summary class="btn">
+          <span>6. Enroute – Altitude</span>
+          <span class="pill">Center / Departure</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Descend</span></div>
+            <pre><code>[Call Sign], descend and maintain [Altitude].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Descend and maintain [Altitude], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Climb</span></div>
+            <pre><code>[Call Sign], climb and maintain [Altitude].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Climb and maintain [Altitude], [Call Sign].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Request different cruise altitude</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], request [Altitude].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>[Call Sign], confirm new cruise altitude [Altitude]?</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Affirmative, [Call Sign].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>[Call Sign], climb and maintain [Altitude].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Climb and maintain [Altitude], [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 7. Direct-To -->
+      <details class="section">
+        <summary class="btn">
+          <span>7. Direct-To / Own Navigation</span>
+          <span class="pill">Center / Departure</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Request direct (BeyondATC)</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], request direct [Fix or Coordinate].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC</span></div>
+            <pre><code>[Call Sign], cleared direct [Fix or Coordinate]. Resume own navigation.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Readback</span></div>
+            <pre><code>Direct [Fix or Coordinate], then resume own navigation, [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 8. Enroute – Frequency Change -->
+      <details class="section">
+        <summary class="btn">
+          <span>8. Enroute – Frequency Change & Check-in</span>
+          <span class="pill">Center ↔ Center / Center ↔ Approach</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Handoff</span></div>
+            <pre><code>[Call Sign], contact [Center Name] Center on [Frequency].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Short (comme l’exemple)</span></div>
+            <pre><code>[Frequency], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You (initial call)</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], level [Altitude], direct [Fix].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Example style</span></div>
+            <pre><code>Memphis Center, N884CT, level 5,000.</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Request frequency change (quitter Center)</span></div>
+            <pre><code>[Center Name] Center, [Call Sign], request frequency change.</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 9. Approach – Descent & Expectations -->
+      <details class="section">
+        <summary class="btn">
+          <span>9. Approach – Descent & Expectations</span>
+          <span class="pill">Center / Approach</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Step descents</span></div>
+            <pre><code>[Call Sign], descend and maintain 5,000.
+[Call Sign], descend and maintain 3,000.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Descend and maintain 5,000, [Call Sign].
+Descend and maintain 3,000, [Call Sign].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Expect radar vectors</span></div>
+            <pre><code>[Call Sign], expect radar vectors runway [Runway Number].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Expect radar vectors runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Expect visual approach</span></div>
+            <pre><code>[Call Sign], expect the visual approach runway [Runway Number].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Expect the visual approach runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Field in sight</span></div>
+            <pre><code>[Call Sign], airport is at your one o'clock, [Distance] miles.
+Report the field in sight.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>We have the field in sight, [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 10. Vectors for the Approach -->
+      <details class="section">
+        <summary class="btn">
+          <span>10. Vectors for the Approach</span>
+          <span class="pill">Approach</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Left turn</span></div>
+            <pre><code>[Call Sign], turn left heading [Heading], vectors for the approach.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Turn left heading [Heading], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Right turn</span></div>
+            <pre><code>[Call Sign], turn right heading [Heading].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Turn right heading [Heading], [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 11. Visual Approach & Tower Handoff -->
+      <details class="section">
+        <summary class="btn">
+          <span>11. Visual Approach & Tower</span>
+          <span class="pill">Approach → Tower</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Clear visual approach</span></div>
+            <pre><code>[Call Sign], cleared visual approach runway [Runway Number].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Cleared visual approach runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Handoff to Tower</span></div>
+            <pre><code>[Call Sign], contact [Tower Name] Tower on [Frequency].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>[Frequency], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Initial call (full)</span></div>
+            <pre><code>[Tower Name] Tower, [Call Sign], [Distance] miles [Direction] of the field,
+visual runway [Runway Number], full stop.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Example from your flight</span></div>
+            <pre><code>Fort Smith Tower, N884CT, visual runway 26.</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 12. Landing -->
+      <details class="section">
+        <summary class="btn">
+          <span>12. Landing</span>
+          <span class="pill">Tower</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Landing clearance</span></div>
+            <pre><code>[Call Sign], wind [Direction] at [Speed], runway [Runway Number] cleared to land.</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Cleared to land runway [Runway Number], [Call Sign].</code></pre>
+          </div>
+        </div>
+      </details>
+
+      <!-- 13. After Landing / Taxi to Parking -->
+      <details class="section">
+        <summary class="btn">
+          <span>13. After Landing – Taxi to Parking</span>
+          <span class="pill">Tower → Ground</span>
+          <span class="chev">›</span>
+        </summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Exit runway</span></div>
+            <pre><code>[Call Sign], exit right at [Taxiway].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>Exit right at [Taxiway], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Contact Ground</span></div>
+            <pre><code>[Call Sign], contact Ground on [Frequency].</code></pre>
+          </div>
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You</span></div>
+            <pre><code>[Frequency], [Call Sign].</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-you">You – Request taxi to ramp</span></div>
+            <pre><code>[Airport Name] Ground, [Call Sign], clear of runway [Runway Number] at [Taxiway],
+request taxi to the ramp.</code></pre>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><span class="badge badge-atc">ATC – Generic taxi</span></div>
+            <pre><code>[Call Sign], taxi to [Parking / Ramp] via [Taxi Route].</code></pre>
+          </div>
+        </div>
+      </details>
+	 
+  
+
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+
+		  // Si au moins 1 est ouvert -> on ferme tout
+		  // Si tous sont fermés -> on ouvre tout
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		// Bonus accessibilité : Entrée / Espace déclenche aussi
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+  
+  
+</body>
+</html>

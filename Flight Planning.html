@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FLIGHT PLANNING</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      /* Palette proche du support imprimé */
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+
+      --gridLine:#b9c2cc;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --red:#b42318;
+      --green:#1e6f36;
+
+      --shadow: rgba(0,0,0,.12);
+
+      /* Tooltips */
+      --tipBg:#0f172a;
+      --tipText:#ffffff;
+      --tipShadow: rgba(0,0,0,.35);
+
+      /* Lisibilité */
+      --baseFont: 20px;
+      --baseLine: 1.22;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+      font-size:var(--baseFont);
+      line-height:var(--baseLine);
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    /* léger “sheen” plastifié */
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    /* ===== HEADER ===== */
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+	
+		/* Colonnes “fixes” */
+	.col{
+	  padding:0;
+	}
+		
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+    }
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:8px 6px 10px;
+    }
+
+    /* ===== GRID 2 COLONNES ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:0;
+
+      border-top: 1.5px solid #111111;
+      border-bottom: 1.5px solid #111111;
+      border-left: 1.5px solid #111111;
+      border-right: 1px solid #8a8f98;
+
+      position:relative;
+      align-items:start;
+    }
+    .grid::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      left:50%;
+      width:1px;
+      background:#111111;
+      pointer-events:none;
+    }
+
+    .section{
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+
+      background:transparent;
+      border:none;
+      border-radius:0;
+      padding:6px 8px;
+      margin:0 0 10px;
+      display:block;
+    }
+    .section:last-child{margin-bottom:0}
+
+    /* Yellow headers */
+    .btn{
+      margin:-4px -4px 7px;
+      padding:6px 6px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:20px;
+      white-space:nowrap;
+    }
+
+    /* Text utilities */
+    .note{font-size:14px; color:var(--ink2); line-height:1.25}
+    .mono{font-family:"Arial Narrow", Arial, Helvetica, sans-serif;}
+	.divider{
+	  height:0;
+	  border-top: 2px solid rgba(0,0,0,.22);
+	  margin:10px 0;
+	}
+
+    /* Lists */
+    ul{
+      list-style:none;
+      padding-left:0;
+      margin:0;
+    }
+    li{margin:2px 0}
+    .dash li::before{
+      content:"– ";
+      color:#2b3b4f;
+      font-weight:900;
+    }
+    .sub{
+      margin-top:4px;
+      padding-left:12px;
+    }
+    .sub li::before{content:"• "; font-weight:900; color:#2b3b4f;}
+
+    /* Links look */
+    a{
+      color:var(--deepBlue);
+      text-decoration:none;
+      font-weight:900;
+    }
+    a:hover{ text-decoration:underline; }
+	
+		/* Sous-titre de section (ex: Airport Charts / Aeronautical Charts) */
+	.subhead{
+	  font-size: 22px;        /* légèrement plus grand */
+	  margin-top: 6px;
+	  color: var(--ink);
+	}
+
+	/* Liens “ressources” */
+	.links-plain a{
+	  font-style: italic;
+	  font-weight: normal;
+	  color: var(--ink);     /* même couleur que le texte */
+	  text-decoration: none;
+	}
+
+	.links-plain a:hover{
+	  text-decoration: underline;
+	}
+	
+		
+	/* Supprime le "– " parasite */
+	.dash li.subhead::before{
+	  content:none !important;
+	}
+
+	/* Alignement checkbox + texte */
+	.dash li.subhead{
+	  display:flex;
+	  align-items:center;
+	  gap:5px;
+	}
+
+	/* ===== Checkbox propre, centrée, lisible ===== */
+	.subhead input[type="checkbox"]{
+	  appearance:none;
+	  -webkit-appearance:none;
+
+	  width:22px;               /* plus grande */
+	  height:22px;
+
+	  border:1.6px solid rgba(27,31,36,.65);
+	  border-radius:4px;
+	  background:#fff;
+
+	  cursor:pointer;
+	  position:relative;
+	  flex:0 0 auto;
+
+	  box-sizing:border-box;
+
+	  transition:
+		border-color .18s ease,
+		box-shadow .18s ease,
+		transform .14s ease;
+	}
+
+	/* Feedback clic discret */
+	.subhead input[type="checkbox"]:active{
+	  transform: scale(0.94);
+	}
+
+	/* Focus clavier */
+	.subhead input[type="checkbox"]:focus-visible{
+	  outline:2px solid rgba(0,0,0,.18);
+	  outline-offset:2px;
+	}
+
+	/* ===== Coche parfaitement centrée ===== */
+	.subhead input[type="checkbox"]::after{
+	  content:"";
+	  position:absolute;
+
+	  /* centrage exact */
+	  left:50%;
+	  top:50%;
+
+	  width:7px;
+	  height:12px;
+
+	  border:solid #111;
+	  border-width:0 2.2px 2.2px 0;
+
+	  transform:
+		translate(-50%, -60%)   /* ajuste verticalement */
+		rotate(45deg)
+		scale(0.6);
+
+	  opacity:0;
+
+	  transition:
+		transform .22s cubic-bezier(.25,1,.3,1),
+		opacity .16s ease;
+	}
+
+	/* État coché */
+	.subhead input[type="checkbox"]:checked{
+	  box-shadow: 0 1px 2px rgba(0,0,0,.12);
+	  border-color: rgba(27,31,36,.85);
+	}
+
+	/* Apparition fluide de la coche */
+	.subhead input[type="checkbox"]:checked::after{
+	  opacity:1;
+	  transform:
+		translate(-50%, -60%)
+		rotate(45deg)
+		scale(1);
+	}
+	
+	.subhead a{
+	  color: inherit;
+	  text-decoration: none;
+	  font-weight: inherit;
+	  font-style: inherit;
+	  transition: opacity .15s ease;
+	}
+
+	.subhead a:hover{
+	  opacity: .78;
+	}
+	
+	.sub a{
+	  color: inherit;
+	  text-decoration: none;
+	  font-weight: inherit;
+	  font-style: inherit;
+	  transition: opacity .15s ease;
+	}
+
+	.sub a:hover{
+	  opacity: .78;
+	}
+	
+	.dash a{
+	  color: inherit;
+	  text-decoration: none;
+	  font-weight: inherit;
+	  font-style: inherit;
+	  transition: opacity .15s ease;
+	}
+
+	.dash a:hover{
+	  opacity: .78;
+	}
+	
+	.sub a:hover{
+	  opacity: .78;
+	}
+	
+	 .btn a{
+	  color: inherit;
+	  text-decoration: none;
+	  font-weight: inherit;
+	  font-style: inherit;
+	  transition: opacity .15s ease;
+	}
+
+	.btn a:hover{
+	  opacity: .78;
+	}
+	
+	
+
+
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+    /* ===== Responsive ===== */
+    @media (max-width:1020px){
+      body{padding:10px}
+      .main{padding:10px}
+
+      .grid{ grid-template-columns: 1fr; }
+      .grid::before{ display:none; }
+
+      .checkwrap{padding:0 24px}
+      .checkwrap:before,.checkwrap:after{display:none}
+      .brand,.variant{width:auto}
+    }
+	
+
+	/* ===== MOBILE FIX (Memo VFR) ===== */
+	@media (max-width: 520px){
+
+	  /* 1) Header : garder les barres rouges + titre joli */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+	  .brand{
+		width:100%;
+		justify-content:flex-start; /* VFR en haut à gauche */
+	  }
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+	  .checkwrap{
+	    position: relative;   /* <-- AJOUTE ÇA */
+		padding:0 36px; /* barres plus courtes */
+		max-width:100%;
+	  }
+	  .checkwrap::before,
+	  .checkwrap::after{
+	    display: block !important;   /* <-- AJOUTE ÇA */
+		width: clamp(18px, 6vw, 32px); /* barres adaptatives */
+	  }
+	  .checkmate{
+		font-size:22px;
+		max-width: 88vw;
+		white-space: normal;  /* autorise 2 lignes */
+		text-align:center;
+		line-height:1.15;
+		padding:8px 14px;
+	  }
+	  .variant{ display:none; }
+
+	  /* 2) Tes titres jaunes (classe .btn) : ne plus forcer nowrap */
+	  .btn{
+		white-space: normal;
+		line-height: 1.15;
+		font-size: 18px;
+		padding: 10px 8px;
+	  }
+
+	  /* 3) La grille est déjà en 1 colonne chez toi, on sécurise */
+	  .grid{
+		overflow-x: hidden;
+	  }
+
+	  /* 4) Lignes avec checkbox : autoriser le wrap et éviter l’overflow */
+	  .dash li.subhead{
+		align-items: flex-start;
+		flex-wrap: wrap;
+		gap: 8px;
+	  }
+
+	  /* 5) Les liens/boutons dans les subhead : qu'ils ne poussent pas la largeur */
+	  .dash li.subhead a{
+		max-width: 100%;
+		white-space: normal;
+		word-break: break-word;
+	  }
+
+	  /* 6) Si tu utilises nav-btn ici, le rendre “mobile-friendly” */
+	  .nav-btn{
+		display: inline-block;     /* pas block pleine largeur dans une ligne flex */
+		width: auto;
+		max-width: 100%;
+		font-size: 16px;
+		padding: 10px 12px;
+		text-transform: none;      /* optionnel : plus joli dans une checklist */
+	  }
+	}
+
+	/* ===== FIX CHECKBOX + TEXTE (CSS ONLY) ===== */
+
+	/* 1) La ligne checkbox + texte : toujours sur la même ligne tant que possible */
+	.grid .dash li.subhead{
+	  display:flex !important;
+	  align-items:flex-start !important;
+	  gap:8px !important;
+	  flex-wrap: nowrap !important;   /* <-- empêche le saut après la checkbox */
+	}
+
+	/* 2) La checkbox ne bouge pas */
+	.grid .dash li.subhead input[type="checkbox"]{
+	  flex:0 0 auto !important;
+	  margin:0 !important;
+	  margin-top:2px !important;
+	}
+
+	/* 3) Le texte / lien prend le reste de la ligne et wrap proprement */
+	.grid .dash li.subhead a,
+	.grid .dash li.subhead{
+	  overflow-wrap:anywhere;
+	  word-break:break-word;
+	}
+
+	.grid .dash li.subhead a{
+	  flex:1 1 auto !important;
+	  min-width:0 !important;         /* <-- clé pour éviter overflow en flex */
+	}
+
+	/* 4) Harmoniser taille lien vs texte (même style que le li) */
+	.grid .dash li.subhead a{
+	  font-size: inherit !important;
+	  font-weight: inherit !important;
+	  font-style: inherit !important;
+	  color: inherit !important;
+	  text-decoration: none !important;
+	}
+
+	.grid .dash li.subhead a:hover{
+	  opacity:.78;
+	}
+
+	/* 5) Si tu utilises encore nav-btn dans cette page, on le neutralise */
+	.grid .dash li.subhead a.nav-btn{
+	  display:inline !important;
+	  padding:0 !important;
+	  margin:0 !important;
+	  background:none !important;
+	  border:0 !important;
+	  box-shadow:none !important;
+	  text-transform:none !important;
+	}
+	/* ===== Uniformiser la police des liens "bouton" restants dans Memo VFR ===== */
+
+	/* Tous les liens de la checklist prennent la typo du texte (pas de style "bouton") */
+	.grid .dash a.nav-btn,
+	.grid .sub a.nav-btn{
+	  font-family: inherit !important;
+	  font-size: inherit !important;
+	  font-weight: inherit !important;
+	  font-style: inherit !important;
+	  text-transform: none !important;
+	  letter-spacing: normal !important;
+	  line-height: inherit !important;
+
+	  /* enlève l'apparence bouton si elle existe */
+	  background: none !important;
+	  border: 0 !important;
+	  box-shadow: none !important;
+	  padding: 0 !important;
+	  margin: 0 !important;
+	  display: inline !important;
+
+	  color: inherit !important;
+	  text-decoration: none !important;
+	}
+
+	.grid .dash a.nav-btn:hover,
+	.grid .sub a.nav-btn:hover{
+	  opacity: .78;
+	}
+
+
+
+	
+	
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna">VFR</div>
+          <div class="airplains">
+            <div>Visual</div>
+            <div>Flight</div>
+            <div>Rules</div>
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">Flight Planning</div>
+			</a>
+          </div>
+        </div>
+
+        <div class="variant">
+          <small> </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="grid">
+
+        <!-- COLONNE GAUCHE -->
+        <div class="col">
+
+          <!-- 1 -->
+          <div class="section" id="preparation-du-vol">
+            <div class="btn">1) Préparation du vol</div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="Weather & NOTAM.html">
+				Météo (METAR + TAF + Vents en altitude) & NOTAM 
+				</a>
+              </li>
+            </ul>
+            <ul class="sub links-plain">
+              <li><a href="https://www.windy.com/?45.748,4.850,5" target="_blank" rel="noopener noreferrer">Weather Global - Windy</a></li>
+              <li><a href="https://metar-taf.com/fr/?c=388110.-930322.4" target="_blank" rel="noopener noreferrer">Weather Global - Metar &amp; Taf</a></li>
+              <li><a href="https://airportwxbot.com/planner?ActiveSideBar=UnloadedFlightPlanBar" target="_blank" rel="noopener noreferrer">Weather &amp; NOTAM Global – Wx Planner</a></li>
+              <li><a href="https://aviationweather.gov/data/metar/" target="_blank" rel="noopener noreferrer">Weather US - AWC</a></li>
+              <li><a href="https://www.fltplan.com/#" target="_blank" rel="noopener noreferrer">Weather US - FltPlan</a></li>
+              <li><a href="https://plan.navcanada.ca/wxrecall/" target="_blank" rel="noopener noreferrer">Weather &amp; NOTAM CA – NAV Canada</a></li>
+              <li><a href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank" rel="noopener noreferrer">NOTAM US - FAA</a></li>
+              <li><a href="https://www.sia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer">Weather &amp; NOTAM FR - SIA</a></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="Airport Chart.html">
+				  Airport Charts / Aeronautical Charts 
+				</a>
+              </li>
+            </ul>
+            <ul class="sub links-plain">
+              <li><a href="https://www.fltplan.com/#" target="_blank" rel="noopener noreferrer">Airport Charts US – FltPlan</a></li>
+              <li><a href="https://skyvector.com/" target="_blank" rel="noopener noreferrer">Aeronautical Charts US - SkyVector</a></li>
+              <li><a href="https://www.sia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer">Airport Charts FR - SIA</a></li>
+              <li><a href="https://www.geoportail.gouv.fr/donnees/carte-oaci-vfr" target="_blank" rel="noopener noreferrer">Aeronautical Charts FR - GeoPortail</a></li>
+              <li><a href="https://airportwxbot.com/planner?ActiveSideBar=UnloadedFlightPlanBar" target="_blank" rel="noopener noreferrer">Airport &amp; Aeronautical Charts Global – Wx Planner</a></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="https://www.littlenavmap.org/manuals/littlenavmap/release/3.0/en/" target="_blank" rel="noopener noreferrer">
+				 Plan de Vol / Navlog 
+				</a>
+              </li>
+            </ul>
+            <ul class="sub links-plain">
+              <li>LittleNavMap</li>
+              <li><a href="https://dispatch.simbrief.com/home" target="_blank" rel="noopener noreferrer">Plan de vol - SimBrief</a></li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="Aviation Rules.html">
+				  Règles aériennes 
+				</a>
+              </li>
+            </ul>
+            <ul class="sub">
+              <li>VMC minimales</li>
+              <li>Espaces aériens traversés (classes A → G)</li>
+              <li>Altitudes semi-circulaires</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+                <a class="nav-btn" href="Fuel Planning.html">
+				Fuel Planning
+				</a>
+              </li> 
+            </ul>
+            <ul class="sub">
+              <li>EFB / LittleNavMap</li>
+            </ul>
+
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="Weight & Balance.html">
+				Weight & Balance
+				</a>
+              </li>
+            </ul>
+            <ul class="sub">
+              <li>EFB / POH</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+                <a class="nav-btn" href="Performance Planning.html">
+				Performance Planning
+				</a>
+              </li>
+            </ul>
+            <ul class="sub">
+              <li>EFB / POH / LittleNavMap</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+                <a class="nav-btn" href="Flight Plan Form.html">
+				Soumettre le plan de vol VFR officiel
+				</a>
+              </li>
+            </ul>
+            <ul class="sub">
+              <li>
+			  	<a class="nav-btn" href="US Flight Plan - Form FAA 7233-1.pdf" target="_blank" rel="noopener noreferrer">
+				Document PDF US
+				</a>
+			  </li>
+			  <li>
+			  	<a class="nav-btn" href="FR Plan de vol - Formulaire CERFA 14806-01.pdf" target="_blank" rel="noopener noreferrer">
+				Document PDF FR
+				</a>
+			  </li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <ul class="dash">
+              <li class="subhead">
+                <input type="checkbox">
+				<a class="nav-btn" href="Hub Checklist.html">
+				Checklist/Pré-vol
+				</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div class="col">
+
+          <div class="section" id="mise-en-route-roulage">
+            <div class="btn">
+				<a class="nav-btn" href="Navigation & Procédures.html">
+				2) Navigation &amp; Procédures
+				</a>
+			</div>
+
+            <ul class="dash">
+              <li>Pré-vol</li>
+            </ul>
+
+
+
+            <ul class="dash">
+              <li>Décollage & sortie du circuit</li>
+            </ul>
+
+
+            <ul class="dash">
+              <li>Altitudes VFR</li>
+            </ul>
+
+
+            <ul class="dash">
+              <li>Navigation</li>
+            </ul>
+
+
+            <ul class="dash">
+              <li>Correction de vent</li>
+            </ul>
+
+
+            <ul class="dash">
+              <li>Approche</li>
+            </ul>
+			  
+          </div>
+
+          <div class="section" id="fin-de-vol">
+            <div class="btn">3) Fin de vol</div>
+
+            <ul class="dash">
+              <li>Postflight</li>
+            </ul>
+            <ul class="sub">
+              <li>Inscription des heures de vol</li>
+              <li>Vérification de l’état de l’avion</li>
+              <li>Checklist postflight</li>
+            </ul>
+          </div>
+
+          <div class="section" id="outils">
+            <div class="btn">Outils</div>
+
+            <ul class="sub links-plain">
+              <li><a href="https://24timezones.com/carte-fuseaux-horaires" target="_blank" rel="noopener noreferrer">Fuseaux horaires</a></li>
+              <li><a href="https://www.dauntless-soft.com/products/Freebies/TrueAirspeedCalculator/" target="_blank" rel="noopener noreferrer">True Airspeed (TAS) Calculator</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+
+</html>

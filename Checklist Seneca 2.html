@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CHECKLIST SENECA II</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      /* Palette proche du support imprimé */
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f2f3;
+
+      --gridLine:#b9c2cc;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --oliveBandTop:#f2eaa9;
+      --oliveBandBot:#e5d772;
+
+      --red:#b42318;
+      --green:#1e6f36;
+      --orange:#b96a00;
+
+      --shadow: rgba(0,0,0,.12);
+
+      /* Tooltips */
+      --tipBg:#0f172a;
+      --tipText:#ffffff;
+      --tipShadow: rgba(0,0,0,.35);
+
+      /* Lisibilité */
+      --baseFont: 11.5px;
+      --baseLine: 1.22;
+
+      /* PERF2 alignment */
+      --perfHdrH: 30px;
+      --perfRowH3: 26px;
+      --perfRowH2: 26px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(1080px, 100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+        linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+      z-index:1;
+    }
+
+    /* ===== HEADER ===== */
+    .header{
+      position:relative;
+      z-index:4;
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+    }
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:22px;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+    .variant small{
+      display:block;
+      font-style:normal;
+      font-weight:700;
+      font-size:10px;
+      color:var(--ink2);
+      margin-top:3px;
+      white-space:normal;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      position:relative;
+      z-index:2;
+      background:var(--panel);
+      padding:8px 6px;
+    }
+
+    /* ===== TOP GRID ===== */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items:stretch;
+    }
+    .col{
+      border-top: 1.5px solid #111111;
+      border-bottom: 1.5px solid #111111;
+      border-left: 1.5px solid #111111;
+      border-right: none;
+    }
+    .col:last-child{
+      border-right: 1px solid #8a8f98;
+    }
+    .section{
+      background:transparent;
+      border:none;
+      border-radius:0;
+      padding:6px;
+      margin-bottom:10px;
+    }
+    .section:last-child{margin-bottom:0}
+
+    /* Yellow headers */
+    .btn{
+      margin:-4px -4px 7px;
+      padding:6px 6px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.12);
+      color:var(--btnText);
+      font-weight:900;
+      font-style:italic;
+      letter-spacing:.35px;
+      text-transform:uppercase;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    ul{list-style:none; padding-left:0; margin:0;}
+    li{margin:1px 0}
+
+    .note{font-size:10px; color:var(--ink2); line-height:1.25}
+    .green{color:var(--green); font-weight:900}
+    .red{color:var(--red); font-weight:900}
+    .blue{color:var(--deepBlue); font-weight:900}
+    .mono{font-family:"Arial Narrow", Arial, Helvetica, sans-serif;}
+    .mph{font-size:9px; color:#3f4b58; font-style:italic; font-weight:800}
+
+    /* ===== Tooltips ===== */
+    .item{
+      position:relative;
+      cursor:help;
+      text-decoration:none;
+      outline:none;
+    }
+    .item:focus-visible{
+      box-shadow:0 0 0 2px rgba(31,95,158,.25);
+      border-radius:3px;
+    }
+    .item::after{
+      content:attr(data-tip);
+      position:absolute;
+      left:0;
+      top:100%;
+      margin-top:6px;
+      min-width:240px;
+      max-width:380px;
+      background:var(--tipBg);
+      color:var(--tipText);
+      padding:8px 10px;
+      border-radius:10px;
+      box-shadow:0 12px 30px var(--tipShadow);
+      font-size:11px;
+      line-height:1.25;
+      opacity:0;
+      transform:translateY(-4px);
+      pointer-events:none;
+      transition:opacity .12s ease, transform .12s ease;
+      z-index:50;
+      white-space:normal;
+    }
+    .item::before{
+      content:"";
+      position:absolute;
+      left:14px;
+      top:100%;
+      margin-top:2px;
+      border:7px solid transparent;
+      border-bottom-color:transparent;
+      opacity:0;
+      transform:translateY(-4px);
+      transition:opacity .12s ease, transform .12s ease;
+      pointer-events:none;
+      z-index:51;
+    }
+    .item:hover::after,.item:hover::before,
+    .item:focus-visible::after,.item:focus-visible::before{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .col:last-child .item::after{left:auto; right:0;}
+    .col:last-child .item::before{left:auto; right:14px;}
+
+    /* ===== V-SPEEDS BAND ===== */
+    .vspeeds{
+      margin-top:8px;
+      border:2px solid var(--outerBlue);
+      border-radius:4px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .vs-top{
+      display:grid;
+      grid-template-columns: 1.1fr 1.25fr 1.75fr 1.2fr;
+      background:linear-gradient(var(--oliveBandTop), var(--oliveBandBot));
+      font-size:9.5px;
+      line-height:1.15;
+    }
+    .vs-cell{
+      padding:7px 8px;
+      border-right:1px solid rgba(0,0,0,.10);
+    }
+    .vs-cell:last-child{border-right:0}
+
+    .vs-row{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:baseline;
+      gap:8px;
+      padding:2px 0;
+      white-space:nowrap;
+    }
+    .vs-label{color:#1f4f86; font-weight:900;}
+    .vs-dots{
+      border-bottom:1px dotted rgba(31,79,134,.55);
+      transform:translateY(-2px);
+      opacity:.95;
+    }
+    .vs-value{color:#1f4f86; font-weight:900;}
+    .vs-value .mphSmall{
+      color:#3f4b58;
+      font-size:9px;
+      font-weight:800;
+      font-style:italic;
+      margin-left:4px;
+    }
+
+    .tag{
+      display:inline-block;
+      margin-left:6px;
+      padding:1px 6px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.35px;
+      vertical-align:1px;
+      border:1px solid rgba(0,0,0,.18);
+      background:rgba(255,255,255,.45);
+      color:#20324a;
+      text-transform:uppercase;
+    }
+    .tag.limit{color:#7a1a13; border-color:rgba(180,35,24,.35)}
+    .tag.caution{color:#7a4a00; border-color:rgba(185,106,0,.35)}
+    .tag.maneuver{color:#0f5132; border-color:rgba(30,111,54,.35)}
+
+    /* ===== PERFORMANCE TABLE (perf2) ===== */
+    .perf2{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      font-size:14px;
+    }
+    .perf2 th,.perf2 td{
+      border:1px solid #b9c2cc;
+      padding:10px 12px;
+      vertical-align:top;
+    }
+    .perf2 thead th{
+      background:#f3f5f7;
+      font-weight:900;
+      letter-spacing:.45px;
+      text-transform:uppercase;
+      color:#20324a;
+      font-size:17px;
+    }
+    .perf2 thead th .mphTiny{
+      font-size:12px;
+      font-style:italic;
+      font-weight:900;
+      text-transform:none;
+      color:#4a5563;
+      margin-left:4px;
+    }
+    .perf2 thead th.notesHdr{
+      color:#b24a16;
+      font-style:italic;
+      text-transform:none;
+      letter-spacing:.6px;
+    }
+
+    .perf2 td.phaseCell{width:30%;}
+    .perf2 td.knotsCell{width:18%; text-align:center;}
+    .perf2 td.flapsCell{width:14%; text-align:center;}
+    .perf2 td.notesCell{width:38%; text-align:center;}
+
+    .perf2 .rowHdr{
+      height:var(--perfHdrH);
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      margin:0 0 6px;
+    }
+    .perf2 .phaseCell .rowHdr{
+      justify-content:space-between;
+      gap:10px;
+    }
+    .phaseTitle2{
+      color:#1f5f9e;
+      font-weight:900;
+      font-style:italic;
+      text-decoration:underline;
+      text-underline-offset:2px;
+      font-size:16px;
+      margin:0;
+      line-height:1;
+    }
+    .tasMini{
+      float:none;
+      font-size:12px;
+      color:#4a5563;
+      font-style:italic;
+      font-weight:900;
+      margin:0;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .lines3,.lines2{line-height:1;}
+    .lines3{
+      display:grid;
+      grid-template-rows: repeat(3, var(--perfRowH3));
+      row-gap:0;
+      align-items:center;
+    }
+    .lines2{
+      display:grid;
+      grid-template-rows: repeat(2, var(--perfRowH2));
+      row-gap:0;
+      align-items:center;
+    }
+    .lines3 > div,.lines2 > div{
+      height:100%;
+      display:flex;
+      align-items:baseline;
+    }
+    .knotsCell .lines3 > div,
+    .knotsCell .lines2 > div,
+    .flapsCell .lines3 > div,
+    .flapsCell .lines2 > div{
+      justify-content:center;
+    }
+
+    .kBlue2{color:#1f5f9e; font-weight:900; font-size:17px;}
+    .mph2{color:#4a5563; font-style:italic; font-weight:900; font-size:12px; margin-left:6px;}
+    .star2{color:#b42318; font-weight:900; margin-left:4px;}
+
+    .noteBlock{
+      display:grid;
+      grid-template-rows:auto auto auto;
+      row-gap:8px;
+      justify-items:center;
+    }
+    .shortField2{
+      color:#1e6f36;
+      font-weight:900;
+      font-style:italic;
+      text-decoration:underline;
+      text-underline-offset:2px;
+    }
+    .softField2{
+      color:#b96a00;
+      font-weight:900;
+      font-style:italic;
+      text-decoration:underline;
+      text-underline-offset:2px;
+    }
+    .notesLine{line-height:1.35; font-size:13px;}
+
+    .centerNotes{
+      line-height:1.45;
+      font-weight:900;
+      color:#1b1f24;
+      font-size:14px;
+    }
+    .centerNotes .muted{
+      font-weight:900;
+      font-style:italic;
+      color:#4a5563;
+      font-size:12px;
+    }
+
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	
+	.cessna-link {
+	  text-decoration: none;
+	  color: inherit;
+	  display: inline-block;
+	}
+
+	.cessna {
+	  cursor: pointer;
+	  user-select: none;
+	  transition: filter 0.15s ease;
+	}
+
+	.cessna:hover {
+	  filter: brightness(1.15);
+	}
+
+    /* ===== Responsive ===== */
+    @media (max-width:1020px){
+      body{padding:10px}
+      .main{padding:10px}
+      .grid{grid-template-columns:1fr 1fr}
+      .vs-top{grid-template-columns:1fr}
+      .checkwrap{padding:0 24px}
+      .checkwrap:before,.checkwrap:after{display:none}
+      .brand,.variant{width:auto}
+      .item::after{max-width:320px}
+    }
+	
+	/* =========================================================
+	   ✅ MOBILE ONLY — SENECA II FIX PACK
+	   - PA-34-200T / Turbo Seneca II EN HAUT À DROITE (vrai)
+	   - Header: brand gauche / titre centré / variant droite
+	   - Barres rouges conservées
+	   - Grille 6 colonnes -> 1 colonne lisible
+	   - V-speeds -> 1 colonne
+	   - PERF2 (tableau du bas) -> mode "cartes" sur mobile (PC inchangé)
+	   ========================================================= */
+
+	/* ---------- Mobile header + layout ---------- */
+	@media (max-width: 520px){
+
+	  /* page padding */
+	  body{ padding:10px; }
+
+	/* ---------- 2) HEADER MOBILE FIX (≤520px) ---------- */
+	@media (max-width: 520px){
+
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* brand stays top-left */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* title centered */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* keep red bars visible + adaptive */
+	  .checkwrap{
+		padding: 0 38px;
+		max-width: 100%;
+	  }
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* allow wrap (2 lines) */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* variant can wrap (or hide if you prefer) */
+	  .variant{
+		width:100%;
+		text-align:center;
+		white-space:normal;
+		font-size:18px;
+		line-height:1.1;
+	  }
+	}
+
+
+	  /* main spacing */
+	  .main{ padding:10px !important; }
+
+	  /* 6 colonnes -> 1 colonne */
+	  .grid{ grid-template-columns:1fr !important; }
+
+	  /* bordures propres quand ça wrap */
+	  .col{
+		border-left: 1.5px solid #111 !important;
+		border-right: 1.5px solid #111 !important;
+		border-top: 1.5px solid #111 !important;
+		border-bottom: 0 !important;
+	  }
+	  .col:last-child{
+		border-bottom: 1.5px solid #111 !important;
+	  }
+
+	  /* titres jaunes: wrap */
+	  .btn{
+		white-space:normal !important;
+		line-height:1.15 !important;
+	  }
+
+	  /* tooltips: pas d’overflow */
+	  .item::after{
+		min-width: 200px !important;
+		max-width: 86vw !important;
+		white-space: normal !important;
+	  }
+
+	  /* V-speeds band -> 1 colonne */
+	  .vs-top{ grid-template-columns:1fr !important; }
+	  .vs-row{ white-space:normal !important; }
+	  .vs-dots{ display:none !important; } /* optionnel : évite les lignes bizarres sur petit écran */
+	}
+
+
+	/* ---------- PERF2 (tableau du bas) : mode cartes sur mobile ---------- */
+	@media (max-width: 620px){
+
+	  /* IMPORTANT: évite le clipping qui "casse" le bas */
+	  .vspeeds{
+		overflow: visible !important;
+	  }
+
+	  /* Cache l'entête classique */
+	  .perf2 thead{ display:none !important; }
+
+	  /* Table -> blocs */
+	  .perf2,
+	  .perf2 tbody,
+	  .perf2 tr,
+	  .perf2 td{
+		display:block !important;
+		width:100% !important;
+	  }
+
+	  .perf2{
+		border-collapse: separate !important;
+		border-spacing: 0 !important;
+		background:transparent !important;
+		font-size:13px !important;
+	  }
+
+	  /* Chaque "phase" devient une carte */
+	  .perf2 tr{
+		background:#fff !important;
+		border:1px solid #b9c2cc !important;
+		border-radius:10px !important;
+		overflow:hidden !important;
+		margin:12px 0 !important;
+		box-shadow: 0 2px 10px rgba(0,0,0,.08) !important;
+	  }
+
+	  .perf2 td{
+		border:none !important;
+		border-bottom:1px solid rgba(0,0,0,.10) !important;
+		padding:10px 12px !important;
+	  }
+	  .perf2 tr td:last-child{ border-bottom:none !important; }
+
+	  /* Labels auto par colonne (PHASE / KNOTS / FLAPS / NOTES) */
+	  .perf2 td.phaseCell::before{
+		content:"PHASE — ";
+		font-weight:900;
+		color:#3e4a57;
+	  }
+	  .perf2 td.knotsCell::before{
+		content:"KNOTS — ";
+		font-weight:900;
+		color:#3e4a57;
+	  }
+	  .perf2 td.flapsCell::before{
+		content:"FLAPS — ";
+		font-weight:900;
+		color:#3e4a57;
+	  }
+	  .perf2 td.notesCell::before{
+		content:"NOTES — ";
+		font-weight:900;
+		color:#b24a16;
+	  }
+
+	  /* Les contenus internes ne doivent pas forcer la largeur */
+	  .perf2 .rowHdr{ height:auto !important; margin:0 0 6px !important; }
+	  .perf2 .lines3,
+	  .perf2 .lines2{
+		display:block !important;
+	  }
+	  .perf2 .lines3 > div,
+	  .perf2 .lines2 > div{
+		height:auto !important;
+		display:block !important;
+		padding:2px 0 !important;
+	  }
+
+	  /* Centre/alignements plus naturels en mobile */
+	  .perf2 td.knotsCell,
+	  .perf2 td.flapsCell,
+	  .perf2 td.notesCell{
+		text-align:left !important;
+	  }
+
+	  /* Notes blocks: reflow */
+	  .noteBlock{
+		display:block !important;
+		row-gap:0 !important;
+		justify-items:unset !important;
+	  }
+	  .notesLine{ margin:6px 0 !important; }
+
+	  /* Texte qui wrap */
+	  .centerNotes,
+	  .notesLine,
+	  .tasMini{
+		white-space:normal !important;
+		overflow-wrap:anywhere !important;
+		word-break:break-word !important;
+	  }
+	}
+	/* ===== MOBILE : supprimer PA-34 / Turbo Seneca II sans casser le header ===== */
+	@media (max-width: 520px){
+
+	  /* On garde la grille header (gauche / centre / droite)
+		 mais on vide visuellement la colonne droite */
+	  .variant{
+		display:none !important;
+	  }
+
+	  /* On recentre parfaitement le titre malgré la colonne droite absente */
+	  .header-top{
+		grid-template-columns: auto 1fr auto !important;
+	  }
+
+	}
+
+
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+		<div class="brand">
+		  <a href="Piper Seneca II POH.pdf" target="_blank" rel="noopener noreferrer" class="cessna-link">
+			<div class="cessna">Piper</div>
+		  </a>
+		  <div class="airplains">
+			<div><b>JetStream FS</b></div>
+			<div>Conversion</div>
+		  </div>
+		</div>
+
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">Checklist</div>
+			</a>
+          </div>
+        </div>
+
+        <div class="variant">
+          <b>PA-34-200T</b><br>
+          Turbo Seneca II
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <!-- ===== TOP GRID ===== -->
+      <div class="grid">
+
+        <!-- COL 1 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">INITIAL</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Météo / altitude-densité / givrage : impact direct sur perf, vitesses et marges moteur (turbos).">Weather &amp; Den. Alt.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Masse &amp; centrage : confirme enveloppe (4570 lbs max TO, 4342 lbs max LDG).">Weight &amp; Balance</span></li>
+              <li><span tabindex="0" class="item" data-tip="Carburant : quantité planifiée + alternats + réserves, vérifie autonomie (tables perf).">Fuel Planning</span></li>
+              <li><span tabindex="0" class="item" data-tip="Performances : TO/ASDA/Obstacle, montée, croisière, selon PA/OAT/poids (graphiques).">Performance Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Docs : limitations/POH/assurance/immatriculation/AROW à bord.">Papers &ndash; A.R.O.W.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Brief pax : portes, issues, ceintures, stérile, urgence, pas toucher les commandes.">Passenger Brief</span></li>
+              <li><span tabindex="0" class="item" data-tip="Coupe-circuits : enfoncés, rien de déclenché avant mise sous tension.">Circuit Breakers</span></li>
+              <li><span tabindex="0" class="item" data-tip="Commandes : liberté + sens correct, vérifie aussi trim et friction des manettes.">Flight Controls</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">EXTERIOR</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Carburant : quantité visuelle, compare aux jauges, vérifie bouchons serrés.">Fuel Quantity &amp; Caps</span></li>
+              <li><span tabindex="0" class="item" data-tip="Sumping : eau/impuretés, grade 100/100LL, odeur/couleur cohérentes.">Fuel Sumps &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Huiles (2 moteurs) : niveaux, fuites, trappes, état général.">Oil (L/R) &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Admission/filtre : dégagé, pas d’obstruction (insectes/objets).">Air Intakes &ndash; Clear</span></li>
+              <li><span tabindex="0" class="item" data-tip="Hélices : bords, fissures, impacts, spinner, pas de fuite au moyeu.">Props (L/R) &ndash; Inspect</span></li>
+              <li><span tabindex="0" class="item" data-tip="Train : pneus, freins, amortisseurs, fuites, trappes/portes.">Gear/Tires/Brakes</span></li>
+              <li><span tabindex="0" class="item" data-tip="Surfaces : charnières/goupilles, débattements, gouvernes libres.">Surfaces &amp; Controls</span></li>
+              <li><span tabindex="0" class="item" data-tip="Pitot/statique : ouvertures propres, capuchons retirés, pas d’insectes.">Pitot &amp; Static Ports</span></li>
+              <li><span tabindex="0" class="item" data-tip="Antennes/feux : fixations OK, lentilles propres.">Antennas / Lights</span></li>
+              <li><span tabindex="0" class="item" data-tip="Dernier tour : cales/amarres/barre de tractage retirées, zone hélices claire.">Final Walk Around</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">INTERIOR</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Sièges : verrouillés (rails), dossier ajusté, contrôle complet des débattements.">Seats &ndash; Adjust/Lock</span></li>
+              <li><span tabindex="0" class="item" data-tip="Ceintures/harnais : pilotes + passagers, serrage correct avant start/taxi.">Belts/Harness &ndash; Secure</span></li>
+              <li><span tabindex="0" class="item" data-tip="Commandes carburant : identifie OFF/ON/croisée (évite sélection incorrecte).">Fuel Selectors &ndash; Identify</span></li>
+              <li><span tabindex="0" class="item" data-tip="Trim : plage libre, position départ (takeoff range).">Trim &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Frein de parc : utile au démarrage et run-up, relâche avant taxi.">Park Brake &ndash; Set</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- COL 2 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">BEFORE START</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Avionics OFF : protège radios/nav au start et évite pics tension.">Avionics &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Alternators OFF (avant start) : selon SOP/POH, évite charge instantanée.">Alternators &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Heaters/Blowers OFF : limite conso électrique pendant start.">Heaters/Blowers &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mélanges RICH : base pour start, ajuster si altitude/chaud.">Mixtures &ndash; Full Rich</span></li>
+              <li><span tabindex="0" class="item" data-tip="Pas hélices HIGH RPM : permet réponse immédiate et lubrification contrôlée.">Props &ndash; Full Forward</span></li>
+              <li><span tabindex="0" class="item" data-tip="Gaz 1/4\" ouvert : facilite mise en route, évite étouffement.">Throttles &ndash; Open 1/4&quot;</span></li>
+              <li><span tabindex="0" class="item" data-tip="Boost pumps ON pour prime (si requis) puis OFF avant start selon procédure.">Aux Fuel Pumps &ndash; Prime</span></li>
+              <li><span tabindex="0" class="item" data-tip="Sélecteurs carburant sur ON (réservoirs principaux) avant start.">Fuel Selectors &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Zone hélices libre : annonce claire, visuel + extérieur si besoin.">Prop Area &ndash; Clear</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">ENGINE START</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Battery Master ON : alimente circuits. Vérifie odeur/ampérage anormal.">Master &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Beacon ON : signale hélices en mouvement / moteur.">Beacon &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Start (L puis R ou selon SOP) : engage démarreur, surveille EGT/FF.">Starter &ndash; Engage</span></li>
+              <li><span tabindex="0" class="item" data-tip="Oil pressure : doit monter rapidement après start (sinon couper).">Oil Pressure &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Alternators ON après stabilisation : vérifie charge/volts.">Alternators &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Avionics ON après tension stable : configure fréquences et nav.">Avionics &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Pumps OFF (après start) : en croisière elles restent OFF (sauf procédure).">Aux Fuel Pumps &ndash; Off</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">PRE-TAXI / TAXI</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Frein de parc OFF : avant roulage. Test freins dès les premiers mètres.">Park Brake &ndash; Release</span></li>
+              <li><span tabindex="0" class="item" data-tip="Instruments : gyro/HI, TC, altimètre, caps, paramètres moteur.">Instruments &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Taxi light : selon besoin. Strobes plutôt en entrée piste.">Taxi Light &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Gouvernes : check efficacité au roulage (vent) + free/correct.">Controls &ndash; Free/Correct</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures : légèrement appauvrir au sol pour limiter encrassement.">Mixtures &ndash; Lean (Taxi)</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- COL 3 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">RUN-UP</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Freins : maintiens l’avion immobile pendant essais moteurs.">Brakes &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures RICH (ou best power si altitude) avant essais.">Mixtures &ndash; Full Rich</span></li>
+              <li><span tabindex="0" class="item" data-tip="Props HIGH RPM : vérifie réponse, puis cycles hélices si requis (selon SOP).">Props &ndash; Full Forward</span></li>
+              <li><span tabindex="0" class="item" data-tip="Throttles 2000 RPM : régime run-up standard.">Throttles &ndash; 2000 RPM</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mag check (L/R/BOTH) : chute RPM dans limites, moteur stable.">Mags &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Prop cycle : vérifie gouverneur/huile (évite sur-cycler).">Props &ndash; Cycle</span></li>
+              <li><span tabindex="0" class="item" data-tip="Alternators : charge/volts OK, pas de déséquilibre anormal.">Alternators &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Temps/pression huile + CHT/EGT : dans plages avant départ.">Engine Gauges &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Vacuum / instruments gyro (si équipé) : dans le vert.">Vacuum &ndash; Check</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">PRE-TAKEOFF</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Flaps selon procédure : normal UP, short-field possible 25° (2e cran).">Flaps &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Trim : takeoff range (réduit effort au décollage).">Trim &ndash; Takeoff</span></li>
+              <li><span tabindex="0" class="item" data-tip="Sélecteurs carburant ON : confirme L/R corrects.">Fuel Selectors &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Pumps OFF pour décollage normal (POH) ; ON si procédure spécifique/panne.">Aux Fuel Pumps &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures RICH : ajuste si départ haute altitude (évite sur-rich).">Mixtures &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Props 2575 RPM : plein avant pour décollage/initial climb.">Props &ndash; 2575</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps : as required (souvent OPEN pour TO/climb si chaud).">Cowl Flaps &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Portes/fenêtres verrouillées, sièges/ceintures OK.">Doors/Belts &ndash; Secure</span></li>
+              <li><span tabindex="0" class="item" data-tip="Feux : landing light ON, strobes ON en entrée piste (SOP).">Lights &ndash; As Req.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- COL 4 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">TAKEOFF</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Pleine puissance : ne pas dépasser 40 inHg MAP (limitation).">Power &ndash; Full (≤ 40&quot;)</span></li>
+              <li><span tabindex="0" class="item" data-tip="RPM décollage : 2575 RPM (max).">RPM &ndash; 2575</span></li>
+              <li><span tabindex="0" class="item" data-tip="Airspeed alive : annonce et vérifie cohérence.">Airspeed &ndash; Alive</span></li>
+              <li><span tabindex="0" class="item" data-tip="Rotation : décollage normal accélère 66–71 KIAS.">Rotate &ndash; <span class="blue">66-71</span> <span class="mph">(76-82)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Après envol : accélère vers Vy (2 moteurs) 89 KIAS.">Vy &ndash; <span class="blue">89</span> <span class="mph">(102)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Train rentré : après montée positive. Respect VLO/VLE.">Gear &ndash; Up</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">CLIMB</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Takeoff climb : mixtures full rich, props 2575, MAP ≤ 40 inHg.">Power &ndash; Set (TO)</span></li>
+              <li><span tabindex="0" class="item" data-tip="Vx/Vy : obstacle 76 KIAS, meilleur taux 89 KIAS (2 moteurs).">Airspeed &ndash; <span class="blue">76/89</span> <span class="mph">(87/102)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps : as required pour températures, referme si possible en croisière montée.">Cowl Flaps &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cruise climb (POH) : 2450 RPM / 31.5 inHg / 102 KIAS.">Cruise Climb &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Engine gauges : surveille CHT/EGT/huile, surtout en forte puissance.">Gauges &ndash; Monitor</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">CRUISE</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Référence : power setting table (MP vs RPM vs altitude/temp) pour 45–75% power.">Power &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps : as required (souvent CLOSED en croisière pour perf).">Cowl Flaps &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixture : ajuste (ex. 25°F rich of peak EGT selon graphique/perf).">Mixtures &ndash; Adjust</span></li>
+              <li><span tabindex="0" class="item" data-tip="Instruments : scan régulier, équilibre L/R, fuel flow, pressions/temp.">Instruments &ndash; Scan</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- COL 5 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">DESCENT</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Mixtures : enrichir avec la descente pour éviter sur-lean et refroidissement excessif.">Mixtures &ndash; Enrich</span></li>
+              <li><span tabindex="0" class="item" data-tip="Throttles : garde réglage croisière ou réduit progressivement (évite choc thermique).">Throttles &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps CLOSED (POH) sauf besoin refroidissement.">Cowl Flaps &ndash; Closed</span></li>
+              <li><span tabindex="0" class="item" data-tip="ATIS/QNH : prépare arrivée, check altimètre.">ATIS / Altimeter</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">PRE-LANDING</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Gear warning horn : check fonction avant approche.">Gear Warn Horn &ndash; Check</span></li>
+              <li><span tabindex="0" class="item" data-tip="Airspeed : 98 KIAS en vent arrière (POH).">Downwind &ndash; <span class="blue">98</span> <span class="mph">(113)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Seats : dossiers droits, cabine prête.">Seat Backs &ndash; Erect</span></li>
+              <li><span tabindex="0" class="item" data-tip="Belts/harness : attache/ajuste, annonce ‘secure’.">Belts/Harness &ndash; Secure</span></li>
+              <li><span tabindex="0" class="item" data-tip="Fuel selectors ON : confirme alimentation correcte (L/R).">Fuel Selectors &ndash; On</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps : as required selon températures en approche.">Cowl Flaps &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Aux fuel pumps OFF (POH).">Aux Fuel Pumps &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures : set (souvent full rich) pour remise de gaz.">Mixtures &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Props 2250 RPM (POH) avant sortie train/volets.">Props &ndash; 2250</span></li>
+              <li><span tabindex="0" class="item" data-tip="Train DOWN : max 129 KIAS pour extension/gear down.">Gear &ndash; Down (≤ <span class="blue">129</span>)</span></li>
+              <li><span tabindex="0" class="item" data-tip="Flaps : set as required, ne pas dépasser Vfe 107 KIAS flaps sortis.">Flaps &ndash; Set</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">LANDING</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Base : 97 KIAS (POH).">Base &ndash; <span class="blue">97</span> <span class="mph">(112)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Final : 87 KIAS (POH).">Final &ndash; <span class="blue">87</span> <span class="mph">(100)</span></span></li>
+              <li><span tabindex="0" class="item" data-tip="Close final : réduis puissance, stabilise plan et vitesse, garde marges.">Power &ndash; Reduce</span></li>
+              <li><span tabindex="0" class="item" data-tip="GUMP : Gas (fuel), Undercarriage, Mixtures, Props (et vérif flaps/feux)."><span class="red mono" style="letter-spacing:3px;">G.U.M.P.</span></span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">GO-AROUND</div>
+            <div class="green" style="font-style:italic; font-weight:900; font-size:12px; line-height:1.25;">
+              <span tabindex="0" class="item" data-tip="Plein gaz (≤ 40&quot;) : maîtrise axe/assiette, compense au fur et à mesure.">Power &ndash; Full (≤ 40&quot;)</span><br/>
+              <span tabindex="0" class="item" data-tip="Props : plein avant pour réponse immédiate.">Props &ndash; Full Forward</span><br/>
+              <span tabindex="0" class="item" data-tip="Mixtures : full rich (ou set) pour puissance et refroidissement.">Mixtures &ndash; Full Rich</span><br/>
+              <span tabindex="0" class="item" data-tip="Flaps : rentre par étapes après taux positif, respecte Vfe.">Flaps &ndash; Retract Step</span><br/>
+              <span tabindex="0" class="item" data-tip="Gear : UP après montée positive et obstacle dégagé.">Gear &ndash; Up</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- COL 6 -->
+        <div class="col">
+          <div class="section">
+            <div class="btn">AFTER LANDING</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Flaps UP : protège mécanisme/évite dommages au roulage.">Flaps &ndash; Up</span></li>
+              <li><span tabindex="0" class="item" data-tip="Cowl flaps : as required au sol (souvent OPEN si chaud).">Cowl Flaps &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Transponder : selon ATC (ALT/standby).">XPDR &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Lights : strobes OFF en sortie piste, taxi ON si besoin.">Lights &ndash; As Req.</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures : lean au sol pour limiter encrassement bougies.">Mixtures &ndash; Lean (Taxi)</span></li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <div class="btn">SECURING</div>
+            <ul>
+              <li><span tabindex="0" class="item" data-tip="Park brake : set avant coupure (ou cales si pente/vent).">Park Brake &ndash; Set</span></li>
+              <li><span tabindex="0" class="item" data-tip="Avionics OFF : protège équipements avant coupure électrique.">Avionics &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Throttles : idle pour stabiliser avant coupure.">Throttles &ndash; Idle</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mixtures : idle cut-off (full lean) pour arrêt moteurs.">Mixtures &ndash; Cut-Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Mags OFF après arrêt : sécurité allumage.">Mags &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Alternators OFF : coupe charge avant master OFF.">Alternators &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Master OFF : coupe batterie. Vérifie tout OFF.">Master &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Fuel selectors OFF : sécurise carburant au parking (si SOP/POH).">Fuel Selectors &ndash; Off</span></li>
+              <li><span tabindex="0" class="item" data-tip="Chocks/tie-downs : sécurise avion, surtout vent.">Chocks / Tie-Downs</span></li>
+              <li><span tabindex="0" class="item" data-tip="Covers : pitot/prises si utilisé, portes verrouillées.">Covers / Doors</span></li>
+            </ul>
+
+            <div style="margin-top:10px;">
+              <div style="margin-top:6px; border:1px solid #d6b100; background:#fff6c7; padding:6px 8px; border-radius:3px; font-size:9.5px; line-height:1.2; color:#b06b00; font-style:italic; font-weight:800;">
+                Check Your POH<br/>
+                For Notes / Cautions<br/>
+                Plus Manufacturer<br/>
+                For Revisions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== V-SPEEDS ===== -->
+      <div class="vspeeds">
+        <div class="vs-top">
+          <div class="vs-cell">
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vent de travers max démontré (référence d’essai).">
+                  X Wind • Max Demod
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">17 <span class="mphSmall">(20)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Rotation décollage normal : accélérer 66–71 KIAS.">
+                  Vr • Rotation
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">66-71 <span class="mphSmall">(76-82)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vx : meilleur angle (obstacle) en montée 2 moteurs.">
+                  Vx • Best Angle Climb
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">76 <span class="mphSmall">(87)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vy : meilleur taux (2 moteurs) en montée.">
+                  Vy • Best Rate Climb
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">89 <span class="mphSmall">(102)</span></span>
+            </div>
+          </div>
+
+          <div class="vs-cell">
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vmc : vitesse mini de contrôle (1 moteur, config définie par la certification).">
+                  Vmc • Min Control (SE)
+                </span>
+                <span class="tag limit">LIMIT</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">66 <span class="mphSmall">(76)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vyse : meilleur taux (1 moteur) — ‘blue line’.">
+                  Vyse • Best Rate (SE)
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">89 <span class="mphSmall">(102)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Approche : 97 KIAS en base (POH).">
+                  Approach • Base
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">97 <span class="mphSmall">(112)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Final : 87 KIAS (POH).">
+                  Final
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">87 <span class="mphSmall">(100)</span></span>
+            </div>
+          </div>
+
+          <div class="vs-cell">
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Va : dépend de la masse. Ne pas dépasser en air turbulent / entrées franches.">
+                  Va • Maneuver (Max Wt)
+                </span>
+                <span class="tag maneuver">MANEUVER</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">136 <span class="mphSmall">(157)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Va (plus léger) : diminue avec la masse. Valeur de référence basse.">
+                  Va • Maneuver (Low Wt)
+                </span>
+                <span class="tag maneuver">MANEUVER</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">121 <span class="mphSmall">(139)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vle/Vlo (extension) : ne pas sortir le train au-dessus de 129 KIAS.">
+                  Vle/Vlo • Gear Extend
+                </span>
+                <span class="tag limit">LIMIT</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">129 <span class="mphSmall">(148)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vlo (retract) : ne pas rentrer le train au-dessus de 107 KIAS.">
+                  Vlo • Gear Retract
+                </span>
+                <span class="tag limit">LIMIT</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">107 <span class="mphSmall">(123)</span></span>
+            </div>
+          </div>
+
+          <div class="vs-cell">
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vno : haut de l’arc vert. Zone jaune au-dessus : air calme uniquement.">
+                  Vno • Max Structural Cruise
+                </span>
+                <span class="tag caution">CAUTION</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">163 <span class="mphSmall">(188)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vne : ligne rouge. Ne jamais dépasser.">
+                  Vne • Never Exceed
+                </span>
+                <span class="tag limit">LIMIT</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">195 <span class="mphSmall">(224)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Vfe : vitesse max avec volets sortis (arc blanc 61–107 KIAS).">
+                  Vfe • Flaps Extended
+                </span>
+                <span class="tag limit">LIMIT</span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">107 <span class="mphSmall">(123)</span></span>
+            </div>
+
+            <div class="vs-row">
+              <span class="vs-label">
+                <span tabindex="0" class="item" data-tip="Airspeed indic. : arc blanc 61–107, vert 63–163, jaune 163–195 (POH).">
+                  ASI Markings • Ref
+                </span>
+              </span>
+              <span class="vs-dots"></span>
+              <span class="vs-value">POH</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PERFORMANCE TABLE (PERF2) ===== -->
+        <table class="perf2">
+          <thead>
+            <tr>
+              <th>PHASE</th>
+              <th>KNOTS <span class="mphTiny">(MPH)</span></th>
+              <th>FLAPS &deg;</th>
+              <th class="notesHdr">&ndash; NOTES &ndash;</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- DEPARTURE -->
+            <tr>
+              <td class="phaseCell">
+                <div class="rowHdr">
+                  <div class="phaseTitle2">DEPARTURE</div>
+                </div>
+                <div class="lines3">
+                  <div>Rotation</div>
+                  <div>Best Angle Climb</div>
+                  <div>Best Rate Climb</div>
+                </div>
+              </td>
+
+              <td class="knotsCell">
+                <div class="rowHdr"></div>
+                <div class="lines3">
+                  <div><span class="kBlue2">66-71</span> <span class="mph2">(76-82)</span></div>
+                  <div><span class="kBlue2">76</span> <span class="mph2">(87)</span></div>
+                  <div><span class="kBlue2">89</span> <span class="mph2">(102)</span></div>
+                </div>
+              </td>
+
+              <td class="flapsCell">
+                <div class="rowHdr"></div>
+                <div class="lines3">
+                  <div>0</div><div>0</div><div>0</div>
+                </div>
+              </td>
+
+              <td class="notesCell">
+                <div class="rowHdr"></div>
+                <div class="noteBlock">
+                  <div class="notesLine">
+                    <span class="shortField2">Short Field</span>
+                    <span class="mono">25&deg;</span> Flaps &ndash;
+                    Liftoff <span class="kBlue2">61</span> <span class="mph2">(70)</span>
+                    / 50 ft <span class="kBlue2">69</span> <span class="mph2">(79)</span>
+                  </div>
+                  <div class="notesLine">
+                    <span class="softField2">To Climb</span>  <span class="kBlue2">2575</span> RPM &ndash; <span class="kBlue2">&le;40&quot;</span> MAP
+                  </div>
+                  <div></div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- CRUISE -->
+            <tr>
+              <td class="phaseCell">
+                <div class="rowHdr">
+                  <div class="phaseTitle2">CRUISE</div>
+                </div>
+                <div class="lines3">
+                  <div>Economy</div>
+                  <div>Normal</div>
+                  <div>Maximum</div>
+                </div>
+              </td>
+
+              <td class="knotsCell">
+                <div class="rowHdr"></div>
+                <div class="lines3">
+                  <div><span class="kBlue2">55%</span> <span class="mph2">(ref)</span></div>
+                  <div><span class="kBlue2">65%</span> <span class="mph2">(ref)</span></div>
+                  <div><span class="kBlue2">75%</span> <span class="mph2">(ref)</span></div>
+                </div>
+              </td>
+
+              <td class="flapsCell">
+                <div class="rowHdr"></div>
+                <div class="lines3">
+                  <div>0</div><div>0</div><div>0</div>
+                </div>
+              </td>
+
+              <td class="notesCell">
+                <div class="rowHdr"></div>
+                <div class="centerNotes">
+                  55% &ndash; <span class="kBlue2">~18.0</span> GPH<br/>
+                  65% &ndash; <span class="kBlue2">~20.5</span> GPH<br/>
+                  75% &ndash; <span class="kBlue2">~23.6</span> GPH
+                </div>
+              </td>
+            </tr>
+
+            <!-- ARRIVAL -->
+            <tr>
+              <td class="phaseCell">
+                <div class="rowHdr">
+                  <div class="phaseTitle2">ARRIVAL</div>
+                </div>
+                <div class="lines2">
+                  <div>Downwind</div>
+                  <div>Final</div>
+                </div>
+              </td>
+
+              <td class="knotsCell">
+                <div class="rowHdr"></div>
+                <div class="lines2">
+                  <div><span class="kBlue2">98</span> <span class="mph2">(113)</span></div>
+                  <div><span class="kBlue2">87</span> <span class="mph2">(100)</span></div>
+                </div>
+              </td>
+
+              <td class="flapsCell">
+                <div class="rowHdr"></div>
+                <div class="lines2">
+                  <div>As Req.</div>
+                  <div>As Req.</div>
+                </div>
+              </td>
+
+              <td class="notesCell">
+                <div class="rowHdr"></div>
+                <div class="centerNotes">
+                  Props &ndash; <span class="kBlue2">2250</span> RPM<br/>
+                  Gear Down &ndash; <span class="kBlue2">&le;129</span> KIAS
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

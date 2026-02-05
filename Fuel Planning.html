@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FUEL PLANNING</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+	/* =========================================================
+	   ✅ UNIVERSAL CHECKMATE THEME (SUPerset)
+	   Compatible avec tes 6 pages (1→6)
+	   ========================================================= */
+
+	/* -------------------------
+	   0) Variables (thème)
+	   ------------------------- */
+	:root{
+	  /* Palette */
+	  --outerBlue:#2a69b0;
+	  --deepBlue:#1f5f9e;
+	  --ink:#1b1f24;
+	  --ink2:#3e4a57;
+	  --paper:#fbfbfb;
+	  --panel:#f1f2f3;
+	  --gridLine:#b9c2cc;
+	  --shadow: rgba(0,0,0,.12);
+
+	  /* Boutons jaunes */
+	  --btnTop:#f4edb7;
+	  --btnMid:#e5d675;
+	  --btnBot:#d6c55a;
+	  --btnEdge:#4d5863;
+	  --btnText:#1f5f9e;
+
+	  /* Bande olive (vspeeds) */
+	  --oliveBandTop:#f2eaa9;
+	  --oliveBandBot:#e5d772;
+
+	  /* Statuts */
+	  --red:#b42318;
+	  --green:#1e6f36;
+	  --orange:#b96a00;
+
+	  /* Typo / lisibilité */
+	  --baseFont: 18px;
+	  --baseLine: 1.22;
+
+	  /* Tooltips */
+	  --tipBg:#0f172a;
+	  --tipText:#ffffff;
+	  --tipShadow: rgba(0,0,0,.35);
+
+	  /* Code blocks */
+	  --codeBg:#ffffff;
+	  --codeBorder:#b9c2cc;
+
+	  /* Badges */
+	  --you:#1e6f36;
+	  --atc:#b96a00;
+	  --note:#b42318;
+
+	  /* Callouts */
+	  --calloutBg:#ffffff;
+	  --calloutBorder:#b9c2cc;
+
+	  /* PERF2 alignment (pages perf) */
+	  --perfHdrH: 30px;
+	  --perfRowH3: 26px;
+	  --perfRowH2: 26px;
+
+	  /* Largeurs “fixes” header (optionnel) */
+	  --hdrSideW: 260px;
+	}
+
+	/* Densité (si tu veux reproduire la page #4 très compacte) */
+	.density-compact{
+	  --baseFont: 11.5px;
+	  --baseLine: 1.22;
+	}
+
+	/* -------------------------
+	   1) Reset / Base
+	   ------------------------- */
+	*{ box-sizing:border-box; }
+
+	body{
+	  margin:0;
+	  background:#e9eef5;
+	  font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+	  color:var(--ink);
+
+	  display:flex;
+	  justify-content:center;
+
+	  padding:18px;
+	  font-size:var(--baseFont);
+	  line-height:var(--baseLine);
+	}
+
+	/* Liens */
+	a{
+	  color:var(--deepBlue);
+	  text-decoration:none;
+	  font-weight:900;
+	}
+	a:hover{ text-decoration:underline; }
+
+	/* Utilitaires texte */
+	.note{ font-size:14px; color:var(--ink2); line-height:1.25; }
+	.mono{ font-family:"Arial Narrow", Arial, Helvetica, sans-serif; }
+	.green{ color:var(--green); font-weight:900; }
+	.red{ color:var(--red); font-weight:900; }
+	.blue{ color:var(--deepBlue); font-weight:900; }
+
+	.divider{
+	  height:1px;
+	  background:rgba(0,0,0,.18);
+	  margin:8px 0;
+	}
+
+	hr{
+	  border:none;
+	  border-top:1px solid rgba(0,0,0,.15);
+	  margin:10px 0;
+	}
+
+	/* -------------------------
+	   2) Card + sheen
+	   ------------------------- */
+	.card{
+	  width:min(1080px, 100%);
+	  background:var(--paper);
+	  border:6px solid var(--outerBlue);
+	  border-radius:6px;
+	  box-shadow:0 8px 22px var(--shadow);
+	  overflow:hidden;
+	  position:relative;
+	}
+
+	/* sheen léger */
+	.card::after{
+	  content:"";
+	  position:absolute;
+	  inset:0;
+	  pointer-events:none;
+	  background:
+		radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+		linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+	  z-index:1;
+	}
+
+	/* -------------------------
+	   3) Header (brand / logo / variant)
+	   ------------------------- */
+	.header{
+	  position:relative;
+	  z-index:4;
+	  padding:10px 14px 8px;
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	}
+
+	.header-top{
+	  display:flex;
+	  align-items:flex-end;
+	  justify-content:space-between;
+	  gap:10px;
+	}
+
+	.brand{
+	  width:var(--hdrSideW);
+	  display:flex;
+	  align-items:flex-end;
+	  gap:10px;
+	}
+
+	.cessna{
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:40px;
+	  color:var(--deepBlue);
+	  line-height:1;
+	  letter-spacing:.2px;
+	  white-space:nowrap;
+	}
+
+	.airplains{
+	  font-size:8px;
+	  color:var(--ink2);
+	  line-height:1.1;
+	  margin-bottom:3px;
+	}
+
+	.logo{
+	  flex:1;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  padding:0 6px;
+	}
+
+	.checkwrap{
+	  position:relative;
+	  display:inline-block;
+	  padding:0 72px;
+	}
+
+	.checkwrap:before,
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+	.checkwrap:before{ left:0; }
+	.checkwrap:after{
+	  right:0;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	}
+
+	.checkmate{
+	  display:inline-block;
+	  background:#fff;
+	  border:2px solid #6b7785;
+	  border-radius:10px;
+	  padding:4px 16px 6px;
+	  font-weight:900;
+	  font-size:34px;
+	  color:#2b3b4f;
+	  line-height:1;
+	  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+	  white-space:nowrap;
+	  text-align:center;
+	}
+
+	/* Variante à droite */
+	.variant{
+	  width:var(--hdrSideW);
+	  text-align:right;
+	  color:var(--deepBlue);
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:22px;
+	  line-height:1.05;
+	  white-space:nowrap;
+	}
+	.variant small{
+	  display:block;
+	  font-style:normal;
+	  font-weight:700;
+	  font-size:10px;
+	  color:var(--ink2);
+	  margin-top:3px;
+	  white-space:normal;
+	}
+
+	/* Checkmate link hover (présent dans 2/3/4/5/6) */
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+	/* -------------------------
+	   4) Main + subtitle
+	   ------------------------- */
+	.main{
+	  position:relative;
+	  z-index:2;
+	  background:var(--panel);
+	  padding:10px 10px 12px;
+	}
+
+	.subtitle{
+	  text-align:center;
+	  color:var(--ink2);
+	  margin:6px 0 12px;
+	  font-size:15px;
+	}
+
+	/* -------------------------
+	   5) Boutons / titres jaunes
+	   ------------------------- */
+	.nav-btn{
+	  display:block;
+	  margin:0 0 14px;
+	  padding:12px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:8px;
+	  font-weight:900;
+	  font-style:italic;
+	  color:var(--btnText);
+	  text-transform:uppercase;
+	  font-size:20px;
+	  text-decoration:none;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.15);
+	  transition:transform 120ms ease, box-shadow 120ms ease;
+	}
+	.nav-btn:hover{
+	  transform:translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	.nav-desc{
+	  display:block;
+	  margin-top:4px;
+	  font-style:normal;
+	  font-size:14px;
+	  text-transform:none;
+	  color:#2b3b4f;
+	  opacity:.85;
+	}
+
+	.btn{
+	  margin:-4px -4px 7px;
+	  padding:6px 6px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:7px;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.12);
+	  color:var(--btnText);
+	  font-weight:900;
+	  font-style:italic;
+	  letter-spacing:.35px;
+	  text-transform:uppercase;
+	  white-space:nowrap;
+	  font-size:19px;
+	}
+	.btn.btn--sm{ font-size:12px; }
+	.btn.btn--xs{ font-size:11px; }
+
+	/* Accordéon (summary) */
+	summary.btn{
+	  list-style:none;
+	  cursor:pointer;
+	  user-select:none;
+
+	  margin:0;
+	  padding:8px 10px;
+
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  gap:10px;
+	}
+	summary.btn::-webkit-details-marker{ display:none; }
+
+	.pill{
+	  display:inline-block;
+	  padding:1px 8px;
+	  border-radius:999px;
+	  font-size:12px;
+	  font-weight:900;
+	  letter-spacing:.35px;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  color:#20324a;
+	  text-transform:none;
+	  font-style:normal;
+	  white-space:nowrap;
+	}
+
+	.chev{
+	  margin-left:auto;
+	  font-weight:900;
+	  color:#2b3b4f;
+	  opacity:.85;
+	  transition: transform 180ms ease;
+	  font-style:normal;
+	}
+	details.section[open] .chev{ transform: rotate(90deg); }
+
+	.section-body{
+	  margin-top:8px;
+	  background:transparent;
+	  padding:0 2px 4px;
+	}
+	details.section .section-body{
+	  overflow:hidden;
+	  max-height:0;
+	  opacity:0;
+	  transform: translateY(-6px);
+	  transition:
+		max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 260ms ease,
+		transform 260ms ease;
+	}
+	details.section[open] .section-body{
+	  max-height: 8000px;
+	  opacity:1;
+	  transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce){
+	  .nav-btn,
+	  .checkmate-link .checkmate,
+	  .chev,
+	  details.section .section-body{
+		transition:none !important;
+	  }
+	}
+
+	/* -------------------------
+	   6) Sections
+	   ------------------------- */
+	.section{
+	  break-inside: avoid;
+	  -webkit-column-break-inside: avoid;
+	  page-break-inside: avoid;
+
+	  background:transparent;
+	  border:none;
+	  border-radius:0;
+	  padding:6px 8px;
+	  margin:0 0 10px;
+	  display:block;
+	}
+	.section:last-child{ margin-bottom:0; }
+	details.section{ margin:0 0 12px; padding:0; }
+
+	/* -------------------------
+	   7) Grilles
+	   ------------------------- */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0;
+
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	  align-items:start;
+	}
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+	.grid.grid--1{ grid-template-columns:1fr; }
+	.grid.grid--1::before{ display:none; }
+
+	/* -------------------------
+	   8) Lists
+	   ------------------------- */
+	ul{ list-style:none; padding-left:0; margin:0; }
+	li{ margin:2px 0; }
+
+	.dash li::before{
+	  content:"– ";
+	  color:#2b3b4f;
+	  font-weight:900;
+	}
+	.sub{ margin-top:4px; padding-left:12px; }
+	.sub li::before{
+	  content:"• ";
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	/* -------------------------
+	   9) Tables / KPI / Callouts
+	   ------------------------- */
+	.grid2{
+	  display:grid;
+	  grid-template-columns:1fr 1fr;
+	  gap:10px;
+	}
+	.grid3{
+	  display:grid;
+	  grid-template-columns:1fr 1fr 1fr;
+	  gap:10px;
+	}
+
+	.tbl{
+	  width:100%;
+	  border-collapse:collapse;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:6px;
+	  overflow:hidden;
+	  font-size:14px;
+	}
+	.tbl th, .tbl td{
+	  border-bottom:1px solid rgba(0,0,0,.12);
+	  border-right:1px solid rgba(0,0,0,.08);
+	  padding:8px 10px;
+	  vertical-align:top;
+	}
+	.tbl th{
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	  color:#2b3b4f;
+	  font-weight:900;
+	  text-transform:uppercase;
+	  letter-spacing:.06em;
+	  font-size:12px;
+	}
+	.tbl tr:last-child td{ border-bottom:none; }
+	.tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+	.kpi{
+	  display:flex;
+	  gap:10px;
+	  flex-wrap:wrap;
+	  justify-content:center;
+	  margin:6px 0 10px;
+	}
+	.kpi .box{
+	  min-width:220px;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:8px;
+	  padding:8px 10px;
+	}
+	.kpi .box .t{
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  color:var(--ink2);
+	  font-weight:900;
+	  margin-bottom:2px;
+	}
+	.kpi .box .v{
+	  font-size:16px;
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	.callout{
+	  background:var(--calloutBg);
+	  border:1px solid var(--calloutBorder);
+	  border-radius:6px;
+	  padding:10px 12px;
+	  margin:6px 0 10px;
+	}
+	.callout strong{ font-weight:900; }
+
+	.h2{
+	  margin:0 0 4px;
+	  font-size:18px;
+	  font-weight:900;
+	  color:var(--deepBlue);
+	  font-style:italic;
+	  letter-spacing:.2px;
+	  text-transform:uppercase;
+	  text-align:center;
+	}
+
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+	/* -------------------------
+	   10) Code blocks
+	   ------------------------- */
+	pre{
+	  margin: 6px 0 10px;
+	  padding: 10px 12px;
+	  background: var(--codeBg);
+	  border-radius: 6px;
+	  border: 1px solid var(--codeBorder);
+	  font-size: 14px;
+	  overflow-x: auto;
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  color: var(--ink);
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	}
+	code{
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	  color: inherit;
+	}
+
+	/* -------------------------
+	   11) Responsive
+	   ------------------------- */
+	@media (max-width:1020px){
+	  body{ padding:10px; }
+	  .main{ padding:10px; }
+
+	  .grid{ grid-template-columns: 1fr; }
+	  .grid::before{ display:none; }
+
+	  .checkwrap{ padding:0 24px; }
+	  .checkwrap:before,.checkwrap:after{ display:none; }
+
+	  .brand,.variant{ width:auto; }
+	  .grid2,.grid3{ grid-template-columns:1fr; }
+	  .kpi .box{ min-width:unset; width:100%; }
+	  summary.btn{ font-size:18px; }
+	  .pill{ font-size:11px; }
+	}
+
+	@media (max-width:800px){
+	  .variant{ display:none; }
+	}
+	
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* cache la colonne droite */
+	  .variant{ display:none; }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;           /* laisse la place aux barres */
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;  /* on force l’affichage */
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;       /* autorise le wrap */
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  /* le texte principal prend la largeur pour éviter le serrage */
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  /* chevron toujours à droite */
+	  .chev{
+		margin-left:auto;
+	  }
+	}
+	@media (max-width: 520px){
+	  .tbl{ display:block; overflow-x:auto; }
+	}
+	
+	
+	/* =========================================================
+	   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+	   + summary.btn qui wrap proprement
+	   ========================================================= */
+	@media (max-width: 520px){
+
+	  /* ----- Header layout ----- */
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  /* OPS reste en haut à gauche */
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  /* Titre centré (ligne du milieu) */
+	  .logo{
+		width:100%;
+		padding:0;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  /* cache la colonne droite */
+	  .variant{ display:none; }
+
+	  /* ----- Titre + barres rouges conservées ----- */
+	  .checkwrap{
+		padding: 0 38px;           /* laisse la place aux barres */
+		max-width: 100%;
+	  }
+
+	  .checkwrap:before,
+	  .checkwrap:after{
+		display:block !important;  /* on force l’affichage */
+		width: clamp(18px, 7vw, 34px);
+		height: 3px;
+	  }
+
+	  /* Le titre peut passer sur 2 lignes */
+	  .checkmate{
+		font-size: 22px;
+		max-width: 88vw;
+		white-space: normal;       /* autorise le wrap */
+		line-height: 1.15;
+		padding: 8px 14px;
+		text-align:center;
+	  }
+
+	  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+	  summary.btn{
+		white-space: normal;
+		flex-wrap: wrap;
+		row-gap: 6px;
+		font-size: 16px;
+		padding: 10px 10px;
+	  }
+
+	  /* le texte principal prend la largeur pour éviter le serrage */
+	  summary.btn > :first-child{
+		flex: 1 1 100%;
+	  }
+
+	  /* chevron toujours à droite */
+	  .chev{
+		margin-left:auto;
+	  }
+	}
+	/* =========================================================
+	   ANTI-OVERFLOW PATCH (Fuel Planning)
+	   - titres qui wrap
+	   - pre/code qui ne débordent pas
+	   - tables lisibles sur mobile
+	   ========================================================= */
+
+	/* 1) Autorise le wrap partout où ça déborde souvent */
+	.h2,
+	.callout strong,
+	.btn{
+	  white-space: normal;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 2) Les PRE/CODE : pas de débordement + wrap des longues formules */
+	pre, code{
+	  max-width: 100%;
+	}
+	pre{
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  overflow-wrap: anywhere;
+	}
+
+	/* 3) Tables : elles sont la cause #1.
+		  -> desktop: normal
+		  -> mobile: scroll horizontal propre (pas de casse du layout) */
+	.tbl{
+	  width:100%;
+	  max-width:100%;
+	}
+
+	/* 4) Mobile (gros patch) */
+	@media (max-width: 620px){
+
+	  /* Titres un peu moins gros pour éviter la ligne qui dépasse */
+	  .h2{
+		font-size: 16px;
+		line-height: 1.15;
+	  }
+
+	  /* Callouts : évite que des mots/formules poussent le container */
+	  .callout{
+		max-width: 100%;
+		overflow-wrap: anywhere;
+	  }
+
+	  /* TABLE -> mode "carte" (meilleur que scroll pour ta table 4 colonnes) */
+	  .tbl thead{ display:none; }
+	  .tbl, .tbl tbody, .tbl tr, .tbl td{ display:block; width:100%; }
+	  .tbl tr{
+		border:1px solid rgba(0,0,0,.12);
+		border-radius:8px;
+		background:#fff;
+		margin:10px 0;
+		overflow:hidden;
+	  }
+	  .tbl td{
+		border:none;
+		border-bottom:1px solid rgba(0,0,0,.08);
+		padding:8px 10px;
+	  }
+	  .tbl td:last-child{ border-bottom:none; }
+
+	  /* Labels automatiques pour tes 4 colonnes (dans l’ordre actuel) */
+	  .tbl td:nth-child(1)::before{ content:"Bloc — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(2)::before{ content:"Données — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(3)::before{ content:"Formule — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(4)::before{ content:"Résultat — "; font-weight:900; color:var(--ink2); }
+
+	  /* Empêche les valeurs longues (0.117 × 10.5) de casser le layout */
+	  .tbl td{
+		overflow-wrap:anywhere;
+		word-break:break-word;
+	  }
+	}
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains">
+          </div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Fuel Planning</div>
+            </a>
+          </div>
+        </div>
+		
+        <div class="variant">
+          
+          <small></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="subtitle">
+      </div>
+
+      <!-- KPI / Résumé -->
+      <details class="section" open>
+        <summary class="btn">
+          Résumé mission &amp; hypothèses (celles utilisées dans l’exemple)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+        <div class="kpi">
+          <div class="box">
+            <div class="t">Route</div>
+            <div class="v">KPSC → KALW</div>
+          </div>
+          <div class="box">
+            <div class="t">Altitude / Règles</div>
+            <div class="v">5 500 ft — VFR jour</div>
+          </div>
+          <div class="box">
+            <div class="t">Temps enroute (LNM)</div>
+            <div class="v">0h26</div>
+          </div>
+          <div class="box">
+            <div class="t">Avion</div>
+            <div class="v">C172P — Long Range Tanks</div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="callout">
+            <strong>Données perf choisies (hypothèses réalistes type C172)</strong>
+            <ul class="dash">
+              <li><strong>Taxi</strong> : 10 min (0.167 h) — <strong>FF</strong> 4.0 GPH</li>
+              <li><strong>Montée</strong> : 7 min (0.117 h) — <strong>FF</strong> 10.5 GPH</li>
+              <li><strong>Croisière</strong> : 13 min (0.217 h) — <strong>FF</strong> 8.5 GPH</li>
+              <li><strong>Descente</strong> : 6 min (0.100 h) — <strong>FF</strong> 6.5 GPH</li>
+              <li><strong>Réserve finale</strong> : 30 min (0.5 h) — <strong>FF</strong> 8.0 GPH</li>
+              <li><strong>Contingency</strong> : 5% du Trip</li>
+            </ul>
+            <div class="divider"></div>
+            <div class="note">
+              Remplace ces FF par les tables du POH/AFM (cruise performance / fuel to climb / etc.)
+              ou par ta conso calibrée en simulateur.
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Carburant utilisable &amp; conversion W&amp;B</strong>
+            <ul class="dash">
+              <li><strong>Usable fuel</strong> : 25 gal / réservoir, 50 gal total (C172P long range)</li>
+              <li><strong>Conversion standard</strong> : Avgas ≈ <strong>6 lb/gal</strong></li>
+              <li><strong>Ramp Fuel</strong> = Block Fuel (au parking)</li>
+              <li><strong>Takeoff Fuel</strong> = Block Fuel − Taxi Fuel</li>
+            </ul>
+            <div class="divider"></div>
+            <div class="note">
+              Le W&amp;B se calcule sur le poids carburant ; en opération, on distingue souvent
+              <em>ramp weight</em> et <em>takeoff weight</em> via le taxi fuel.
+            </div>
+          </div>
+        </div>
+      </div>
+      </details>
+      <!-- Accordéon : Partie Théorique -->
+      <details class="section" open>
+        <summary class="btn">
+          Partie théorique : méthode universelle (applicable à tous les avions)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid">
+            <!-- Colonne gauche : Théorie -->
+            <div class="section">
+              <div class="h2">A) Découper le carburant en blocs</div>
+              <ul class="dash">
+                <li><strong>Taxi Fuel</strong> : démarrage + roulage + run-up + attentes</li>
+                <li><strong>Trip Fuel</strong> : montée + croisière + descente + intégration/approche</li>
+                <li><strong>Final Reserve</strong> : réserve “protégée” (souvent exprimée en minutes)</li>
+                <li><strong>Contingency / Extra</strong> : marge imprévus (vent, attente, détour, conso réelle)</li>
+                <li><strong>Alternate Fuel</strong> : si tu prévois un terrain de dégagement (optionnel en VFR, réaliste)</li>
+              </ul>
+
+              <div class="callout">
+                <strong>Formule de base</strong>
+                <pre><code>Block Fuel = Taxi + Trip + Final Reserve + Contingency (+ Alternate)</code></pre>
+                <div class="note">
+                  Le but opérationnel : pouvoir terminer le vol prévu sans entamer la final reserve,
+                  sauf situation anormale/urgence.
+                </div>
+              </div>
+
+              <div class="h2">B) Trip Fuel : méthode “POH-driven”</div>
+              <div class="callout">
+                <strong>Principe universel</strong>
+                <pre><code>Fuel_phase (gal) = Temps_phase (h) × Fuel Flow_phase (GPH)</code></pre>
+
+                <ul class="dash">
+                  <li>Tu découpes au minimum : <strong>climb</strong>, <strong>cruise</strong>, <strong>descent</strong>.</li>
+                  <li>Tu récupères les <strong>Fuel Flows</strong> dans le POH/AFM (ou manuel perf).</li>
+                  <li>Tu récupères les <strong>temps</strong> via ton nav log (GS/vent, segments, etc.).</li>
+                </ul>
+
+                <div class="divider"></div>
+
+                <strong>Montée (climb) : 2 méthodes réalistes</strong>
+                <ul class="sub">
+                  <li><strong>Table POH directe</strong> : “time/fuel/distance to climb” quand disponible.</li>
+                  <li><strong>Calcul</strong> : (temps de montée) × (GPH montée).</li>
+                </ul>
+
+                <strong>Croisière : 3 décisions</strong>
+                <ul class="sub">
+                  <li><strong>Altitude</strong> (vents, relief, espaces, perf).</li>
+                  <li><strong>Réglage</strong> (RPM/%power).</li>
+                  <li><strong>Mélange</strong> (full rich / leaned selon procédures).</li>
+                </ul>
+
+                <strong>Descente</strong>
+                <ul class="sub">
+                  <li>Souvent conso plus faible (ou garder la conso croisière si tu veux conservateur).</li>
+                  <li>Ajoute si besoin une <strong>intégration longue</strong> (5–10 min).</li>
+                </ul>
+              </div>
+
+              <div class="h2">C) Final reserve : minutes → gallons</div>
+              <div class="callout">
+                <strong>La réserve se gère proprement en temps</strong>
+                <pre><code>Reserve (gal) = Temps_reserve (h) × GPH_reference</code></pre>
+                <ul class="dash">
+                  <li>Ex. VFR jour : <strong>30 min</strong> = 0.5 h (final reserve).</li>
+                  <li>Choisir une conso de référence “réserve” (holding / croisière éco).</li>
+                  <li>L’idée : <strong>réserve protégée</strong> (tu évites de la consommer).</li>
+                </ul>
+              </div>
+
+              <div class="h2">D) W&amp;B : conversion &amp; logique Ramp/Takeoff</div>
+              <div class="callout">
+                <strong>Conversion standard</strong>
+                <pre><code>Fuel weight (lb) = Gallons × 6</code></pre>
+                <ul class="dash">
+                  <li><strong>Ramp fuel</strong> = Block Fuel (au parking).</li>
+                  <li><strong>Takeoff fuel</strong> = Block Fuel − Taxi fuel.</li>
+                  <li><strong>Takeoff weight</strong> = Ramp weight − (Taxi fuel × 6).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Colonne droite : Illustration directe avec l’exemple -->
+            <div class="section">
+              <div class="h2">Illustration instantanée sur notre vol</div>
+
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Bloc</th>
+                    <th>Données</th>
+                    <th>Formule</th>
+                    <th>Résultat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Taxi</strong></td>
+                    <td>10 min, 4.0 GPH</td>
+                    <td>0.167 × 4.0</td>
+                    <td><strong>0.67 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Montée</strong></td>
+                    <td>7 min, 10.5 GPH</td>
+                    <td>0.117 × 10.5</td>
+                    <td><strong>1.23 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Croisière</strong></td>
+                    <td>13 min, 8.5 GPH</td>
+                    <td>0.217 × 8.5</td>
+                    <td><strong>1.84 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Descente</strong></td>
+                    <td>6 min, 6.5 GPH</td>
+                    <td>0.100 × 6.5</td>
+                    <td><strong>0.65 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Trip total</strong></td>
+                    <td>Climb + Cruise + Descent</td>
+                    <td>1.23 + 1.84 + 0.65</td>
+                    <td><strong>3.72 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Final reserve</strong></td>
+                    <td>30 min, 8.0 GPH</td>
+                    <td>0.5 × 8.0</td>
+                    <td><strong>4.00 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Contingency</strong></td>
+                    <td>5% du trip</td>
+                    <td>0.05 × 3.72</td>
+                    <td><strong>0.19 gal</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Block fuel</strong></td>
+                    <td>Taxi + Trip + Reserve + Cont.</td>
+                    <td>0.67 + 3.72 + 4.00 + 0.19</td>
+                    <td><strong>8.58 gal</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="callout">
+                <strong>Arrondis opérationnels (réalistes)</strong>
+                <ul class="dash">
+                  <li>Block fuel calculé : <strong>8.58 gal</strong> → arrondi : <strong>9.0 gal</strong></li>
+                  <li>Poids carburant (ramp) : 9.0 × 6 = <strong>54 lb</strong></li>
+                  <li>Takeoff fuel : 9.0 − 0.67 = <strong>8.33 gal</strong></li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Logique “réserve protégée”</strong>
+                <pre><code>Fuel à l’arrivée ≈ Block − Taxi − Trip
+≈ 9.0 − 0.7 − 3.8 = 4.5 gal</code></pre>
+                <div class="note">
+                  Ici tu arrives avec ~4.5 gal, donc tu conserves la réserve finale (4.0 gal)
+                  et tu gardes un petit “coussin” au-dessus.
+                </div>
+              </div>
+
+              <div class="callout">
+                <strong>Vérification carburant utilisable</strong>
+                <ul class="dash">
+                  <li>Usable fuel C172P (long range) : <strong>50 gal</strong></li>
+                  <li>Block fuel ici : <strong>9 gal</strong> → largement &lt; 50 gal</li>
+                </ul>
+                <div class="note">
+                  Toujours vérifier “usable fuel” (et non la capacité totale) avant de valider le plan.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Accordéon : Procédure étape par étape (checklist complète) -->
+      <details class="section" open>
+        <summary class="btn">
+          Procédure complète : étape par étape
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid">
+            <!-- Étapes universelles -->
+            <div class="section">
+              <div class="h2">Étapes universelles (tous avions)</div>
+
+              <div class="callout">
+                <strong>Étape 1 — Rassembler les entrées</strong>
+                <ul class="dash">
+                  <li><strong>Route &amp; temps</strong> (ou segments) : distance, cap, vent, GS, EET</li>
+                  <li><strong>Profil</strong> : altitude(s), climb/cruise/descent, intégration</li>
+                  <li><strong>Perf avion</strong> : fuel flows (GPH) par phase via POH/AFM</li>
+                  <li><strong>Réserves</strong> : minutes (ex. 30 min VFR jour), + marge contingency</li>
+                  <li><strong>Usable fuel</strong> : capacité utilisable (pas la totale)</li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 2 — Taxi fuel</strong>
+                <pre><code>Taxi (gal) = (Taxi_min / 60) × GPH_taxi</code></pre>
+                <div class="note">
+                  En pratique : tu peux prendre une valeur “fixe” (0.5–2 gal selon terrain)
+                  ou un calcul temps × conso.
+                </div>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 3 — Trip fuel (phases)</strong>
+                <pre><code>Climb (gal)   = (Climb_min / 60) × GPH_climb
+Cruise (gal)  = (Cruise_min / 60) × GPH_cruise
+Descent (gal) = (Descent_min / 60) × GPH_descent</code></pre>
+                <div class="note">
+                  Si ton POH donne “fuel to climb” directement, prends-le (c’est encore mieux).
+                </div>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 4 — Final reserve</strong>
+                <pre><code>Reserve (gal) = (Reserve_min / 60) × GPH_reference</code></pre>
+                <ul class="dash">
+                  <li>La réserve est <strong>protégée</strong> (tu évites d’y toucher).</li>
+                  <li>Choisis une conso de référence (holding / cruise éco / selon tes SOP).</li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 5 — Contingency / Extra</strong>
+                <ul class="dash">
+                  <li>Option A : <strong>% du trip</strong> (ex 5–10%)</li>
+                  <li>Option B : <strong>minutes</strong> ajoutées (ex +5 à +15 min)</li>
+                  <li>Option C : “marge fixe” (ex +1 gal minimum)</li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 6 — Block fuel &amp; W&amp;B</strong>
+                <pre><code>Block (gal) = Taxi + Trip + Reserve + Contingency (+ Alternate)
+Fuel weight (lb) = Block (gal) × 6</code></pre>
+                <ul class="dash">
+                  <li><strong>Ramp fuel</strong> = Block fuel</li>
+                  <li><strong>Takeoff fuel</strong> = Block − Taxi</li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 7 — Vérifications finales</strong>
+                <ul class="dash">
+                  <li>Block ≤ <strong>usable fuel</strong></li>
+                  <li>Endurance suffisante et <strong>réserve finale intacte</strong> à l’arrivée</li>
+                  <li>W&amp;B : ramp vs takeoff vs landing (si tu veux très précis)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Étapes appliquées à l’exemple -->
+            <div class="section">
+              <div class="h2">Même procédure appliquée à KPSC → KALW</div>
+
+              <div class="callout">
+                <strong>Étape 1 — Entrées (notre exemple 03/02)</strong>
+                <ul class="dash">
+                  <li>Route : <strong>KPSC → KALW</strong></li>
+                  <li>Règles : <strong>VFR jour</strong></li>
+                  <li>Altitude : <strong>5 500 ft</strong></li>
+                  <li>Temps total : <strong>0h26</strong></li>
+                  <li>Découpage temps : montée <strong>7 min</strong>, croisière <strong>13 min</strong>, descente <strong>6 min</strong></li>
+                  <li>Taxi : <strong>10 min</strong></li>
+                  <li>Réserve finale : <strong>30 min</strong></li>
+                  <li>Contingency : <strong>5%</strong> du trip</li>
+                </ul>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 2 — Taxi fuel</strong>
+                <pre><code>Taxi = (10/60) × 4.0 = 0.67 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 3 — Trip fuel</strong>
+                <pre><code>Montée   = (7/60)  × 10.5 = 1.23 gal
+Croisière= (13/60) ×  8.5 = 1.84 gal
+Descente = (6/60)  ×  6.5 = 0.65 gal
+
+Trip = 1.23 + 1.84 + 0.65 = 3.72 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 4 — Final reserve</strong>
+                <pre><code>Reserve = (30/60) × 8.0 = 4.00 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 5 — Contingency</strong>
+                <pre><code>Contingency = 5% × Trip = 0.05 × 3.72 = 0.19 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 6 — Block fuel</strong>
+                <pre><code>Block = Taxi + Trip + Reserve + Contingency
+= 0.67 + 3.72 + 4.00 + 0.19
+= 8.58 gal → arrondi opérationnel : 9.0 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 6bis — W&amp;B (poids carburant)</strong>
+                <pre><code>Fuel weight (ramp) = 9.0 × 6 = 54 lb
+Takeoff fuel = 9.0 − 0.67 = 8.33 gal</code></pre>
+              </div>
+
+              <div class="callout">
+                <strong>Étape 7 — Vérifications</strong>
+                <ul class="dash">
+                  <li>Usable fuel : <strong>50 gal</strong> → OK (Block 9 gal)</li>
+                  <li>Fuel à l’arrivée ≈ 9.0 − 0.7 − 3.8 = <strong>4.5 gal</strong></li>
+                  <li>Réserve finale = <strong>4.0 gal</strong> → intacte (≈ 0.5 gal de marge au-dessus)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+            </details>
+      </details>
+
+    </div><!-- /main -->
+  </div><!-- /card -->
+
+	<script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+
+		  // Si au moins 1 est ouvert -> on ferme tout
+		  // Si tous sont fermés -> on ouvre tout
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		// Bonus accessibilité : Entrée / Espace déclenche aussi
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+	</script>
+
+</body>
+</html>

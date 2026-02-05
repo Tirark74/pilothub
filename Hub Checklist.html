@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CHECKLIST HUB</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+    :root{
+      --outerBlue:#2a69b0;
+      --deepBlue:#1f5f9e;
+      --ink:#1b1f24;
+      --ink2:#3e4a57;
+      --paper:#fbfbfb;
+      --panel:#f1f6ff;
+
+      --btnTop:#f4edb7;
+      --btnMid:#e5d675;
+      --btnBot:#d6c55a;
+      --btnEdge:#4d5863;
+      --btnText:#1f5f9e;
+
+      --shadow: rgba(0,0,0,.12);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#e9eef5;
+      font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      padding:18px;
+    }
+
+    /* ===== CARD ===== */
+    .card{
+      width:min(900px,100%);
+      background:var(--paper);
+      border:6px solid var(--outerBlue);
+      border-radius:6px;
+      box-shadow:0 8px 22px var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .header{
+      padding:10px 14px 8px;
+      background:linear-gradient(#fbfdff,#f1f6ff);
+    }
+
+    .header-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+    }
+
+    .brand{
+      width:260px;
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
+
+    .cessna{
+      font-weight:900;
+      font-style:italic;
+      font-size:40px;
+      color:var(--deepBlue);
+      line-height:1;
+    }
+
+    .airplains{
+      font-size:8px;
+      color:var(--ink2);
+      line-height:1.1;
+      margin-bottom:3px;
+    }
+
+    .logo{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0 6px;
+    }
+    .checkwrap{
+      position:relative;
+      display:inline-block;
+      padding:0 72px;
+    }
+    .checkwrap:before{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkwrap:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      right:0;
+      width:66px;
+      height:3px;
+      background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+      transform:translateY(-50%);
+    }
+    .checkmate{
+      display:inline-block;
+      background:#fff;
+      border:2px solid #6b7785;
+      border-radius:10px;
+      padding:4px 16px 6px;
+      font-weight:900;
+      font-size:34px;
+      color:#2b3b4f;
+      line-height:1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+      white-space:nowrap;
+    }
+
+    .variant{
+      width:260px;
+      text-align:right;
+      color:var(--deepBlue);
+      font-weight:900;
+      font-style:italic;
+      font-size:20px;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      background:var(--panel);
+      padding:14px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:var(--ink2);
+      font-size:15px;
+      margin-bottom:16px;
+    }
+
+    /* ===== NAV BUTTONS ===== */
+    .nav-btn{
+      display:block;
+      margin:0 0 14px;
+      padding:12px;
+      text-align:center;
+      background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+      border:2px solid var(--btnEdge);
+      border-radius:8px;
+      font-weight:900;
+      font-style:italic;
+      color:var(--btnText);
+      text-transform:uppercase;
+      font-size:20px;
+      text-decoration:none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 1px 0 rgba(0,0,0,.15);
+      transition:transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .nav-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.85),
+        0 3px 8px rgba(0,0,0,.18);
+    }
+
+    .nav-desc{
+      display:block;
+      margin-top:4px;
+      font-style:normal;
+      font-size:14px;
+      text-transform:none;
+      color:#2b3b4f;
+      opacity:.85;
+    }
+
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+    @media(max-width:800px){
+      body{padding:10px}
+      .variant{display:none}
+    }
+	
+		/* ===== Mobile header avec barres rouges conservées ===== */
+	@media (max-width: 520px){
+
+	  .header-top{
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	  }
+
+	  .brand{
+		width:100%;
+		justify-content:flex-start;
+	  }
+
+	  .logo{
+		width:100%;
+		display:flex;
+		justify-content:center;
+	  }
+
+	  .checkwrap{
+		position:relative;
+		padding:0 36px;           /* barres plus courtes */
+		max-width:100%;
+	  }
+
+	  /* Barres rouges raccourcies */
+	  .checkwrap::before,
+	  .checkwrap::after{
+		width:28px;               /* <<< clé */
+		height:3px;
+	  }
+
+	  .checkwrap::before{ left:0 }
+	  .checkwrap::after{ right:0 }
+
+	  .checkmate{
+		font-size:22px;
+		white-space:normal;       /* autorise 2 lignes */
+		text-align:center;
+		line-height:1.15;
+		max-width:80vw;
+		padding:8px 14px;
+	  }
+	}
+
+	
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna"></div>
+          <div class="airplains">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+		
+        <div class="logo">
+          <div class="checkwrap">
+			<a href="index.html" class="checkmate-link">
+			<div class="checkmate">Checklist</div>
+			</a>
+          </div>
+        </div>
+		
+        <div class="variant">
+           
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <!-- ===== LINKS ===== -->
+  
+	  <a class="nav-btn" href="Checklist C172N.html">
+        Cessna 172NG
+      </a>
+	  
+	  <a class="nav-btn" href="Checklist Seneca 2.html">
+        Piper Seneca II
+      </a>
+
+    </div>
+  </div>
+</body>
+</html>

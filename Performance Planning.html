@@ -1,0 +1,1848 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PERFORMANCE PLANNING</title>
+  <link rel="icon" href="Citycons_plane_icon-icons.com_67921.ico" type="image/x-icon">
+
+  <style>
+
+	/* =========================================================
+	   ✅ UNIVERSAL CHECKMATE THEME (SUPerset)
+	   Compatible avec tes 6 pages (1→6)
+	   ========================================================= */
+
+	/* -------------------------
+	   0) Variables (thème)
+	   ------------------------- */
+	:root{
+	  /* Palette */
+	  --outerBlue:#2a69b0;
+	  --deepBlue:#1f5f9e;
+	  --ink:#1b1f24;
+	  --ink2:#3e4a57;
+	  --paper:#fbfbfb;
+	  --panel:#f1f2f3;
+	  --gridLine:#b9c2cc;
+	  --shadow: rgba(0,0,0,.12);
+
+	  /* Boutons jaunes */
+	  --btnTop:#f4edb7;
+	  --btnMid:#e5d675;
+	  --btnBot:#d6c55a;
+	  --btnEdge:#4d5863;
+	  --btnText:#1f5f9e;
+
+	  /* Bande olive (vspeeds) */
+	  --oliveBandTop:#f2eaa9;
+	  --oliveBandBot:#e5d772;
+
+	  /* Statuts */
+	  --red:#b42318;
+	  --green:#1e6f36;
+	  --orange:#b96a00;
+
+	  /* Typo / lisibilité */
+	  --baseFont: 18px;
+	  --baseLine: 1.22;
+
+	  /* Tooltips */
+	  --tipBg:#0f172a;
+	  --tipText:#ffffff;
+	  --tipShadow: rgba(0,0,0,.35);
+
+	  /* Code blocks */
+	  --codeBg:#ffffff;
+	  --codeBorder:#b9c2cc;
+
+	  /* Badges */
+	  --you:#1e6f36;
+	  --atc:#b96a00;
+	  --note:#b42318;
+
+	  /* Callouts */
+	  --calloutBg:#ffffff;
+	  --calloutBorder:#b9c2cc;
+
+	  /* PERF2 alignment (pages perf) */
+	  --perfHdrH: 30px;
+	  --perfRowH3: 26px;
+	  --perfRowH2: 26px;
+
+	  /* Largeurs “fixes” header (optionnel) */
+	  --hdrSideW: 260px;
+	}
+
+	/* Densité (si tu veux reproduire la page #4 très compacte) */
+	.density-compact{
+	  --baseFont: 11.5px;
+	  --baseLine: 1.22;
+	}
+
+	/* -------------------------
+	   1) Reset / Base
+	   ------------------------- */
+	*{ box-sizing:border-box; }
+
+	body{
+	  margin:0;
+	  background:#e9eef5;
+	  font-family:"Arial Narrow", Arial, Helvetica, sans-serif;
+	  color:var(--ink);
+
+	  display:flex;
+	  justify-content:center;
+
+	  padding:18px;
+	  font-size:var(--baseFont);
+	  line-height:var(--baseLine);
+	}
+
+	/* Liens */
+	a{
+	  color:var(--deepBlue);
+	  text-decoration:none;
+	  font-weight:900;
+	}
+	a:hover{ text-decoration:underline; }
+
+	/* Utilitaires texte */
+	.note{ font-size:14px; color:var(--ink2); line-height:1.25; }
+	.mono{ font-family:"Arial Narrow", Arial, Helvetica, sans-serif; }
+	.green{ color:var(--green); font-weight:900; }
+	.red{ color:var(--red); font-weight:900; }
+	.blue{ color:var(--deepBlue); font-weight:900; }
+
+	.divider{
+	  height:1px;
+	  background:rgba(0,0,0,.18);
+	  margin:8px 0;
+	}
+
+	hr{
+	  border:none;
+	  border-top:1px solid rgba(0,0,0,.15);
+	  margin:10px 0;
+	}
+
+	/* -------------------------
+	   2) Card + sheen
+	   ------------------------- */
+	.card{
+	  width:min(1080px, 100%);
+	  background:var(--paper);
+	  border:6px solid var(--outerBlue);
+	  border-radius:6px;
+	  box-shadow:0 8px 22px var(--shadow);
+	  overflow:hidden;
+	  position:relative;
+	}
+
+	/* sheen léger */
+	.card::after{
+	  content:"";
+	  position:absolute;
+	  inset:0;
+	  pointer-events:none;
+	  background:
+		radial-gradient(1200px 520px at 18% 6%, rgba(255,255,255,.55), rgba(255,255,255,0) 52%),
+		linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,0) 30%);
+	  z-index:1;
+	}
+
+	/* -------------------------
+	   3) Header (brand / logo / variant)
+	   ------------------------- */
+	.header{
+	  position:relative;
+	  z-index:4;
+	  padding:10px 14px 8px;
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	}
+
+	.header-top{
+	  display:flex;
+	  align-items:flex-end;
+	  justify-content:space-between;
+	  gap:10px;
+	}
+
+	.brand{
+	  width:var(--hdrSideW);
+	  display:flex;
+	  align-items:flex-end;
+	  gap:10px;
+	}
+
+	.cessna{
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:40px;
+	  color:var(--deepBlue);
+	  line-height:1;
+	  letter-spacing:.2px;
+	  white-space:nowrap;
+	}
+
+	.airplains{
+	  font-size:8px;
+	  color:var(--ink2);
+	  line-height:1.1;
+	  margin-bottom:3px;
+	}
+
+	.logo{
+	  flex:1;
+	  display:flex;
+	  justify-content:center;
+	  align-items:center;
+	  padding:0 6px;
+	}
+
+	.checkwrap{
+	  position:relative;
+	  display:inline-block;
+	  padding:0 72px;
+	}
+
+	.checkwrap:before,
+	.checkwrap:after{
+	  content:"";
+	  position:absolute;
+	  top:50%;
+	  width:66px;
+	  height:3px;
+	  background:linear-gradient(90deg, transparent, #c63b3b, #c63b3b);
+	  transform:translateY(-50%);
+	}
+	.checkwrap:before{ left:0; }
+	.checkwrap:after{
+	  right:0;
+	  background:linear-gradient(270deg, transparent, #c63b3b, #c63b3b);
+	}
+
+	.checkmate{
+	  display:inline-block;
+	  background:#fff;
+	  border:2px solid #6b7785;
+	  border-radius:10px;
+	  padding:4px 16px 6px;
+	  font-weight:900;
+	  font-size:34px;
+	  color:#2b3b4f;
+	  line-height:1;
+	  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+	  white-space:nowrap;
+	  text-align:center;
+	}
+
+	/* Variante à droite */
+	.variant{
+	  width:var(--hdrSideW);
+	  text-align:right;
+	  color:var(--deepBlue);
+	  font-weight:900;
+	  font-style:italic;
+	  font-size:20px;
+	  line-height:1.05;
+	  white-space:nowrap;
+	}
+	.variant small{
+	  display:block;
+	  font-style:normal;
+	  font-weight:700;
+	  font-size:10px;
+	  color:var(--ink2);
+	  margin-top:3px;
+	  white-space:normal;
+	}
+
+	/* Checkmate link hover */
+	.checkmate-link{
+	  text-decoration:none;
+	  display:inline-block;
+	}
+	.checkmate-link .checkmate{
+	  cursor:pointer;
+	  transition: transform 120ms ease, box-shadow 120ms ease;
+	}
+	.checkmate-link .checkmate:hover{
+	  transform: translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+
+	/* -------------------------
+	   4) Main + subtitle
+	   ------------------------- */
+	.main{
+	  position:relative;
+	  z-index:2;
+	  background:var(--panel);
+	  padding:10px 10px 12px;
+	}
+
+	.subtitle{
+	  text-align:center;
+	  color:var(--ink2);
+	  margin:6px 0 12px;
+	  font-size:15px;
+	}
+
+	/* -------------------------
+	   5) Boutons / titres jaunes
+	   ------------------------- */
+	.nav-btn{
+	  display:block;
+	  margin:0 0 14px;
+	  padding:12px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:8px;
+	  font-weight:900;
+	  font-style:italic;
+	  color:var(--btnText);
+	  text-transform:uppercase;
+	  font-size:20px;
+	  text-decoration:none;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.15);
+	  transition:transform 120ms ease, box-shadow 120ms ease;
+	}
+	.nav-btn:hover{
+	  transform:translateY(-1px);
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.85),
+		0 3px 8px rgba(0,0,0,.18);
+	}
+	.nav-desc{
+	  display:block;
+	  margin-top:4px;
+	  font-style:normal;
+	  font-size:14px;
+	  text-transform:none;
+	  color:#2b3b4f;
+	  opacity:.85;
+	}
+
+	.btn{
+	  margin:-4px -4px 7px;
+	  padding:6px 6px;
+	  text-align:center;
+	  background:linear-gradient(var(--btnTop), var(--btnMid) 55%, var(--btnBot));
+	  border:2px solid var(--btnEdge);
+	  border-radius:7px;
+	  box-shadow:
+		inset 0 1px 0 rgba(255,255,255,.75),
+		0 1px 0 rgba(0,0,0,.12);
+	  color:var(--btnText);
+	  font-weight:900;
+	  font-style:italic;
+	  letter-spacing:.35px;
+	  text-transform:uppercase;
+	  white-space:nowrap;
+	  font-size:19px;
+	}
+
+	summary.btn{
+	  list-style:none;
+	  cursor:pointer;
+	  user-select:none;
+
+	  margin:0;
+	  padding:8px 10px;
+
+	  display:flex;
+	  align-items:center;
+	  justify-content:center;
+	  gap:10px;
+	}
+	summary.btn::-webkit-details-marker{ display:none; }
+
+	.pill{
+	  display:inline-block;
+	  padding:1px 8px;
+	  border-radius:999px;
+	  font-size:12px;
+	  font-weight:900;
+	  letter-spacing:.35px;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  color:#20324a;
+	  text-transform:none;
+	  font-style:normal;
+	  white-space:nowrap;
+	}
+
+	.chev{
+	  margin-left:auto;
+	  font-weight:900;
+	  color:#2b3b4f;
+	  opacity:.85;
+	  transition: transform 180ms ease;
+	  font-style:normal;
+	}
+	details.section[open] .chev{ transform: rotate(90deg); }
+
+	.section-body{
+	  margin-top:8px;
+	  background:transparent;
+	  padding:0 2px 4px;
+	}
+	details.section .section-body{
+	  overflow:hidden;
+	  max-height:0;
+	  opacity:0;
+	  transform: translateY(-6px);
+	  transition:
+		max-height 420ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 260ms ease,
+		transform 260ms ease;
+	}
+	details.section[open] .section-body{
+	  max-height: 999999px;   /* ou 50000px si tu veux */
+	  opacity:1;
+	  transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce){
+	  .nav-btn,
+	  .checkmate-link .checkmate,
+	  .chev,
+	  details.section .section-body{
+		transition:none !important;
+	  }
+	}
+
+	/* -------------------------
+	   6) Sections
+	   ------------------------- */
+	.section{
+	  break-inside: avoid;
+	  -webkit-column-break-inside: avoid;
+	  page-break-inside: avoid;
+
+	  background:transparent;
+	  border:none;
+	  border-radius:0;
+	  padding:6px 8px;
+	  margin:0 0 10px;
+	  display:block;
+	}
+	.section:last-child{ margin-bottom:0; }
+	details.section{ margin:0 0 12px; padding:0; }
+
+	/* -------------------------
+	   7) Grilles
+	   ------------------------- */
+	.grid{
+	  display:grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap:0;
+
+	  border-top: 1.5px solid #111111;
+	  border-bottom: 1.5px solid #111111;
+	  border-left: 1.5px solid #111111;
+	  border-right: 1px solid #8a8f98;
+
+	  position:relative;
+	  align-items:start;
+	}
+
+	.grid::before{
+	  content:"";
+	  position:absolute;
+	  top:0; bottom:0;
+	  left:50%;
+	  width:1px;
+	  background:#111111;
+	  pointer-events:none;
+	}
+
+	.grid.grid--1{ grid-template-columns:1fr; }
+	.grid.grid--1::before{ display:none; }
+
+	.grid.grid--2{ grid-template-columns:1fr 1fr; }
+
+	/* -------------------------
+	   8) Lists
+	   ------------------------- */
+	ul{ list-style:none; padding-left:0; margin:0; }
+	li{ margin:2px 0; }
+
+	.dash li::before{ content:"– "; color:#2b3b4f; font-weight:900; }
+	.sub{ margin-top:4px; padding-left:12px; }
+	.sub li::before{ content:"• "; font-weight:900; color:#2b3b4f; }
+
+	/* -------------------------
+	   9) Badges
+	   ------------------------- */
+	.badge{
+	  display:inline-block;
+	  padding:2px 10px;
+	  border-radius:999px;
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  margin:0 6px 6px 0;
+	  border:1px solid rgba(0,0,0,.18);
+	  background:rgba(255,255,255,.55);
+	  font-weight:900;
+	  color:#20324a;
+	  vertical-align:2px;
+	  white-space:nowrap;
+	}
+	.badge-you{ color:var(--you); border-color:rgba(30,111,54,.35); }
+	.badge-atc{ color:var(--atc); border-color:rgba(185,106,0,.35); }
+	.badge-note{ color:var(--note); border-color:rgba(180,35,24,.35); }
+
+	/* -------------------------
+	   10) Code blocks
+	   ------------------------- */
+	pre{
+	  margin: 6px 0 10px;
+	  padding: 10px 12px;
+	  background: var(--codeBg);
+	  border-radius: 6px;
+	  border: 1px solid var(--codeBorder);
+	  font-size: 14px;
+	  overflow-x: auto;
+	  white-space: pre-wrap;
+	  word-break: break-word;
+	  color: var(--ink);
+	  font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+	}
+	code{ font-family: "JetBrains Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+	em{ font-style:italic; }
+
+	/* -------------------------
+	   11) Tables / KPI / Callouts
+	   ------------------------- */
+	.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+	.tbl{
+	  width:100%;
+	  border-collapse:collapse;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:6px;
+	  overflow:hidden;
+	  font-size:14px;
+	}
+	.tbl th, .tbl td{
+	  border-bottom:1px solid rgba(0,0,0,.12);
+	  border-right:1px solid rgba(0,0,0,.08);
+	  padding:8px 10px;
+	  vertical-align:top;
+	}
+	.tbl th{
+	  background:linear-gradient(#fbfdff,#f1f6ff);
+	  color:#2b3b4f;
+	  font-weight:900;
+	  text-transform:uppercase;
+	  letter-spacing:.06em;
+	  font-size:12px;
+	}
+	.tbl tr:last-child td{ border-bottom:none; }
+	.tbl td:last-child, .tbl th:last-child{ border-right:none; }
+
+	.kpi{
+	  display:flex;
+	  gap:10px;
+	  flex-wrap:wrap;
+	  justify-content:center;
+	  margin:6px 0 10px;
+	}
+	.kpi .box{
+	  min-width:220px;
+	  background:#fff;
+	  border:1px solid var(--gridLine);
+	  border-radius:8px;
+	  padding:8px 10px;
+	}
+	.kpi .box .t{
+	  font-size:12px;
+	  text-transform:uppercase;
+	  letter-spacing:.08em;
+	  color:var(--ink2);
+	  font-weight:900;
+	  margin-bottom:2px;
+	}
+	.kpi .box .v{
+	  font-size:16px;
+	  font-weight:900;
+	  color:#2b3b4f;
+	}
+
+	.callout{
+	  background:var(--calloutBg);
+	  border:1px solid var(--calloutBorder);
+	  border-radius:6px;
+	  padding:10px 12px;
+	  margin:6px 0 10px;
+	}
+	.callout strong{ font-weight:900; }
+
+	.h2{
+	  margin:0 0 4px;
+	  font-size:18px;
+	  font-weight:900;
+	  color:var(--deepBlue);
+	  font-style:italic;
+	  letter-spacing:.2px;
+	  text-transform:uppercase;
+	  text-align:center;
+	}
+
+	/* ICAO cliquable : léger indice au survol (sans changer la mise en forme) */
+	#icaoToggle{
+	  cursor:pointer;
+	}
+	#icaoToggle:hover{
+	  filter: brightness(1.08);
+	}
+	#icaoToggle:active{
+	  transform: translateY(1px);
+	}
+	#icaoToggle:focus{
+	  outline: none;
+	}
+
+	/* Empêche la sélection du texte sur ICAO */
+	#icaoToggle{
+	  user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select: none;
+	}
+
+	/* -------------------------
+	   17) Responsive
+	   ------------------------- */
+	@media (max-width:1020px){
+	  body{ padding:10px; }
+	  .main{ padding:10px; }
+	  .grid{ grid-template-columns: 1fr; }
+	  .grid::before{ display:none; }
+	  .checkwrap{ padding:0 24px; }
+	  .checkwrap:before,.checkwrap:after{ display:none; }
+	  .brand,.variant{ width:auto; }
+	  .grid2{ grid-template-columns:1fr; }
+	  .kpi .box{ min-width:unset; width:100%; }
+	}
+
+	@media (max-width:800px){
+	  .variant{ display:none; }
+	}
+
+
+		/* =========================================================
+		   MOBILE HEADER FIX — OPS à gauche + titre centré + barres rouges
+		   + summary.btn qui wrap proprement
+		   ========================================================= */
+		@media (max-width: 520px){
+
+		  /* ----- Header layout ----- */
+		  .header-top{
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		  }
+
+		  /* OPS reste en haut à gauche */
+		  .brand{
+			width:100%;
+			justify-content:flex-start;
+		  }
+
+		  /* Titre centré (ligne du milieu) */
+		  .logo{
+			width:100%;
+			padding:0;
+			display:flex;
+			justify-content:center;
+		  }
+
+		  /* cache la colonne droite */
+		  .variant{ display:none; }
+
+		  /* ----- Titre + barres rouges conservées ----- */
+		  .checkwrap{
+			padding: 0 38px;           /* laisse la place aux barres */
+			max-width: 100%;
+		  }
+
+		  .checkwrap:before,
+		  .checkwrap:after{
+			display:block !important;  /* on force l’affichage */
+			width: clamp(18px, 7vw, 34px);
+			height: 3px;
+		  }
+
+		  /* Le titre peut passer sur 2 lignes */
+		  .checkmate{
+			font-size: 22px;
+			max-width: 88vw;
+			white-space: normal;       /* autorise le wrap */
+			line-height: 1.15;
+			padding: 8px 14px;
+			text-align:center;
+		  }
+
+		  /* ----- Accordéons (summary.btn) : wrap clean ----- */
+		  summary.btn{
+			white-space: normal;
+			flex-wrap: wrap;
+			row-gap: 6px;
+			font-size: 16px;
+			padding: 10px 10px;
+		  }
+
+		  /* le texte principal prend la largeur pour éviter le serrage */
+		  summary.btn > :first-child{
+			flex: 1 1 100%;
+		  }
+
+		  /* chevron toujours à droite */
+		  .chev{
+			margin-left:auto;
+		  }
+		}
+	/* =========================================================
+	   ANTI-OVERFLOW PATCH (Flight Plan)
+	   - titres qui wrap
+	   - pre/code sans débordement
+	   - tables lisibles sur mobile
+	   ========================================================= */
+
+	/* 1) Autorise le retour à la ligne sur les titres */
+	.btn,
+	.h2,
+	.callout strong{
+	  white-space: normal;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 2) PRE/CODE : wrap + pas de débordement */
+	pre, code{
+	  max-width: 100%;
+	}
+	pre{
+	  white-space: pre-wrap;
+	  overflow-wrap: anywhere;
+	  word-break: break-word;
+	}
+
+	/* 3) Empêche les contenus “flex” (summary.btn) de forcer la largeur */
+	summary.btn{
+	  min-width: 0;
+	}
+	summary.btn > *{
+	  min-width: 0;
+	}
+
+	/* 4) Tables : desktop OK / mobile -> mode cartes */
+	.tbl{
+	  width:100%;
+	  max-width:100%;
+	}
+
+	@media (max-width: 620px){
+
+	  /* Un poil plus petit pour éviter les lignes trop longues */
+	  .checkmate{ font-size: 26px; }
+	  summary.btn{ font-size: 17px; }
+
+	  .h2{
+		font-size: 16px;
+		line-height: 1.15;
+	  }
+
+	  /* TABLE -> cartes (3 colonnes) */
+	  .tbl thead{ display:none; }
+	  .tbl, .tbl tbody, .tbl tr, .tbl td{
+		display:block;
+		width:100%;
+	  }
+	  .tbl tr{
+		border:1px solid rgba(0,0,0,.12);
+		border-radius:8px;
+		background:#fff;
+		margin:10px 0;
+		overflow:hidden;
+	  }
+	  .tbl td{
+		border:none;
+		border-bottom:1px solid rgba(0,0,0,.08);
+		padding:8px 10px;
+		overflow-wrap:anywhere;
+		word-break:break-word;
+	  }
+	  .tbl td:last-child{ border-bottom:none; }
+
+	  /* Labels pour tes tables à 3 colonnes */
+	  .tbl td:nth-child(1)::before{ content:"Élément — "; font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(2)::before{ content:"Valeur — ";  font-weight:900; color:var(--ink2); }
+	  .tbl td:nth-child(3)::before{ content:"Remarque — "; font-weight:900; color:var(--ink2); }
+	}
+
+
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="header">
+      <div class="header-top">
+        <div class="brand">
+          <div class="cessna" id="icaoToggle" role="button" tabindex="0">OPS</div>
+          <div class="airplains"></div>
+        </div>
+
+        <div class="logo">
+          <div class="checkwrap">
+            <a href="index.html" class="checkmate-link">
+              <div class="checkmate">Performance Planning</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="variant">
+          
+          <small></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+
+      <div class="subtitle">
+        
+      </div>
+
+      <!-- =====================================================
+           1) OBJECTIF & PHILOSOPHIE
+           ===================================================== -->
+      <details id="obj" class="section" open>
+        <summary class="btn">
+          1) À QUOI SERVENT LES CALCULS “PERF” ?
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="callout">
+            <strong>Idée centrale :</strong> tu ne cherches pas “si ça passe sur le papier”, tu cherches
+            si c’est <span class="blue">sûr</span>, <span class="blue">répétable</span> et <span class="blue">margeable</span>.
+            En entraînement (simulateur réaliste), tu te comportes comme un pilote : <span class="red">limite = NO GO</span>.
+          </div>
+
+          <div class="grid">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">Les 4 questions à trancher</div>
+              <ul class="dash">
+                <li><strong>Décollage :</strong> puis-je décoller en sécurité sur la piste prévue ?</li>
+                <li><strong>Obstacles :</strong> puis-je franchir obstacles/relief avec une marge réaliste ?</li>
+                <li><strong>Atterrissage :</strong> puis-je atterrir et m’arrêter sur la LDA disponible ?</li>
+                <li><strong>Imprévus :</strong> ai-je de la marge si la technique n’est pas parfaite / météo évolue ?</li>
+              </ul>
+            </div>
+
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">Ce que la perf n’est pas</div>
+              <ul class="dash">
+                <li>Ce n’est pas une “preuve” que tu peux ignorer la météo.</li>
+                <li>Ce n’est pas un chiffre unique : c’est une <strong>chaîne</strong> (météo → avion → piste → obstacles → décision).</li>
+                <li>Ce n’est pas “le mieux que l’avion peut faire” : c’est “ce que toi, aujourd’hui, tu peux faire en sécurité”.</li>
+              </ul>
+              <div class="callout" style="margin-top:10px;">
+                <strong>Règle de sécurité :</strong> si un maillon est incertain (piste mouillée non documentée, rafales fortes,
+                données météo instables), tu compenses par <span class="blue">marges plus grandes</span> ou tu passes en <span class="red">NO GO</span>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           2) DONNÉES À RÉCUPÉRER
+           ===================================================== -->
+      <details id="inputs" class="section" open>
+        <summary class="btn">
+          2) DONNÉES À RÉCUPÉRER — AVION / PISTE / MÉTÉO
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="kpi">
+            <div class="box">
+              <div class="t">Source #1</div>
+              <div class="v">POH / AFM (avion)</div>
+            </div>
+            <div class="box">
+              <div class="t">Source #2</div>
+              <div class="v">VAC / AIP / AFD (piste)</div>
+            </div>
+            <div class="box">
+              <div class="t">Source #3</div>
+              <div class="v">METAR / TAF / NOTAM (météo)</div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">A) Côté avion (POH/AFM)</div>
+              <ul class="dash">
+                <li><strong>Configuration prévue :</strong> normal / short field / soft field, volets, mixture/leaning en altitude.</li>
+                <li><strong>Masse & centrage :</strong> masse réelle, CG (tu l’as déjà via W&amp;B).</li>
+                <li><strong>Performances publiées :</strong>
+                  <ul class="sub">
+                    <li>Décollage : <em>ground roll</em> + distance <em>over 50 ft</em> (ou 15 m).</li>
+                    <li>Atterrissage : <em>ground roll</em> + distance <em>over 50 ft</em>.</li>
+                  </ul>
+                </li>
+                <li><strong>Hypothèses constructeur :</strong> piste sèche / plane, vent nul, technique standard (à vérifier).</li>
+                <li><strong>Corrections prévues par le POH :</strong> vent, pente, surface (herbe), altitude/temperature.</li>
+                <li><strong>Limites :</strong> masse max, limitations volets, “demonstrated crosswind”, vitesses Vx/Vy, short/soft-field speeds.</li>
+              </ul>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Important :</strong> si le POH ne donne pas un facteur (ex. piste mouillée), tu ne l’inventes pas comme une
+                “vérité POH” : tu appliques une <span class="blue">marge opérationnelle conservatrice</span> ou tu évites la condition.
+              </div>
+            </div>
+
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">B) Côté aérodrome / piste</div>
+              <ul class="dash">
+                <li><strong>Élévation terrain</strong> (impact sur PA/DA).</li>
+                <li><strong>Pistes :</strong> orientation, longueur, largeur, revêtement, pente si publiée.</li>
+                <li><strong>Distances :</strong> TORA/TODA/ASDA (décollage) et LDA (atterrissage).</li>
+                <li><strong>Obstacles :</strong> arbres, antennes, relief dans l’axe de départ/approche.</li>
+                <li><strong>NOTAM :</strong> travaux, piste réduite, contamination, balisage HS.</li>
+              </ul>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Astuce “pilot-like” :</strong> note la piste envisagée + une piste de repli (plus face au vent / plus longue),
+                avant même de lancer les calculs.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid--1" style="margin-top:10px;">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">C) Côté météo (METAR/TAF)</div>
+              <ul class="dash">
+                <li><strong>Vent :</strong> direction/force + rafales (Gxx). Un vent arrière faible peut ruiner la perf.</li>
+                <li><strong>Température (OAT)</strong> + <strong>QNH</strong> : nécessaires pour PA/DA.</li>
+                <li><strong>État piste :</strong> sèche / mouillée / contaminée (pluie/neige) — énorme impact sur freinage.</li>
+                <li><strong>Visibilité / plafond :</strong> VFR minima + marges perso (décision, charge de travail).</li>
+                <li><strong>Phénomènes :</strong> CB/TS, cisaillement, turbulence mécanique, pluie forte.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           3) CALCULS FONDAMENTAUX
+           ===================================================== -->
+      <details id="core" class="section" open>
+        <summary class="btn">
+          3) CALCULS FONDAMENTAUX — PA / DA / COMPOSANTES DE VENT
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="callout">
+            <strong>Pourquoi ces 3 calculs ?</strong> Parce que la performance dépend d’abord de
+            <span class="blue">l’air</span> (pression/densité), puis du <span class="blue">vent</span> (aide/pénalité),
+            avant même de parler technique et marges.
+          </div>
+
+          <div class="grid">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">1) Altitude pression (Pressure Altitude)</div>
+              <ul class="dash">
+                <li><strong>But :</strong> entrer correctement dans les abaques POH.</li>
+                <li><strong>Formule pratique :</strong> <code>PA = Altitude terrain + (1013 − QNH) × 30 ft</code></li>
+                <li><strong>Interprétation :</strong>
+                  <ul class="sub">
+                    <li>QNH bas → PA augmente → perf se dégrade.</li>
+                    <li>QNH haut → PA baisse → perf s’améliore.</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Bon réflexe :</strong> si tu as l’ATIS/AWOS, tu as souvent <em>altimeter setting</em> (QNH).
+                Sinon, prends celui du METAR local.
+              </div>
+            </div>
+
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">2) Altitude densité (Density Altitude)</div>
+              <ul class="dash">
+                <li><strong>But :</strong> mesurer le “vrai” niveau de performance (moteur + portance).</li>
+                <li><strong>Étapes :</strong>
+                  <ul class="sub">
+                    <li>ISA à la PA : <code>ISA = 15°C − 2°C/1000 ft × (PA en milliers)</code></li>
+                    <li>Écart : <code>ΔT = OAT − ISA</code></li>
+                    <li>Approx : <code>DA ≈ PA + 120 ft × ΔT</code></li>
+                  </ul>
+                </li>
+                <li><strong>Interprétation :</strong>
+                  <ul class="sub">
+                    <li>DA élevée = distance décollage/atterrissage ↑, taux de montée ↓.</li>
+                    <li>Chaud + haut + pression basse = combo défavorable.</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Très concret :</strong> une DA “modérée” peut déjà changer ton plan si piste courte/obstacles.
+                DA élevée = souvent la cause #1 des “ça n’a pas monté”.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid" style="margin-top:10px;">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">3) Composantes de vent (face / arrière / travers)</div>
+              <ul class="dash">
+                <li><strong>But :</strong> corriger les distances et vérifier la contrôlabilité au sol et à l’arrondi.</li>
+                <li><strong>Formules :</strong>
+                  <ul class="sub">
+                    <li>Angle = différence entre axe piste et direction du vent.</li>
+                    <li>Vent de face ≈ <code>Vent × cos(angle)</code></li>
+                    <li>Vent de travers ≈ <code>Vent × sin(angle)</code></li>
+                  </ul>
+                </li>
+                <li><strong>Règle mentale :</strong>
+                  <ul class="sub">
+                    <li>0° : 100% face, 0% travers</li>
+                    <li>30° : ~85% face, ~50% travers</li>
+                    <li>45° : ~70% face, ~70% travers</li>
+                    <li>60° : ~50% face, ~85% travers</li>
+                    <li>90° : 0% face, 100% travers</li>
+                  </ul>
+                </li>
+                <li><strong>Rafales :</strong> calcule aussi avec la <span class="blue">valeur en rafale</span> pour le vent de travers (conservateur).</li>
+              </ul>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Danger classique :</strong> “petit vent arrière” + piste courte = pénalité disproportionnée.
+                Même 3–5 kt arrière peut te faire basculer en NO GO si tu es déjà limite.
+              </div>
+            </div>
+
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">Mini-table d’interprétation “cas → effet”</div>
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Condition</th>
+                    <th>Effet attendu</th>
+                    <th>Conséquence opérationnelle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>DA ↑ (chaud/haut/QNH bas)</td>
+                    <td>Distance T/O &amp; LDG ↑, montée ↓</td>
+                    <td>Décaler heure (plus froid), alléger, piste plus longue, NO GO si obstacles</td>
+                  </tr>
+                  <tr>
+                    <td>Vent de face ↑</td>
+                    <td>Distance T/O &amp; LDG ↓</td>
+                    <td>Bonne nouvelle… mais surveiller rafales/turbulence/crosswind</td>
+                  </tr>
+                  <tr>
+                    <td>Vent arrière</td>
+                    <td>Distance ↑ (souvent fort)</td>
+                    <td>Changer de piste / attendre / NO GO si piste courte</td>
+                  </tr>
+                  <tr>
+                    <td>Vent de travers ↑</td>
+                    <td>Contrôle plus dur, dérive/effet de rafale</td>
+                    <td>Comparer au “demonstrated” + limiter par ton max perso</td>
+                  </tr>
+                  <tr>
+                    <td>Piste mouillée</td>
+                    <td>Freinage dégradé, distance LDG ↑</td>
+                    <td>Marge ↑, viser piste longue, éviter combos “mouillé + court + obstacle”</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           4) PERFORMANCE DÉCOLLAGE
+           ===================================================== -->
+      <details id="takeoff" class="section" open>
+        <summary class="btn">
+          4) PERFORMANCE DÉCOLLAGE — POH → CORRECTIONS → MARGES → OBSTACLES → DÉCISION
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="callout">
+            <strong>Workflow :</strong> tu pars du POH (valeur brute), tu appliques les corrections (si publiées),
+            tu ajoutes des marges réalistes, puis tu compares au disponible (TORA/TODA) et aux obstacles.
+          </div>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape A — Choisir le bon “cas POH”
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Ce que tu fixes avant de lire un tableau</div>
+                  <ul class="dash">
+                    <li><strong>Technique :</strong> normal vs short-field vs soft-field (selon l’objectif et la piste).</li>
+                    <li><strong>Volets :</strong> valeur exigée par le POH pour cette technique.</li>
+                    <li><strong>Vitesses :</strong> rotation, Vx/Vy, vitesse short-field (selon POH).</li>
+                    <li><strong>Mixture/leaning :</strong> si le POH le demande (altitude/DA).</li>
+                    <li><strong>Masse :</strong> utilise la masse réelle (W&amp;B) du vol.</li>
+                  </ul>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Pourquoi cette étape change tout</div>
+                  <ul class="dash">
+                    <li>Les distances “normal” et “short-field” ne se comparent pas : les hypothèses et vitesses diffèrent.</li>
+                    <li>Une mauvaise config (ex. volets) peut améliorer le roulage mais dégrader la montée (ou l’inverse).</li>
+                    <li>Si tu ne suis pas la technique POH, la valeur POH n’a plus de sens “réel”.</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Règle :</strong> POH d’abord, feeling ensuite.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape B — Lire la distance POH “brute” (ground roll + 50 ft)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Ce que tu récupères</div>
+                  <ul class="dash">
+                    <li><strong>Ground roll :</strong> distance de roulage jusqu’au décollage.</li>
+                    <li><strong>Over 50 ft :</strong> distance totale jusqu’à franchir 50 ft (ou 15 m).</li>
+                    <li><strong>Conditions :</strong> celles décrites par le POH (souvent piste sèche, plane, vent nul).</li>
+                  </ul>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Interprétation pilote</div>
+                  <ul class="dash">
+                    <li>En sécurité opérationnelle, la distance <strong>over 50 ft</strong> est souvent la plus “parlante” (obstacles).</li>
+                    <li>Le ground roll sert surtout à sentir la “marge de roulage” et le point de décision (si ça accélère mal).</li>
+                    <li>Une distance POH “courte” ne garantit pas la montée : vérifie la phase suivante.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape C — Appliquer les corrections (vent / pente / surface / état piste)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Corrections “POH” typiques</div>
+                  <ul class="dash">
+                    <li><strong>Vent :</strong> souvent tabulé (ex. tranches de 5/10 kt de vent de face).</li>
+                    <li><strong>Pente :</strong> parfois un facteur (montée = pénalité).</li>
+                    <li><strong>Surface :</strong> herbe/gravier parfois avec facteur +%.</li>
+                    <li><strong>Altitude/temp :</strong> intégrées via PA/DA dans les abaques.</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Important :</strong> applique ce que le POH autorise (ou ce qu’il décrit).
+                    Si le POH ne documente pas un cas (ex. mouillé), passe en mode <span class="blue">prudence &amp; marges</span>.
+                  </div>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Vent arrière & piste mouillée : pièges</div>
+                  <ul class="dash">
+                    <li><strong>Vent arrière :</strong> pénalité souvent disproportionnée (et parfois déconseillée au-delà de 5 kt).</li>
+                    <li><strong>Piste mouillée :</strong> accélération parfois réduite (roulage), mais surtout freinage incertain à l’atterrissage.</li>
+                    <li><strong>Rafales :</strong> technique plus difficile, distances réelles moins “propres”.</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Décision réaliste :</strong> si tu es déjà proche des limites, le combo
+                    “rafales + mouillé + court + obstacle” est un excellent candidat NO GO.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape D — Ajouter des marges opérationnelles
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Marges réalistes (VFR SEP)</div>
+                  <ul class="dash">
+                    <li><strong>Décollage :</strong> distance over 50 ft × <span class="blue">1,3 minimum</span>.</li>
+                    <li>Si conditions défavorables (DA élevée / rafales / surface / mouillé / technique exigeante) :
+                      vise <span class="blue">+50%</span> (ou plus selon contexte).</li>
+                  </ul>
+                  <div class="note">Ces marges ne “remplacent” pas le POH : elles couvrent les écarts réels (technique, variabilité, imprévus).</div>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Pourquoi tu ajoutes des marges</div>
+                  <ul class="dash">
+                    <li>Le POH suppose une exécution “parfaite” et des conditions strictes.</li>
+                    <li>Toi, tu fais un vol réel/simu avec charge mentale (trafic, radio, turbulence, rafales).</li>
+                    <li>La piste n’est pas toujours “idéale” (état, contamination, irrégularités).</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Règle mentale :</strong> “Si je ne peux pas absorber une erreur normale d’humain, ce n’est pas un plan.”
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape E — Vérifier la capacité de montée (obstacles / relief)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid grid--1">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Le vrai “piège” : tu décolles… mais tu ne montes pas</div>
+                  <ul class="dash">
+                    <li>Regarde la <strong>rate of climb</strong> attendue à ta DA et masse (POH).</li>
+                    <li>Compare avec obstacles dans l’axe : arbres, relief, antennes.</li>
+                    <li>Ajoute l’environnement : turbulence mécanique, rafales, technique short-field plus exigeante.</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Décision :</strong> même si la distance de piste est OK, une montée insuffisante pour franchir obstacles/relief
+                    = <span class="red">NO GO</span>.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape F — Comparer au “disponible” & décider (GO/NO GO)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Comparer</div>
+                  <ul class="dash">
+                    <li>Distance calculée (corrigée + margée) vs <strong>TORA/TODA/ASDA</strong> (selon ce que tu utilises).</li>
+                    <li>Obstacles : distance over 50 ft + marge vs distance/hauteur obstacle.</li>
+                    <li>Vent : composantes (face/arrière/travers) vs limites avion + limites perso.</li>
+                  </ul>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Décider & options</div>
+                  <ul class="dash">
+                    <li>Si “ça passe” mais sans marge : <span class="red">NO GO</span> (ou modifications).</li>
+                    <li>Modifications typiques :
+                      <ul class="sub">
+                        <li>Décaler l’heure (plus froid) → DA meilleure</li>
+                        <li>Alléger (fuel stop) → distances ↓, montée ↑</li>
+                        <li>Changer de piste (plus face au vent / plus longue)</li>
+                        <li>Changer d’aérodrome (plus long / plus bas / moins d’obstacles)</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           5) PERFORMANCE ATTERRISSAGE
+           ===================================================== -->
+      <details id="landing" class="section" open>
+        <summary class="btn">
+          5) PERFORMANCE ATTERRISSAGE — MÉTHODE & PIÈGES (VENT, MOUILLÉ, ARRONDI LONG, MARGES)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="callout">
+            <strong>Principe :</strong> même chaîne que le décollage (POH → corrections → marges → LDA),
+            mais l’atterrissage est souvent <span class="blue">plus critique</span> car une petite erreur de toucher consomme vite la piste.
+          </div>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape A — Distance POH (ground roll + 50 ft)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Ce que tu lis</div>
+                  <ul class="dash">
+                    <li><strong>Ground roll :</strong> distance de roulage après le toucher (freinage inclus selon POH).</li>
+                    <li><strong>Over 50 ft :</strong> distance totale (approche 50 ft → toucher → arrêt).</li>
+                    <li><strong>Hypothèses :</strong> approche stabilisée, point de toucher “au bon endroit”, technique conforme.</li>
+                  </ul>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Interprétation pilote</div>
+                  <ul class="dash">
+                    <li>La distance “over 50 ft” couvre l’arrivée au seuil : c’est souvent celle qu’on compare à la LDA.</li>
+                    <li>Si tu arrives plus vite (rafales → additive), la distance explose.</li>
+                    <li>Si tu touches long, tu “manges” 200–300 m sans t’en rendre compte.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape B — Corrections (vent / pente / état piste)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Vent</div>
+                  <ul class="dash">
+                    <li><strong>Vent de face :</strong> aide (distance ↓), mais attention rafales → vitesse additive.</li>
+                    <li><strong>Vent arrière :</strong> pénalise fortement (distance ↑) — souvent “stop” si piste courte.</li>
+                    <li><strong>Vent travers :</strong> contrôle et alignement, surtout en rafales (stabilité de l’arrondi).</li>
+                  </ul>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Piste mouillée / contaminée</div>
+                  <ul class="dash">
+                    <li>Freinage dégradé → distance ↑.</li>
+                    <li>Risque d’efficacité de freinage non linéaire (selon surface, pluie, contamination).</li>
+                    <li>Si le POH ne donne pas “wet”, tu compenses par marges conservatrices (ci-dessous).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape C — Marges
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Marges recommandées (opérationnel)</div>
+                  <ul class="dash">
+                    <li><strong>Atterrissage sec :</strong> distance over 50 ft × <span class="blue">1,4</span>.</li>
+                    <li><strong>Atterrissage mouillé :</strong> distance over 50 ft × <span class="blue">1,5 à 1,6</span>.</li>
+                    <li><strong>Herbe mouillée :</strong> parfois +30% à +60% (si non documenté → prudence +++ / éviter si limite).</li>
+                  </ul>
+                  <div class="note">Ces valeurs sont des heuristiques de prudence (pas des chiffres “certifiés POH”).</div>
+                </div>
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Pourquoi l’atterrissage mérite plus de marge</div>
+                  <ul class="dash">
+                    <li>Le facteur humain (arrondi long, vitesse additive, freinage tardif) domine vite la distance réelle.</li>
+                    <li>Le mouillé rend le freinage moins prévisible que “sec”.</li>
+                    <li>Une remise de gaz (go-around) doit toujours rester une option.</li>
+                  </ul>
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Conseil réaliste :</strong> si ta marge “mouillé” n’est pas confortable, privilégie une piste plus longue
+                    ou reporte l’arrivée.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="section" open>
+            <summary class="btn">
+              Étape D — Comparer à la LDA & décider
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid grid--1">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Décision atterrissage : GO/NO GO</div>
+                  <ul class="dash">
+                    <li>Distance calculée (corrigée + margée) ≤ <strong>LDA</strong> avec marge confortable.</li>
+                    <li>Si vent arrière / mouillé / rafales rapprochent la limite → changer de piste/terrain, ou attendre.</li>
+                    <li>Si l’approche n’est pas stabilisée : remise de gaz (réflexe “pilote”).</li>
+                  </ul>
+
+                  <div class.Attach style="display:none;"></div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           6) GRILLE GO / NO GO + MODIFICATIONS POSSIBLES
+           ===================================================== -->
+      <details id="decision" class="section" open>
+        <summary class="btn">
+          6) GO / NO GO — GRILLE DE DÉCISION & MODIFICATIONS POSSIBLES
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="grid">
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">NO GO typiques (réalistes)</div>
+              <ul class="dash">
+                <li>Distance T/O ou LDG (avec marges) &gt; distance disponible (TORA/LDA).</li>
+                <li>DA élevée + obstacles/relief → montée insuffisante.</li>
+                <li>Vent arrière significatif sur piste courte.</li>
+                <li>Vent de travers proche du “demonstrated” ou au-delà de ton max perso.</li>
+                <li>Piste mouillée + courte + obstacle + rafales = combo “NO GO” fréquent.</li>
+                <li>Données incertaines (météo instable, état piste inconnu) et tu es déjà limite.</li>
+              </ul>
+              <div class="callout" style="margin-top:10px;">
+                <strong>Règle pro :</strong> si tu dois “espérer” que ça marche, c’est NO GO.
+              </div>
+            </div>
+
+            <div class="section" style="padding:10px 12px;">
+              <div class="h2">Modifications (au lieu d’annuler)</div>
+              <ul class="dash">
+                <li><strong>Heure :</strong> partir plus tôt (air plus froid → DA meilleure).</li>
+                <li><strong>Masse :</strong> alléger (fuel stop, moins de charge) → distances ↓, montée ↑.</li>
+                <li><strong>Piste :</strong> prendre plus face au vent, plus longue, moins d’obstacles.</li>
+                <li><strong>Aérodrome :</strong> choisir un terrain plus bas/long/dégagé.</li>
+                <li><strong>Météo :</strong> attendre une fenêtre (vent baisse, pluie cesse, plafond remonte).</li>
+              </ul>
+              <div class="callout" style="margin-top:10px;">
+                <strong>Training tip :</strong> en simu, impose-toi 1–2 “décisions difficiles” (modifier/retarder) pour reproduire la vraie vie.
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- =====================================================
+           7) EXEMPLE COMPLET — TON VOL (KPSC → KALW)
+           ===================================================== -->
+      <details id="example" class="section" open>
+        <summary class="btn">
+          7) EXEMPLE COMPLET — TON VOL KPSC → KALW (DONNÉES + CALCULS + INTERPRÉTATION + DÉCISION)
+          <span class="chev">›</span>
+        </summary>
+
+        <div class="section-body">
+          <div class="callout">
+            <strong>Données fournies :</strong> Tri-Cities (KPSC) → Walla Walla Rgnl (KALW), 48 NM, 0:26, 5500 ft,
+            VFR jour, 03/02/2026, callsign <code>N884CT</code>. Vent moyen NOAA : 263°T/12 kt (≈ +9 kt tailwind).
+            <div class="note" style="margin-top:6px;">
+              <strong>Important :</strong>
+              Les données METAR/TAF (vent sol exact, OAT, QNH, état piste, rafales) et la masse avion ci-dessous sont inventées mais cohérentes et clairement indiquées.
+            </div>
+          </div>
+
+          <!-- Hypothèses cohérentes (inventées) -->
+          <details class="section" open>
+            <summary class="btn">
+              A) Hypothèses manquantes (inventées et cohérentes)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="kpi">
+                <div class="box"><div class="t">Type avion (hyp.)</div><div class="v">Cessna 172S (SEP)</div></div>
+                <div class="box"><div class="t">Masse T/O (hyp.)</div><div class="v">2 350 lb</div></div>
+                <div class="box"><div class="t">Config T/O (hyp.)</div><div class="v">Short-field • Flaps 10°</div></div>
+                <div class="box"><div class="t">Config LDG (hyp.)</div><div class="v">Short-field</div></div>
+              </div>
+
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Météo départ (KPSC) — hypothèse</div>
+                  <table class="tbl">
+                    <thead><tr><th>Paramètre</th><th>Valeur</th><th>Note</th></tr></thead>
+                    <tbody>
+                      <tr><td>Vent sol</td><td>260° / 12 kt</td><td>cohérent avec flux W–NW</td></tr>
+                      <tr><td>OAT</td><td>+18°C</td><td>hiver doux</td></tr>
+                      <tr><td>QNH</td><td>1015 hPa</td><td>pression standard-ish</td></tr>
+                      <tr><td>État piste</td><td>Sèche</td><td>hypothèse</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Météo arrivée (KALW) — hypothèse</div>
+                  <table class="tbl">
+                    <thead><tr><th>Paramètre</th><th>Valeur</th><th>Note</th></tr></thead>
+                    <tbody>
+                      <tr><td>Vent sol</td><td>270° / 14 kt</td><td>cohérent avec flux W</td></tr>
+                      <tr><td>OAT</td><td>+17°C</td><td>proche départ</td></tr>
+                      <tr><td>QNH</td><td>1014 hPa</td><td>stable</td></tr>
+                      <tr><td>État piste</td><td>Légèrement humide</td><td>hypothèse prudente</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="callout" style="margin-top:10px;">
+                <strong>Pourquoi ces hypothèses ?</strong> Ton briefing NOAA donne un vent moyen en altitude (tailwind).
+                Mais pour la perf, on a besoin du <span class="blue">vent sol</span> + <span class="blue">OAT</span> + <span class="blue">QNH</span>.
+                Ici on choisit des valeurs plausibles et on montre la méthode.
+              </div>
+            </div>
+          </details>
+
+          <!-- Données navigation / carburant fournies -->
+          <details class="section" open>
+            <summary class="btn">
+              B) Navigation & carburant (TES CHIFFRES)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="kpi">
+                <div class="box"><div class="t">Distance / Temps</div><div class="v">48 NM / 0:26</div></div>
+                <div class="box"><div class="t">Altitude</div><div class="v">5 500 ft</div></div>
+                <div class="box"><div class="t">TAS / GS</div><div class="v">120 kt / 112 kt</div></div>
+                <div class="box"><div class="t">Vent moyen total (NOAA)</div><div class="v">263°T / 12 kt (≈ +9 kt TW)</div></div>
+                <div class="box"><div class="t">Vent croisière (NOAA)</div><div class="v">266°T / 16 kt (≈ +16 kt TW)</div></div>
+              </div>
+
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Carburant (récap)</div>
+                  <table class="tbl">
+                    <thead><tr><th>Élément</th><th>Valeur</th><th>Remarque</th></tr></thead>
+                    <tbody>
+                      <tr><td>Fuel type</td><td>Avgas</td><td>SEP type C172</td></tr>
+                      <tr><td>Usable fuel</td><td>300 lbs / 50 gal</td><td>tanks “long range” plausibles</td></tr>
+                      <tr><td>Trip fuel</td><td>20 lbs / 3 gal</td><td>très court</td></tr>
+                      <tr><td>Block fuel</td><td>91 lbs / 15 gal (30% usable)</td><td>marge large</td></tr>
+                      <tr><td>Fuel at destination</td><td>61 lbs / 10 gal</td><td>arrivée confortable</td></tr>
+                      <tr><td>Reserve fuel</td><td>60 lbs / 10 gal</td><td>réserve confortable</td></tr>
+                      <tr><td>Taxi fuel</td><td>10 lbs / 2 gal</td><td>conservateur</td></tr>
+                      <tr><td>Contingency</td><td>5% / 1 lbs / 0 gal</td><td>arrondi</td></tr>
+                      <tr><td>Endurance</td><td>4 h 34</td><td>FAA “fuel on board”</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Climb & descent (récap)</div>
+                  <table class="tbl">
+                    <thead><tr><th>Phase</th><th>Donnée</th><th>Valeur</th></tr></thead>
+                    <tbody>
+                      <tr><td>Climb</td><td>Rate / Speed</td><td>700 fpm @ 80 kt</td></tr>
+                      <tr><td>Climb</td><td>Flight path angle</td><td>4.4°</td></tr>
+                      <tr><td>Climb</td><td>Time to climb</td><td>0:07</td></tr>
+                      <tr><td>Descent</td><td>Rate / Speed</td><td>600 fpm @ 100 kt</td></tr>
+                      <tr><td>Descent</td><td>Flight path angle</td><td>-3.5°</td></tr>
+                      <tr><td>Descent</td><td>Rule of thumb</td><td>2.7 NM / 1000 ft</td></tr>
+                    </tbody>
+                  </table>
+
+                  <div class="callout" style="margin-top:10px;">
+                    <strong>Astuce réalisme :</strong> note dans la navlog :
+                    <span class="blue">TOC</span> (Top of Climb) et <span class="blue">TOD</span> (Top of Descent),
+                    surtout si tu veux coller aux méthodes “école”.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Calculs perf (PA/DA/wind components) -->
+          <details class="section" open>
+            <summary class="btn">
+              C) Calculs perf — PA / DA / vent piste (exemple complet)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">KPSC — PA & DA (avec hypothèses)</div>
+                  <ul class="dash">
+                    <li><strong>Élévation (hyp.) :</strong> 410 ft</li>
+                    <li><strong>QNH (hyp.) :</strong> 1015 hPa</li>
+                    <li><strong>OAT (hyp.) :</strong> +18°C</li>
+                  </ul>
+                  <pre><code>Altitude pression (PA)
+PA = 410 + (1013 − 1015) × 30
+PA = 410 + (-2) × 30
+PA ≈ 350 ft
+
+Altitude densité (DA) — approximation
+ISA à 0.35k ft ≈ 15 − 2×0.35 = 14.3°C
+ΔT = OAT − ISA = 18 − 14.3 = 3.7°C
+DA ≈ PA + 120×ΔT = 350 + 120×3.7
+DA ≈ 350 + 444 = 794 ft ≈ 800 ft</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> DA ≈ 800 ft → <span class="green">bonnes performances</span>
+                    (peu de pénalité “air chaud/haut”).
+                  </div>
+                </div>
+
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Vent piste (exemple) — KPSC RWY 21</div>
+                  <ul class="dash">
+                    <li><strong>Piste (hyp.) :</strong> RWY 21 → axe 210°</li>
+                    <li><strong>Vent (hyp.) :</strong> 260° / 12 kt</li>
+                    <li><strong>Angle :</strong> 50°</li>
+                  </ul>
+
+                  <pre><code>Vent de face ≈ 12 × cos(50°) ≈ 8 kt
+Vent de travers ≈ 12 × sin(50°) ≈ 9 kt</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> ~8 kt de face aide le décollage ; ~9 kt de travers est généralement gérable
+                    si ton “max perso” et l’avion le permettent (toujours comparer au “demonstrated”).
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid" style="margin-top:10px;">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">KALW — PA & DA (avec hypothèses)</div>
+                  <ul class="dash">
+                    <li><strong>Élévation (hyp.) :</strong> 1 194 ft</li>
+                    <li><strong>QNH (hyp.) :</strong> 1014 hPa</li>
+                    <li><strong>OAT (hyp.) :</strong> +17°C</li>
+                  </ul>
+                  <pre><code>PA = 1194 + (1013 − 1014) × 30
+PA = 1194 + (-1) × 30
+PA ≈ 1164 ft
+
+ISA à 1.164k ft ≈ 15 − 2×1.164 = 12.7°C
+ΔT = 17 − 12.7 = 4.3°C
+DA ≈ 1164 + 120×4.3 = 1164 + 516
+DA ≈ 1680 ft</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> DA ≈ 1 700 ft → légère pénalité, mais encore très raisonnable.
+                  </div>
+                </div>
+
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Vent piste (exemple) — KALW RWY 20</div>
+                  <ul class="dash">
+                    <li><strong>Piste (hyp.) :</strong> RWY 20 → axe 200°</li>
+                    <li><strong>Vent (hyp.) :</strong> 270° / 14 kt</li>
+                    <li><strong>Angle :</strong> 70°</li>
+                  </ul>
+
+                  <pre><code>Vent de face ≈ 14 × cos(70°) ≈ 5 kt
+Vent de travers ≈ 14 × sin(70°) ≈ 13 kt</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> peu de face, travers notable (~13 kt).
+                    À comparer au “demonstrated crosswind” et surtout à ton <span class="blue">max perso</span> (rafales ?).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Décollage / atterrissage perf (POH typiques + marges) -->
+          <details class="section" open>
+            <summary class="btn">
+              D) Décollage & atterrissage — distances, corrections, marges (exemple)
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+
+              <div class="grid">
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Décollage (C172S) — exemple chiffré</div>
+                  <ul class="dash">
+                    <li><strong>Masse (hyp.) :</strong> 2 350 lb</li>
+                    <li><strong>DA KPSC :</strong> ~800 ft</li>
+                    <li><strong>Technique :</strong> short-field, flaps 10°</li>
+                    <li><strong>Résultat POH typique :</strong>
+                      <ul class="sub">
+                        <li>Ground roll ≈ 320 m</li>
+                        <li>Over 50 ft ≈ 580 m</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <pre><code>Correction vent de face (≈ 8 kt)
+≈ -10% (exemple) → 580 m × 0.90 ≈ 520 m
+
+Marge opérationnelle (× 1.3)
+520 m × 1.3 ≈ 676 m requis</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> tu compares <span class="blue">676 m requis</span> à la distance disponible (TORA/TODA).
+                    Si tu as une piste de &gt;1000 m, tu es très confortable. Si tu es sur une piste courte, tu revalides avec ton vrai POH.
+                  </div>
+                </div>
+
+                <div class="section" style="padding:10px 12px;">
+                  <div class="h2">Atterrissage (C172S) — exemple chiffré</div>
+                  <ul class="dash">
+                    <li><strong>DA KALW :</strong> ~1 700 ft</li>
+                    <li><strong>Vent de face (hyp.) :</strong> ~5 kt</li>
+                    <li><strong>Piste :</strong> légèrement humide (hyp.)</li>
+                    <li><strong>Résultat POH typique :</strong>
+                      <ul class="sub">
+                        <li>Over 50 ft ≈ 520 m</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <pre><code>Correction vent de face (~5 kt)
+≈ -5% (exemple) → 520 m × 0.95 ≈ 494 m
+
+Piste humide (heuristique prudente)
++20% → 494 m × 1.20 ≈ 593 m
+
+Marge opérationnelle mouillé (× 1.5)
+593 m × 1.5 ≈ 890 m requis</code></pre>
+
+                  <div class="callout">
+                    <strong>Lecture :</strong> compare <span class="blue">890 m requis</span> à la <strong>LDA</strong>.
+                    Si LDA ~2000 m, c’est confortable. Si LDA ~900–1000 m, tu es pile : tu changes le plan ou tu attends des conditions meilleures.
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <details class="section" open>
+                <summary class="btn">
+                  E) Synthèse décisionnelle (GO/NO GO) pour TON vol
+                  <span class="chev">›</span>
+                </summary>
+                <div class="section-body">
+                  <div class="grid">
+                    <div class="section" style="padding:10px 12px;">
+                      <div class="h2">GO/NO GO — critères appliqués</div>
+                      <ul class="dash">
+                        <li><strong>Décollage :</strong> DA faible + vent de face modéré = plutôt favorable.</li>
+                        <li><strong>Atterrissage :</strong> travers plus notable (hyp. 13 kt) → vérifier “demonstrated” + ton max perso, surtout si rafales.</li>
+                        <li><strong>Mouillé :</strong> tu as appliqué une pénalité + marge (prudence).</li>
+                        <li><strong>Distances :</strong> si TORA/LDA sont confortables (pistes “régionales” souvent longues), GO probable.</li>
+                      </ul>
+                    </div>
+
+                    <div class="section" style="padding:10px 12px;">
+                      <div class="h2">Précautions & adaptations réalistes</div>
+                      <ul class="dash">
+                        <li>Si travers proche de ton max perso : choisir la piste la plus face au vent, ou décaler l’heure.</li>
+                        <li>En finale rafaleuse : ajouter la vitesse selon ta règle (et surtout rester stabilisé).</li>
+                        <li>Piste humide : viser un toucher au point, freinage progressif, garder la remise de gaz comme option.</li>
+                        <li>Si tu ne peux pas “absorber” une remise de gaz (montée faible/obstacles) : reconsidérer le plan.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="callout">
+                    <strong>Décision (avec hypothèses actuelles) :</strong> <span class="green">GO confortable</span> si LDA/TORA sont largement supérieures
+                    aux distances requises margées et si le travers reste dans ta zone de confort (rafales incluses).
+                    Sinon : <span class="red">NO GO</span> ou <span class="blue">modification</span> (piste/heure/terrain).
+                  </div>
+                </div>
+              </details>
+
+            </div>
+          </details>
+
+          <!-- “Mini-brief perf” prêt à copier -->
+          <details class="section" open>
+            <summary class="btn">
+              F) PERFORMANCE BRIEF
+              <span class="chev">›</span>
+            </summary>
+            <div class="section-body">
+              <div class="callout">
+                <strong>But :</strong> un briefing perf court avant de rouler.
+              </div>
+              <pre><code>PERFORMANCE BRIEF — N884CT (VFR DAY) — KPSC → KALW — 03/02/2026
+
+1) Inputs
+- Avion / config: ____________ (normal/short/soft, flaps ___)
+- Masse / CG: ____________
+- Piste départ: RWY ___ / TORA ___ / état: (sec/mouillé)
+- Piste arrivée: RWY ___ / LDA ___ / état: (sec/mouillé)
+- Météo: QNH ___ / OAT ___ / vent ___G___
+
+2) Air / Vent
+- PA: ___ ft (formule ou altimètre)
+- DA: ___ ft (impact)
+- Vent piste: face ___ kt / travers ___ kt (inclure rafale)
+
+3) Distances (POH)
+- T/O over 50 ft: ___ (corrigé) → marge: ×1.3 = ___ requis
+- LDG over 50 ft: ___ (corrigé) → marge: ×1.4/1.5 = ___ requis
+
+4) Obstacles / montée
+- Obstacles départ/arrivée: ____________
+- Montée attendue à DA: ____________ (OK / limite)
+
+5) Décision
+- GO / NO GO
+- Conditions “stop” en cours de vol: ____________ (vent, pluie, instabilité approche, etc.)</code></pre>
+            </div>
+          </details>
+        </div>
+      </details>
+
+    </div> <!-- /.main -->
+  </div>   <!-- /.card -->
+
+  <script>
+	  (function(){
+		const btn = document.getElementById("icaoToggle");
+		if(!btn) return;
+
+		const getSections = () => Array.from(document.querySelectorAll("details.section"));
+
+		const anyOpen = (sections) => sections.some(d => d.open);
+		const setAll = (sections, open) => sections.forEach(d => d.open = open);
+
+		const toggleAll = () => {
+		  const sections = getSections();
+		  if(sections.length === 0) return;
+		  setAll(sections, !anyOpen(sections));
+		};
+
+		btn.addEventListener("click", toggleAll);
+
+		btn.addEventListener("keydown", (e) => {
+		  if(e.key === "Enter" || e.key === " "){
+			e.preventDefault();
+			toggleAll();
+		  }
+		});
+	  })();
+  </script>
+
+</body>
+</html>
